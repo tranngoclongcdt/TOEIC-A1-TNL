@@ -6,6 +6,10 @@
 <title>Từ Vựng TOEIC A1-A2 — Học từ vựng có phiên âm & giọng đọc</title>
 <meta name="description" content="Học hơn 1.100 từ vựng TOEIC A1-A2 với phiên âm IPA, giọng đọc Anh/Mỹ, flashcard, bài kiểm tra và ôn tập ngắt quãng. Đồng bộ tiến độ theo tài khoản.">
 <meta name="theme-color" content="#2D59E8">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Từ vựng TOEIC">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232D59E8'/%3E%3Cpath d='M16 18h32v28H16z' fill='none' stroke='white' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M24 28h16M24 36h10' stroke='%23FFE75E' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Sans:wght@400;500&display=swap">
 <style>
@@ -261,6 +265,44 @@ h2, h3 { text-wrap: balance; }
   .toast { bottom: calc(86px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (max-width: 480px) { .scene { height: 360px; } .word { font-size: 25px; } .ring { width: 112px; height: 112px; } }
+/* ===== Nâng cấp giao diện ===== */
+.auth { background: radial-gradient(1200px 600px at 10% -10%, var(--accent-soft), transparent 60%), radial-gradient(900px 500px at 110% 110%, var(--accent-soft), transparent 60%), var(--bg); }
+.authwrap { width: min(880px, 100%); display: grid; grid-template-columns: 1fr 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 10px 40px rgba(21,32,56,.14); overflow: hidden; animation: rise .45s ease both; }
+.authwrap .authbox { width: auto; border: 0; border-radius: 0; box-shadow: none; padding: 32px; align-content: center; }
+.authside { background: linear-gradient(155deg, var(--accent), #6A4DE8); color: #fff; padding: 36px 32px; display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+.authside .logo { background: rgba(255,255,255,.18); color: #fff; }
+.authside h2 { font: 800 32px/1.1 var(--f-display); margin: 6px 0 0; }
+.authside h2 mark { background: var(--hl-bg); color: var(--hl-fg); padding: 0 .2em; border-radius: 6px; }
+.authside p { margin: 0; opacity: .9; }
+.authside ul { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 10px; font-size: 15px; }
+.authside li { display: flex; gap: 10px; align-items: baseline; }
+.authside li::before { content: "✓"; font-weight: 800; color: var(--hl-bg); }
+.pwrap { position: relative; display: flex; }
+.pwrap input { flex: 1; padding-right: 64px; }
+.eye { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: var(--accent); font-weight: 700; font-size: 13px; padding: 6px 10px; border-radius: 8px; }
+.field input { width: 100%; }
+.avatar { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font: 800 14px var(--f-display); text-transform: uppercase; }
+.userbox { padding: 4px 4px 4px 4px; }
+.userbox b { padding-left: 2px; }
+.btn, .chip, .ico, .know, .opt, .trow, .card { transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease, background-color .2s ease; }
+.btn:hover:not(:disabled), .ico:hover { transform: translateY(-1px); }
+.btn:active:not(:disabled), .ico:active { transform: translateY(0) scale(.98); }
+.card:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(21,32,56,.08), 0 10px 24px rgba(21,32,56,.1); }
+.btn.primary { box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 35%, transparent); }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+#view > * { animation: rise .35s ease both; }
+.grid > .card { animation: rise .35s ease both; }
+.grid > .card:nth-child(2) { animation-delay: .04s; } .grid > .card:nth-child(3) { animation-delay: .08s; }
+.grid > .card:nth-child(4) { animation-delay: .12s; } .grid > .card:nth-child(n+5) { animation-delay: .16s; }
+.panel { transition: box-shadow .2s ease; }
+.splash { position: fixed; inset: 0; z-index: 60; background: var(--bg); display: grid; place-items: center; transition: opacity .3s ease; }
+.splash.off { opacity: 0; pointer-events: none; }
+.spin { width: 44px; height: 44px; border-radius: 50%; border: 4px solid var(--accent-soft); border-top-color: var(--accent); animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.confetti { position: fixed; top: -12px; width: 9px; height: 14px; z-index: 70; pointer-events: none; animation: fall linear forwards; }
+@keyframes fall { to { transform: translate3d(var(--dx), 105vh, 0) rotate(720deg); opacity: .9; } }
+@media (max-width: 760px) { .authwrap { grid-template-columns: 1fr; } .authside { display: none; } .authwrap .authbox { padding: 24px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .confetti { display: none; } }
 </style>
 </head>
 <body>
@@ -280,7 +322,7 @@ h2, h3 { text-wrap: balance; }
       <button type="button" data-act="accent" data-v="en-GB" aria-pressed="false">Giọng Anh</button>
     </div>
     <div class="userbox" id="userbox" hidden>
-      <i class="dot" aria-hidden="true"></i>
+      <span class="avatar" id="uAv" aria-hidden="true"></span>
       <b id="uName"></b>
       <button type="button" id="uSignout">Đăng xuất</button>
     </div>
@@ -308,6 +350,18 @@ h2, h3 { text-wrap: balance; }
 
 <!-- Màn hình đăng nhập / đăng ký: hiển thị khi chưa đăng nhập, che toàn bộ ứng dụng -->
 <div class="auth" id="auth" hidden>
+  <div class="authwrap">
+    <aside class="authside" aria-hidden="true">
+      <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 8h6M9 12h4"/></svg></div>
+      <h2>Từ vựng <mark>TOEIC</mark></h2>
+      <p>Học từ vựng thông minh, nhớ lâu hơn mỗi ngày.</p>
+      <ul>
+        <li><b>1.100+</b> từ A1-A2 có câu ví dụ</li>
+        <li>Phiên âm IPA và giọng đọc Mỹ / Anh</li>
+        <li>Flashcard &amp; ôn tập ngắt quãng</li>
+        <li>Đồng bộ tiến độ trên mọi thiết bị</li>
+      </ul>
+    </aside>
   <div class="authbox">
     <h2 id="aTitle">Đăng nhập</h2>
     <div class="authswitch" role="group" aria-label="Đăng nhập hoặc đăng ký">
@@ -324,7 +378,7 @@ h2, h3 { text-wrap: balance; }
     </div>
     <div class="field">
       <label for="aPass">Mật khẩu</label>
-      <input id="aPass" type="password" autocomplete="current-password" placeholder="Tối thiểu 6 ký tự">
+      <div class="pwrap"><input id="aPass" type="password" autocomplete="current-password" placeholder="Tối thiểu 6 ký tự"><button type="button" class="eye" id="aEye" aria-label="Hiện mật khẩu" aria-pressed="false">Hiện</button></div>
     </div>
     <p class="aerr" id="aErr" role="alert"></p>
     <button type="button" class="linkbtn" id="aForgot">Quên mật khẩu?</button>
@@ -336,7 +390,9 @@ h2, h3 { text-wrap: balance; }
     </button>
     <p class="hint" id="aHint">Đăng nhập để tiến độ học được lưu theo tài khoản của bạn.</p>
   </div>
+  </div>
 </div>
+<div class="splash" id="splash" aria-label="Đang tải"><div class="spin"></div></div>
 
 <!-- Firebase SDK (dạng thẻ <script> — phù hợp web tĩnh GitHub Pages) -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
@@ -362,6 +418,9 @@ AUTH.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function () {
 var DB = firebase.firestore();
 
 var CLOUD = { user: null, timer: null };
+/* Màn hình chờ lúc kiểm tra đăng nhập — tự tắt sau tối đa 6 giây phòng khi mất mạng */
+function hideSplash() { var s = document.getElementById('splash'); if (s && !s.classList.contains('off')) { s.classList.add('off'); setTimeout(function () { s.hidden = true; }, 350); } }
+setTimeout(hideSplash, 6000);
 var $ = function (s) { return document.querySelector(s); };
 
 /* Ghi dữ liệu tiến độ hiện tại của máy lên Firestore (users/{uid}).
@@ -568,6 +627,7 @@ AUTH.onAuthStateChanged(function (u) {
 /* Lắng nghe trạng thái đăng nhập: đổi dữ liệu theo tài khoản, hiện/ẩn màn hình */
 AUTH.onAuthStateChanged(function (u) {
   checkRedirectResult(); // lần fire đầu = persistence đã sẵn sàng, đọc redirect ngay lúc an toàn
+  hideSplash();
   CLOUD.user = u || null;
   updateAuthUI(u);
   if (u) {
@@ -1787,7 +1847,7 @@ function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slic
 function dayOffset(n) { var d = new Date(); d.setDate(d.getDate() + n); return d; }
 function today() { return ymd(new Date()); }
 function plusDays(n) { return ymd(dayOffset(n)); }
-function bump() { var t = today(); stats[t] = (stats[t] || 0) + 1; save(KEYS.stats, stats); }
+function bump() { var t = today(); stats[t] = (stats[t] || 0) + 1; save(KEYS.stats, stats); if (stats[t] === pref.goal) { toast('Tuyệt vời! Bạn đã đạt mục tiêu hôm nay 🎉'); if (typeof confetti === 'function') confetti(); } }
 function streak() { var n = 0, i = stats[today()] > 0 ? 0 : 1; while (stats[plusDays(-i)] > 0) { n++; i++; } return n; }
 var IV = [0, 1, 2, 4, 8, 16];
 function grade(w, good) {
@@ -2162,6 +2222,31 @@ document.addEventListener('keydown', function (e) {
   else if (e.key === '1') rateCard(w, false);
   else if (e.key === '2') rateCard(w, true);
 });
+/* ===== Nâng cấp: avatar, hiện mật khẩu, pháo giấy, PWA ===== */
+(function () {
+  var nm = document.getElementById('uName'), av = document.getElementById('uAv');
+  function syncAv() { av.textContent = (nm.textContent.trim().charAt(0) || '?'); }
+  new MutationObserver(syncAv).observe(nm, { childList: true, characterData: true, subtree: true }); syncAv();
+  var eye = document.getElementById('aEye'), pw = document.getElementById('aPass');
+  eye.onclick = function () {
+    var show = pw.type === 'password'; pw.type = show ? 'text' : 'password';
+    eye.textContent = show ? 'Ẩn' : 'Hiện'; eye.setAttribute('aria-pressed', show); eye.setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+  };
+})();
+function confetti() {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cols = ['#2D59E8', '#FFE75E', '#14895C', '#FF6B6B', '#7C9CFF'];
+  for (var i = 0; i < 70; i++) {
+    var p = document.createElement('i'); p.className = 'confetti';
+    p.style.left = Math.random() * 100 + 'vw'; p.style.background = cols[i % cols.length];
+    p.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
+    p.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; p.style.animationDelay = (Math.random() * .4) + 's';
+    document.body.appendChild(p); setTimeout(function (el) { el.remove(); }.bind(null, p), 4200);
+  }
+}
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+}
 render();
 </script>
 

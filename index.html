@@ -323,6 +323,8 @@ h2, h3 { text-wrap: balance; }
       Tiếp tục với Google
     </button>
     <p class="hint" id="aHint">Đăng nhập để tiến độ học được lưu theo tài khoản của bạn.</p>
+    <p class="hint" id="aLastOut" style="color:var(--warn)"></p>
+    <button type="button" class="btn" id="aRetry">Đã về từ Google nhưng chưa vào được? Bấm để nhận lại phiên</button>
   </div>
 </div>
 
@@ -411,6 +413,7 @@ function updateAuthUI(u) {
   var ub = $('#userbox');
   ub.hidden = !u;
   if (u) $('#uName').textContent = u.displayName || (u.email || 'Bạn').split('@')[0];
+  if (!u) { try { var o = localStorage.getItem('toeic-a1-authout-v1'); if (o) $('#aLastOut').textContent = '🔎 ' + o + ' — lưu ý: trình duyệt đang chặn lưu phiên (kiểm tra chế độ ẩn danh / chặn cookie).'; } catch (e) {} }
 }
 
 var AMODE = 'login';
@@ -470,6 +473,25 @@ AUTH.getRedirectResult().catch(function (e) {
   $('#aErr').textContent = authErr(e);
 });
 
+/* Nút thaoo của cầu cản: nếu về từ Google mà vẫn màn đăng nhập, bấm để nhận lại phiên (có thể do trình duyệt cache) */
+$('#aRetry').onclick = function () {
+  $('#aErr').textContent = 'Đang nhận lại phiên...';
+  AUTH.getRedirectResult().then(function () {
+    setTimeout(function () {
+      var u = AUTH.currentUser;
+      $('#aErr').textContent = '';
+      updateAuthUI(u);
+      if (u) {
+        $('#uName').textContent = u.displayName || (u.email || 'Bạn').split('@')[0];
+        cloudLoad(u);
+        toast('Đã vào lại app!');
+      } else {
+        $('#aErr').textContent = 'Vẫn chưa nhận được phiên. Hãy bấm Ctrl+F5 tải lại trang (bỏ cache), hoặc thử đăng nhập bằng Email/mật khẩu.';
+      }
+    }, 800);
+  }).catch(function (e) { $('#aErr').textContent = authErr(e); });
+};
+
 $('#uSignout').onclick = function () {
   AUTH.signOut().then(function () {
     CLOUD.user = null; setMode('login'); $('#aPass').value = '';
@@ -482,6 +504,18 @@ document.addEventListener('keydown', function (e) {
   if (e.key !== 'Enter' || ($('#auth') && $('#auth').hidden)) return;
   var t = e.target;
   if (t && (t.id === 'aEmail' || t.id === 'aPass' || t.id === 'aName')) { e.preventDefault(); $('#aGo').click(); }
+});
+
+/* Chẩn đoán mất phiên: khi đang đăng nhập mà tự bị đẩy ra, ghi lại thời điểm để báo trên màn hình đăng nhập */
+var OUT_KEY = 'toeic-a1-authout-v1';
+AUTH.onAuthStateChanged(function (u) {
+  if (!u && window.__prevUser) {
+    try {
+      var d = new Date();
+      localStorage.setItem(OUT_KEY, 'Phiên mất lúc ' + d.getHours() + ':' + ('0' + d.getMinutes()).slice(-2) + ' ' + d.getDate() + '/' + (d.getMonth() + 1));
+    } catch (e) {}
+  }
+  window.__prevUser = u ? u.uid : null;
 });
 
 /* Lắng nghe trạng thái đăng nhập: đổi dữ liệu theo tài khoản, hiện/ẩn màn hình */

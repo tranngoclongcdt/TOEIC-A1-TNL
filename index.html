@@ -50,6 +50,8 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+/* CỰC KỲ QUAN TRỌNG: [hidden] phải thắng mọi display của CSS (lỗi màn hình đăng nhập không ẩn) */
+[hidden] { display: none !important; }
 body {
   background: var(--bg); color: var(--ink);
   font: 400 16px/1.55 var(--f-body);

@@ -355,6 +355,10 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 var AUTH = firebase.auth();
+/* Giữ phiên đăng nhập lâu dài; nếu trình duyệt không cho thì lùi về phiên tạm để không bị đá ra ngay */
+AUTH.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function () {
+  return AUTH.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(function () {});
+});
 var DB = firebase.firestore();
 
 var CLOUD = { user: null, timer: null };
@@ -504,19 +508,21 @@ $('#aGo').onclick = function () {
 };
 
 $('#aGoogle').onclick = function () {
-  $('#aErr').textContent = '';
-  var onGithub = location.hostname.indexOf('github.io') > -1;
-  if (onGithub) {
-    // GitHub Pages đặt COOP làm popup không hoạt động — dùng redirect (quay lại trang sau khi chọn tài khoản)
-    AUTH.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
-      .catch(function (e) { $('#aErr').textContent = authErr(e); });
-  } else {
-    AUTH.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function (e) {
-      if (e && e.code === 'auth/popup-blocked') {
-        AUTH.signInWithRedirect(new firebase.auth.GoogleAuthProvider()).catch(function (e2) { $('#aErr').textContent = authErr(e2); });
-      } else $('#aErr').textContent = authErr(e);
-    });
-  }
+  var err = $('#aErr'); err.textContent = '';
+  if (location.protocol === 'file:') { err.textContent = 'Đăng nhập Google không chạy khi mở file trực tiếp từ ổ đĩa. Hãy mở trang qua địa chỉ https:// (GitHub Pages) hoặc http://localhost.'; return; }
+  var btn = $('#aGoogle'); btn.disabled = true;
+  var prov = new firebase.auth.GoogleAuthProvider();
+  prov.setCustomParameters({ prompt: 'select_account' });
+  /* Dùng popup làm cách chính: luồng redirect bị các trình duyệt hiện đại (Chrome/Safari/Firefox chặn lưu trữ bên thứ ba)
+     làm mất phiên ngay khi quay về — đúng lỗi "vào xong bị đá ra". Popup không phụ thuộc vào đó. */
+  AUTH.signInWithPopup(prov).then(function () { btn.disabled = false; }).catch(function (e) {
+    btn.disabled = false;
+    if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) {
+      err.textContent = 'Trình duyệt chặn cửa sổ Google. Hãy cho phép popup cho trang này rồi bấm lại.';
+    } else if (e && e.code === 'auth/cancelled-popup-request') {
+      /* người dùng bấm nhiều lần — bỏ qua */
+    } else err.textContent = authErr(e);
+  });
 };
 
 /* Bắt kết quả redirect từ Google — PHẢI gọi sau khi persistence sẵn sàng (lần fire đầu của onAuthStateChanged).

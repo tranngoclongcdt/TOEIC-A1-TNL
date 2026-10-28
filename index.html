@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Từ Vựng TOEIC A1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Sans:wght@400;500&display=swap">
+<style>
+/* Layout: một cột giữa trang, thanh tiến độ trên cùng, 3 tab (Danh sách / Flashcard / Kiểm tra), lọc chủ đề bằng chip cuộn ngang. */
+:root {
+  --bg: #F1F4FA;
+  --surface: #FFFFFF;
+  --ink: #152038;
+  --muted: #5A6680;
+  --line: #DCE2EE;
+  --accent: #2D59E8;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E2E9FD;
+  --hl-bg: #FFE75E;
+  --hl-fg: #3A3000;
+  --good: #14895C;
+  --good-soft: #DDF3E9;
+  --bad: #C73B3B;
+  --bad-soft: #FBE3E3;
+  --shadow: 0 1px 2px rgba(21,32,56,.06), 0 4px 14px rgba(21,32,56,.05);
+  --f-display: "Baloo 2", "Be Vietnam Pro", system-ui, sans-serif;
+  --f-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-ipa: "Noto Sans", "Segoe UI", "Lucida Sans Unicode", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1324; --surface: #151D33; --ink: #E7ECF7; --muted: #9AA6C0; --line: #26304B;
+    --accent: #7C9CFF; --accent-ink: #0D1324; --accent-soft: #1F2A52;
+    --hl-bg: #4A4010; --hl-fg: #FFE75E;
+    --good: #4FD39B; --good-soft: #12372B; --bad: #FF8A8A; --bad-soft: #43202A;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1324; --surface: #151D33; --ink: #E7ECF7; --muted: #9AA6C0; --line: #26304B;
+  --accent: #7C9CFF; --accent-ink: #0D1324; --accent-soft: #1F2A52;
+  --hl-bg: #4A4010; --hl-fg: #FFE75E;
+  --good: #4FD39B; --good-soft: #12372B; --bad: #FF8A8A; --bad-soft: #43202A;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 16px/1.55 var(--f-body);
+  padding-block: 20px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+
+/* Header */
+.head { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: flex-end; justify-content: space-between; }
+.head h1 { font: 800 clamp(30px, 6vw, 44px)/1.05 var(--f-display); margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+.head h1 mark { background: var(--hl-bg); color: var(--hl-fg); padding: 0 .22em; border-radius: 6px; }
+.head p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+.tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.seg { display: inline-flex; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.seg button { border: 0; background: transparent; padding: 5px 14px; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+.progress { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; box-shadow: var(--shadow); }
+.progress .row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+.progress b { color: var(--ink); font-family: var(--f-display); font-size: 20px; font-variant-numeric: tabular-nums; }
+.bar { height: 10px; background: var(--accent-soft); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); border-radius: 99px; transition: width .35s ease; }
+
+/* Tabs + chips */
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: var(--surface); border: 1px solid var(--line); padding: 5px; border-radius: 14px; }
+.tabs button { border: 0; background: transparent; padding: 10px 6px; border-radius: 10px; font: 700 16px var(--f-display); color: var(--muted); }
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+.chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 8px; scrollbar-width: thin; }
+.chip { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surface); padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; white-space: nowrap; }
+.chip small { color: var(--muted); margin-left: 4px; font-variant-numeric: tabular-nums; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip[aria-pressed="true"] small { color: inherit; opacity: .7; }
+
+/* Toolbar */
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; }
+.toolbar input, .toolbar select, .fopts select {
+  font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 10px; padding: 9px 12px; min-width: 0;
+}
+.toolbar input { flex: 1 1 220px; }
+.count { color: var(--muted); font-size: 14px; align-self: center; }
+
+/* Word cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); min-width: 0; }
+.card.known { border-color: var(--good); }
+.card .top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.word { font: 800 28px/1.1 var(--f-display); margin: 0; overflow-wrap: anywhere; }
+.meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.ipa { font-family: var(--f-ipa); background: var(--hl-bg); color: var(--hl-fg); padding: 1px 9px; border-radius: 6px; font-size: 15px; }
+.pos { font-size: 12px; font-weight: 600; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 0 7px; }
+.vi { font-size: 19px; font-weight: 600; margin: 0; color: var(--accent); }
+.ex { margin: 0; font-size: 14.5px; color: var(--ink); display: grid; gap: 2px; padding-left: 12px; border-left: 3px solid var(--line); }
+.ex em { color: var(--muted); font-style: normal; }
+.btns { display: flex; gap: 6px; flex: 0 0 auto; }
+.ico { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--line); background: var(--accent-soft); color: var(--accent); border-radius: 12px; min-width: 42px; height: 42px; padding: 0 10px; font-weight: 600; font-size: 13px; }
+.ico:hover { border-color: var(--accent); }
+.ico.playing { background: var(--accent); color: var(--accent-ink); }
+.ico svg { width: 20px; height: 20px; fill: currentColor; }
+.ico.sm { min-width: 34px; height: 34px; border-radius: 10px; }
+.ico.sm svg { width: 16px; height: 16px; }
+.card .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 4px; }
+.know { border: 1px solid var(--line); background: transparent; padding: 7px 14px; border-radius: 999px; font-weight: 600; font-size: 14px; }
+.know[aria-pressed="true"] { background: var(--good-soft); border-color: var(--good); color: var(--good); }
+.empty { padding: 40px 16px; text-align: center; color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-radius: 16px; }
+
+/* Flashcards */
+.fwrap { display: grid; gap: 14px; justify-items: center; }
+.fopts { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; font-size: 14px; color: var(--muted); }
+.fopts label { display: inline-flex; align-items: center; gap: 6px; }
+.fcount { font: 700 15px var(--f-display); color: var(--muted); font-variant-numeric: tabular-nums; }
+.scene { width: min(560px, 100%); height: 340px; perspective: 1200px; }
+.fc { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .5s cubic-bezier(.3,.7,.2,1); cursor: pointer; }
+.fc.flip { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 20px; text-align: center; }
+.face.back { transform: rotateY(180deg); }
+.face .big { font: 800 clamp(40px, 11vw, 64px)/1 var(--f-display); overflow-wrap: anywhere; }
+.face .ipa { font-size: 20px; padding: 2px 12px; }
+.face .vi { font-size: clamp(26px, 6vw, 34px); font-family: var(--f-display); font-weight: 700; }
+.face .hint { font-size: 13px; color: var(--muted); }
+.face .ex { text-align: left; max-width: 420px; }
+.fbtns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 11px 20px; border-radius: 12px; font-weight: 600; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.good { background: var(--good-soft); color: var(--good); border-color: var(--good); }
+.btn.bad { background: var(--bad-soft); color: var(--bad); border-color: var(--bad); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Quiz */
+.quiz { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: clamp(16px, 4vw, 28px); box-shadow: var(--shadow); display: grid; gap: 18px; max-width: 640px; width: 100%; margin: 0 auto; }
+.quiz h2 { font: 800 26px/1.1 var(--f-display); margin: 0; }
+.quiz .opts { display: grid; gap: 10px; }
+.opt { text-align: left; border: 2px solid var(--line); background: var(--bg); padding: 13px 16px; border-radius: 14px; font-size: 17px; font-weight: 500; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt.right { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+.opt .ipa { font-size: 13px; }
+.qtop { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+.qprompt { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.qprompt .word { font-size: 38px; }
+.feedback { font-weight: 600; min-height: 1.5em; }
+.score { font: 800 56px/1 var(--f-display); color: var(--accent); }
+.review { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.review li { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 10px 12px; border-radius: 10px; background: var(--bad-soft); }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 600; font-size: 14px; }
+.field select { font: inherit; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 14px; max-width: calc(100% - 32px); z-index: 20; }
+.note { font-size: 13px; color: var(--muted); text-align: center; }
+@media (prefers-reduced-motion: reduce) { .fc, .bar i { transition: none; } }
+@media (max-width: 480px) { .scene { height: 360px; } .word { font-size: 25px; } }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="head">
+    <div>
+      <h1>Từ vựng <mark>TOEIC A1</mark></h1>
+      <p>Học từ cơ bản kèm phiên âm IPA, giọng đọc, nghĩa tiếng Việt và câu ví dụ.</p>
+    </div>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Chọn giọng đọc">
+        <button type="button" data-act="accent" data-v="en-US" aria-pressed="true">Giọng Mỹ</button>
+        <button type="button" data-act="accent" data-v="en-GB" aria-pressed="false">Giọng Anh</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="progress" aria-label="Tiến độ">
+    <div class="row"><span>Đã thuộc <b id="pKnown">0</b> / <b id="pTotal">0</b> từ</span><span id="pPct"></span></div>
+    <div class="bar"><i id="pBar" style="width:0%"></i></div>
+  </section>
+
+  <nav class="tabs" role="tablist" aria-label="Chế độ học">
+    <button type="button" role="tab" data-act="tab" data-v="list" aria-selected="true">Danh sách</button>
+    <button type="button" role="tab" data-act="tab" data-v="flash" aria-selected="false">Flashcard</button>
+    <button type="button" role="tab" data-act="tab" data-v="quiz" aria-selected="false">Kiểm tra</button>
+  </nav>
+
+  <div class="chips" id="chips" role="group" aria-label="Chủ đề"></div>
+
+  <main id="view"></main>
+  <p class="note">Tiến độ "đã thuộc" được lưu ngay trong trình duyệt của bạn. Giọng đọc dùng giọng có sẵn trên thiết bị, nếu không nghe thấy hãy kiểm tra âm lượng.</p>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ===== Dữ liệu: từ | IPA | loại từ | nghĩa | ví dụ | dịch ví dụ ===== */
+var DATA = [
+{id:'office', name:'Văn phòng', raw:`
+office|ˈɔːfɪs|n|văn phòng|My office is on the second floor.|Văn phòng của tôi ở tầng hai.
+desk|desk|n|bàn làm việc|Please put the file on my desk.|Làm ơn đặt tập hồ sơ lên bàn của tôi.
+computer|kəmˈpjuːtər|n|máy tính|I use a computer every day.|Tôi dùng máy tính mỗi ngày.
+meeting|ˈmiːtɪŋ|n|cuộc họp|The meeting starts at nine.|Cuộc họp bắt đầu lúc chín giờ.
+manager|ˈmænɪdʒər|n|quản lý|The manager is in her office.|Quản lý đang ở trong văn phòng của cô ấy.
+email|ˈiːmeɪl|n|thư điện tử|I will send you an email.|Tôi sẽ gửi cho bạn một email.
+phone|foʊn|n|điện thoại|Your phone is ringing.|Điện thoại của bạn đang reo.
+paper|ˈpeɪpər|n|giấy|We need more paper.|Chúng ta cần thêm giấy.
+file|faɪl|n|tập tin, hồ sơ|Open the file, please.|Làm ơn mở tập tin ra.
+printer|ˈprɪntər|n|máy in|The printer is broken.|Máy in bị hỏng.
+report|rɪˈpɔːrt|n|báo cáo|I am writing a report.|Tôi đang viết một bản báo cáo.
+schedule|ˈskedʒuːl|n|lịch trình|Check the schedule for today.|Hãy xem lịch trình hôm nay.
+colleague|ˈkɑːliːɡ|n|đồng nghiệp|My colleague speaks English well.|Đồng nghiệp của tôi nói tiếng Anh giỏi.
+boss|bɔːs|n|sếp|My boss is very kind.|Sếp của tôi rất tốt bụng.
+copy|ˈkɑːpi|v|sao chép, photo|Please copy this document.|Làm ơn photo tài liệu này.
+document|ˈdɑːkjumənt|n|tài liệu|Sign the document here.|Hãy ký tài liệu ở đây.`},
+{id:'job', name:'Công việc & nghề nghiệp', raw:`
+job|dʒɑːb|n|công việc|He has a new job.|Anh ấy có một công việc mới.
+work|wɜːrk|v|làm việc|I work from Monday to Friday.|Tôi làm việc từ thứ Hai đến thứ Sáu.
+company|ˈkʌmpəni|n|công ty|She works for a big company.|Cô ấy làm cho một công ty lớn.
+employee|ɪmˈplɔɪiː|n|nhân viên|Every employee has a card.|Mỗi nhân viên đều có một thẻ.
+customer|ˈkʌstəmər|n|khách hàng|The customer is waiting outside.|Khách hàng đang đợi bên ngoài.
+teacher|ˈtiːtʃər|n|giáo viên|My teacher is from Canada.|Giáo viên của tôi đến từ Canada.
+doctor|ˈdɑːktər|n|bác sĩ|The doctor is very busy.|Bác sĩ rất bận.
+engineer|ˌendʒɪˈnɪr|n|kỹ sư|My brother is an engineer.|Anh trai tôi là kỹ sư.
+driver|ˈdraɪvər|n|tài xế|The driver is waiting.|Tài xế đang đợi.
+nurse|nɜːrs|n|y tá|The nurse is kind.|Cô y tá rất tốt bụng.
+student|ˈstuːdnt|n|sinh viên, học sinh|He is a university student.|Anh ấy là sinh viên đại học.
+salary|ˈsæləri|n|tiền lương|The salary is good.|Mức lương khá tốt.
+interview|ˈɪntərvjuː|n|buổi phỏng vấn|I have an interview today.|Hôm nay tôi có một buổi phỏng vấn.
+team|tiːm|n|đội, nhóm|Our team is small.|Nhóm của chúng tôi nhỏ.
+business|ˈbɪznəs|n|việc kinh doanh|He has his own business.|Anh ấy có việc kinh doanh riêng.
+apply|əˈplaɪ|v|nộp đơn, ứng tuyển|I want to apply for this job.|Tôi muốn ứng tuyển vào công việc này.`},
+{id:'shop', name:'Mua sắm', raw:`
+buy|baɪ|v|mua|I want to buy a new bag.|Tôi muốn mua một cái túi mới.
+sell|sel|v|bán|They sell fresh fruit.|Họ bán trái cây tươi.
+shop|ʃɑːp|n|cửa hàng|The shop opens at eight.|Cửa hàng mở cửa lúc tám giờ.
+price|praɪs|n|giá cả|What is the price?|Giá bao nhiêu vậy?
+money|ˈmʌni|n|tiền|I have no money today.|Hôm nay tôi không có tiền.
+cheap|tʃiːp|adj|rẻ|This shirt is cheap.|Cái áo này rẻ.
+expensive|ɪkˈspensɪv|adj|đắt|That phone is expensive.|Chiếc điện thoại đó đắt.
+pay|peɪ|v|trả tiền|I pay by card.|Tôi trả tiền bằng thẻ.
+cash|kæʃ|n|tiền mặt|Do you accept cash?|Bạn có nhận tiền mặt không?
+card|kɑːrd|n|thẻ|Here is my card.|Đây là thẻ của tôi.
+receipt|rɪˈsiːt|n|hóa đơn|Keep the receipt.|Hãy giữ lại hóa đơn.
+sale|seɪl|n|đợt giảm giá|There is a sale today.|Hôm nay có đợt giảm giá.
+size|saɪz|n|kích cỡ|What size do you wear?|Bạn mặc cỡ nào?
+color|ˈkʌlər|n|màu sắc|I like the blue color.|Tôi thích màu xanh dương.
+bag|bæɡ|n|túi xách|Her bag is red.|Túi xách của cô ấy màu đỏ.
+free|friː|adj|miễn phí|The coffee is free.|Cà phê được miễn phí.`},
+{id:'travel', name:'Du lịch & di chuyển', raw:`
+travel|ˈtrævl|v|đi du lịch|I like to travel in summer.|Tôi thích đi du lịch vào mùa hè.
+trip|trɪp|n|chuyến đi|It was a short trip.|Đó là một chuyến đi ngắn.
+ticket|ˈtɪkɪt|n|vé|I need two tickets.|Tôi cần hai vé.
+airport|ˈerpɔːrt|n|sân bay|The airport is far from here.|Sân bay cách đây xa.
+flight|flaɪt|n|chuyến bay|My flight leaves at noon.|Chuyến bay của tôi khởi hành lúc trưa.
+hotel|hoʊˈtel|n|khách sạn|We stay at a hotel.|Chúng tôi ở khách sạn.
+train|treɪn|n|tàu hỏa|The train is late.|Tàu bị trễ.
+bus|bʌs|n|xe buýt|I take the bus to work.|Tôi đi xe buýt đi làm.
+taxi|ˈtæksi|n|xe taxi|Let's take a taxi.|Hãy đi taxi nhé.
+station|ˈsteɪʃn|n|nhà ga, trạm|The station is near here.|Nhà ga ở gần đây.
+map|mæp|n|bản đồ|Look at the map.|Hãy nhìn bản đồ.
+passport|ˈpæspɔːrt|n|hộ chiếu|Show your passport, please.|Làm ơn xuất trình hộ chiếu.
+luggage|ˈlʌɡɪdʒ|n|hành lý|My luggage is heavy.|Hành lý của tôi nặng.
+arrive|əˈraɪv|v|đến nơi|We arrive at six.|Chúng tôi đến nơi lúc sáu giờ.
+leave|liːv|v|rời đi|I leave home at seven.|Tôi rời nhà lúc bảy giờ.
+road|roʊd|n|con đường|This road is busy.|Con đường này đông xe.`},
+{id:'food', name:'Ăn uống', raw:`
+food|fuːd|n|thức ăn|The food is delicious.|Thức ăn rất ngon.
+water|ˈwɔːtər|n|nước|Can I have some water?|Cho tôi xin ít nước được không?
+coffee|ˈkɔːfi|n|cà phê|I drink coffee every morning.|Tôi uống cà phê mỗi sáng.
+tea|tiː|n|trà|She likes hot tea.|Cô ấy thích trà nóng.
+rice|raɪs|n|cơm, gạo|We eat rice every day.|Chúng tôi ăn cơm mỗi ngày.
+bread|bred|n|bánh mì|I buy bread at the market.|Tôi mua bánh mì ở chợ.
+meat|miːt|n|thịt|He does not eat meat.|Anh ấy không ăn thịt.
+fish|fɪʃ|n|cá|The fish is fresh.|Cá còn tươi.
+fruit|fruːt|n|trái cây|Fruit is good for you.|Trái cây tốt cho bạn.
+vegetable|ˈvedʒtəbl|n|rau củ|Eat more vegetables.|Hãy ăn nhiều rau củ hơn.
+breakfast|ˈbrekfəst|n|bữa sáng|I have breakfast at seven.|Tôi ăn sáng lúc bảy giờ.
+lunch|lʌntʃ|n|bữa trưa|Let's have lunch together.|Cùng ăn trưa nhé.
+dinner|ˈdɪnər|n|bữa tối|Dinner is ready.|Bữa tối đã sẵn sàng.
+restaurant|ˈrestrɑːnt|n|nhà hàng|This restaurant is popular.|Nhà hàng này nổi tiếng.
+menu|ˈmenjuː|n|thực đơn|May I see the menu?|Cho tôi xem thực đơn được không?
+order|ˈɔːrdər|v|gọi món, đặt hàng|I would like to order now.|Tôi muốn gọi món bây giờ.`},
+{id:'people', name:'Gia đình & con người', raw:`
+family|ˈfæməli|n|gia đình|I love my family.|Tôi yêu gia đình mình.
+father|ˈfɑːðər|n|bố, cha|My father is a driver.|Bố tôi là tài xế.
+mother|ˈmʌðər|n|mẹ|My mother cooks well.|Mẹ tôi nấu ăn ngon.
+brother|ˈbrʌðər|n|anh/em trai|I have one brother.|Tôi có một anh trai.
+sister|ˈsɪstər|n|chị/em gái|My sister is a nurse.|Chị gái tôi là y tá.
+son|sʌn|n|con trai|Their son is five.|Con trai họ năm tuổi.
+daughter|ˈdɔːtər|n|con gái|Her daughter is a student.|Con gái cô ấy là học sinh.
+friend|frend|n|bạn bè|He is my best friend.|Anh ấy là bạn thân nhất của tôi.
+man|mæn|n|người đàn ông|The man is a doctor.|Người đàn ông đó là bác sĩ.
+woman|ˈwʊmən|n|người phụ nữ|That woman is my teacher.|Người phụ nữ đó là giáo viên của tôi.
+child|tʃaɪld|n|đứa trẻ|The child is happy.|Đứa trẻ rất vui.
+baby|ˈbeɪbi|n|em bé|The baby is sleeping.|Em bé đang ngủ.
+husband|ˈhʌzbənd|n|chồng|Her husband works here.|Chồng cô ấy làm việc ở đây.
+wife|waɪf|n|vợ|His wife is a teacher.|Vợ anh ấy là giáo viên.
+people|ˈpiːpl|n|mọi người|Many people are here.|Nhiều người đang ở đây.
+neighbor|ˈneɪbər|n|hàng xóm|My neighbor is friendly.|Hàng xóm của tôi thân thiện.`},
+{id:'time', name:'Thời gian', raw:`
+time|taɪm|n|thời gian, giờ|What time is it?|Bây giờ là mấy giờ?
+day|deɪ|n|ngày|Have a nice day.|Chúc một ngày tốt lành.
+week|wiːk|n|tuần|I work five days a week.|Tôi làm việc năm ngày một tuần.
+month|mʌnθ|n|tháng|This month is busy.|Tháng này bận rộn.
+year|jɪr|n|năm|He is twenty years old.|Anh ấy hai mươi tuổi.
+today|təˈdeɪ|adv|hôm nay|Today is Monday.|Hôm nay là thứ Hai.
+tomorrow|təˈmɑːroʊ|adv|ngày mai|See you tomorrow.|Hẹn gặp bạn ngày mai.
+yesterday|ˈjestərdeɪ|adv|hôm qua|I called you yesterday.|Hôm qua tôi đã gọi cho bạn.
+morning|ˈmɔːrnɪŋ|n|buổi sáng|Good morning!|Chào buổi sáng!
+afternoon|ˌæftərˈnuːn|n|buổi chiều|The meeting is this afternoon.|Cuộc họp diễn ra chiều nay.
+evening|ˈiːvnɪŋ|n|buổi tối|I study in the evening.|Tôi học vào buổi tối.
+night|naɪt|n|đêm|Good night.|Chúc ngủ ngon.
+now|naʊ|adv|bây giờ|I am busy now.|Bây giờ tôi đang bận.
+always|ˈɔːlweɪz|adv|luôn luôn|She is always on time.|Cô ấy luôn đúng giờ.
+early|ˈɜːrli|adj|sớm|I get up early.|Tôi dậy sớm.
+late|leɪt|adj|muộn, trễ|Sorry, I am late.|Xin lỗi, tôi đến muộn.`},
+{id:'place', name:'Nơi chốn & nhà ở', raw:`
+home|hoʊm|n|nhà|I am at home.|Tôi đang ở nhà.
+house|haʊs|n|ngôi nhà|They have a big house.|Họ có một ngôi nhà lớn.
+room|ruːm|n|căn phòng|My room is small.|Phòng của tôi nhỏ.
+kitchen|ˈkɪtʃɪn|n|nhà bếp|She is in the kitchen.|Cô ấy đang ở trong bếp.
+bathroom|ˈbæθruːm|n|phòng tắm|Where is the bathroom?|Phòng tắm ở đâu?
+door|dɔːr|n|cửa ra vào|The door is open.|Cửa đang mở.
+window|ˈwɪndoʊ|n|cửa sổ|Close the window.|Hãy đóng cửa sổ lại.
+street|striːt|n|đường phố|The street is quiet.|Đường phố yên tĩnh.
+city|ˈsɪti|n|thành phố|I live in a big city.|Tôi sống ở một thành phố lớn.
+school|skuːl|n|trường học|The school is near my house.|Trường học gần nhà tôi.
+bank|bæŋk|n|ngân hàng|The bank closes at five.|Ngân hàng đóng cửa lúc năm giờ.
+hospital|ˈhɑːspɪtl|n|bệnh viện|The hospital is on this road.|Bệnh viện nằm trên con đường này.
+park|pɑːrk|n|công viên|We walk in the park.|Chúng tôi đi dạo trong công viên.
+library|ˈlaɪbreri|n|thư viện|I study in the library.|Tôi học ở thư viện.
+market|ˈmɑːrkɪt|n|chợ|The market is busy.|Chợ rất đông.
+building|ˈbɪldɪŋ|n|tòa nhà|Our office is in that building.|Văn phòng chúng tôi ở trong tòa nhà đó.`},
+{id:'verb', name:'Động từ cơ bản', raw:`
+go|ɡoʊ|v|đi|I go to work by bus.|Tôi đi làm bằng xe buýt.
+come|kʌm|v|đến|Please come here.|Làm ơn đến đây.
+eat|iːt|v|ăn|We eat lunch at noon.|Chúng tôi ăn trưa lúc 12 giờ.
+drink|drɪŋk|v|uống|I drink water every day.|Tôi uống nước mỗi ngày.
+sleep|sliːp|v|ngủ|I sleep eight hours.|Tôi ngủ tám tiếng.
+read|riːd|v|đọc|I read the news every morning.|Tôi đọc tin tức mỗi sáng.
+write|raɪt|v|viết|Write your name here.|Hãy viết tên bạn ở đây.
+listen|ˈlɪsn|v|nghe|Listen to the radio.|Hãy nghe đài.
+speak|spiːk|v|nói|Do you speak English?|Bạn có nói tiếng Anh không?
+see|siː|v|nhìn thấy|I see a bus.|Tôi thấy một chiếc xe buýt.
+know|noʊ|v|biết|I know the answer.|Tôi biết câu trả lời.
+want|wɑːnt|v|muốn|I want a cup of coffee.|Tôi muốn một tách cà phê.
+need|niːd|v|cần|We need a new printer.|Chúng tôi cần một chiếc máy in mới.
+like|laɪk|v|thích|I like this song.|Tôi thích bài hát này.
+help|help|v|giúp đỡ|Can you help me?|Bạn giúp tôi được không?
+open|ˈoʊpən|v|mở|Open the door, please.|Làm ơn mở cửa.
+close|kloʊz|v|đóng|Close the window, please.|Làm ơn đóng cửa sổ.
+start|stɑːrt|v|bắt đầu|The class starts at eight.|Lớp học bắt đầu lúc tám giờ.
+finish|ˈfɪnɪʃ|v|hoàn thành|I finish work at five.|Tôi tan làm lúc năm giờ.
+call|kɔːl|v|gọi điện|I will call you later.|Lát nữa tôi sẽ gọi cho bạn.`},
+{id:'adj', name:'Tính từ cơ bản', raw:`
+good|ɡʊd|adj|tốt, giỏi|This is a good idea.|Đây là một ý tưởng hay.
+bad|bæd|adj|xấu, tệ|The weather is bad.|Thời tiết xấu.
+big|bɪɡ|adj|to, lớn|It is a big room.|Đó là một căn phòng lớn.
+small|smɔːl|adj|nhỏ|I have a small bag.|Tôi có một chiếc túi nhỏ.
+new|nuː|adj|mới|I have a new phone.|Tôi có một chiếc điện thoại mới.
+old|oʊld|adj|cũ, già|This car is old.|Chiếc xe này cũ.
+hot|hɑːt|adj|nóng|The coffee is hot.|Cà phê nóng.
+cold|koʊld|adj|lạnh|It is cold today.|Hôm nay trời lạnh.
+easy|ˈiːzi|adj|dễ|The test is easy.|Bài kiểm tra dễ.
+difficult|ˈdɪfɪkəlt|adj|khó|English is not difficult.|Tiếng Anh không khó.
+busy|ˈbɪzi|adj|bận|I am busy today.|Hôm nay tôi bận.
+happy|ˈhæpi|adj|vui, hạnh phúc|They are happy.|Họ đang vui.
+tired|ˈtaɪərd|adj|mệt|I am tired.|Tôi mệt.
+fast|fæst|adj|nhanh|The train is fast.|Tàu chạy nhanh.
+slow|sloʊ|adj|chậm|The bus is slow.|Xe buýt chạy chậm.
+important|ɪmˈpɔːrtnt|adj|quan trọng|This meeting is important.|Cuộc họp này quan trọng.
+ready|ˈredi|adj|sẵn sàng|Are you ready?|Bạn sẵn sàng chưa?
+long|lɔːŋ|adj|dài|It is a long road.|Đó là một con đường dài.
+short|ʃɔːrt|adj|ngắn, thấp|The report is short.|Bản báo cáo ngắn.`},
+{id:'talk', name:'Giao tiếp & câu hỏi', raw:`
+what|wɑːt|pron|cái gì|What is your name?|Tên bạn là gì?
+where|wer|adv|ở đâu|Where is the station?|Nhà ga ở đâu?
+when|wen|adv|khi nào|When is the meeting?|Khi nào có cuộc họp?
+who|huː|pron|ai|Who is that man?|Người đàn ông đó là ai?
+why|waɪ|adv|tại sao|Why are you late?|Tại sao bạn đến muộn?
+how|haʊ|adv|như thế nào|How are you?|Bạn khỏe không?
+which|wɪtʃ|pron|cái nào|Which bag is yours?|Túi nào là của bạn?
+please|pliːz|adv|làm ơn|Sit down, please.|Mời bạn ngồi.
+thank you|θæŋk juː|phr|cảm ơn|Thank you for your help.|Cảm ơn sự giúp đỡ của bạn.
+sorry|ˈsɑːri|adj|xin lỗi|I am sorry.|Tôi xin lỗi.
+excuse me|ɪkˈskjuːs miː|phr|xin lỗi (để hỏi/nhờ)|Excuse me, where is the bank?|Xin lỗi, ngân hàng ở đâu ạ?
+hello|həˈloʊ|exc|xin chào|Hello, nice to meet you.|Xin chào, rất vui được gặp bạn.
+goodbye|ɡʊdˈbaɪ|exc|tạm biệt|Goodbye, see you soon.|Tạm biệt, hẹn sớm gặp lại.
+welcome|ˈwelkəm|exc|chào mừng|Welcome to our company.|Chào mừng đến với công ty chúng tôi.
+yes|jes|exc|vâng, có|Yes, I can.|Vâng, tôi làm được.
+no|noʊ|exc|không|No, thank you.|Không, cảm ơn.`}
+];
+
+var ALL = [];
+DATA.forEach(function (t) {
+  t.words = [];
+  t.raw.trim().split('\n').forEach(function (line) {
+    var p = line.split('|');
+    var w = { i: ALL.length, w: p[0], ipa: p[1], pos: p[2], vi: p[3], ex: p[4], exvi: p[5], topic: t.id };
+    ALL.push(w); t.words.push(w);
+  });
+});
+
+/* ===== Trạng thái ===== */
+var S = { tab: 'list', topic: 'all', q: '', status: 'all', accent: 'en-US', deck: [], di: 0, flip: false, auto: true, onlyNew: false, quiz: null, qmode: 'vi' };
+var KEY = 'toeic-a1-known-v1';
+var known = {};
+try { known = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { known = {}; }
+function saveKnown() { try { localStorage.setItem(KEY, JSON.stringify(known)); } catch (e) {} }
+
+var $ = function (s) { return document.querySelector(s); };
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function pool() { return S.topic === 'all' ? ALL : DATA.filter(function (t) { return t.id === S.topic; })[0].words; }
+function topicName() { return S.topic === 'all' ? 'Tất cả chủ đề' : DATA.filter(function (t) { return t.id === S.topic; })[0].name; }
+
+var SPK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 4V6L7 10H3zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+
+/* ===== Giọng đọc ===== */
+var voices = [];
+function loadVoices() { if ('speechSynthesis' in window) voices = speechSynthesis.getVoices() || []; }
+loadVoices();
+if ('speechSynthesis' in window) speechSynthesis.onvoiceschanged = loadVoices;
+function pickVoice() {
+  var want = S.accent.toLowerCase();
+  var list = voices.filter(function (v) { return v.lang.replace('_', '-').toLowerCase() === want; });
+  if (!list.length) list = voices.filter(function (v) { return v.lang.toLowerCase().indexOf(want.slice(0, 2)) === 0; });
+  var pref = list.filter(function (v) { return /google|natural|samantha|daniel|serena|aria|jenny/i.test(v.name); });
+  return (pref[0] || list[0]) || null;
+}
+var toastT;
+function toast(msg) { var el = $('#toast'); el.textContent = msg; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { el.hidden = true; }, 2600); }
+function speak(text, rate, btn) {
+  if (!('speechSynthesis' in window)) { toast('Trình duyệt này không hỗ trợ giọng đọc.'); return; }
+  try {
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = S.accent; u.rate = rate || 0.9;
+    var v = pickVoice(); if (v) u.voice = v;
+    if (btn) { btn.classList.add('playing'); u.onend = u.onerror = function () { btn.classList.remove('playing'); }; }
+    speechSynthesis.speak(u);
+  } catch (e) { toast('Không phát được âm thanh trên thiết bị này.'); }
+}
+
+/* ===== Tiến độ + chip ===== */
+function renderProgress() {
+  var k = ALL.filter(function (w) { return known[w.w]; }).length;
+  $('#pKnown').textContent = k; $('#pTotal').textContent = ALL.length;
+  var pct = Math.round(k / ALL.length * 100);
+  $('#pPct').textContent = pct + '% hoàn thành';
+  $('#pBar').style.width = pct + '%';
+}
+function renderChips() {
+  var h = '<button type="button" class="chip" data-act="topic" data-v="all" aria-pressed="' + (S.topic === 'all') + '">Tất cả<small>' + ALL.length + '</small></button>';
+  DATA.forEach(function (t) {
+    var k = t.words.filter(function (w) { return known[w.w]; }).length;
+    h += '<button type="button" class="chip" data-act="topic" data-v="' + t.id + '" aria-pressed="' + (S.topic === t.id) + '">' + esc(t.name) + '<small>' + k + '/' + t.words.length + '</small></button>';
+  });
+  $('#chips').innerHTML = h;
+}
+
+/* ===== Danh sách ===== */
+function listWords() {
+  var q = S.q.trim().toLowerCase();
+  return pool().filter(function (w) {
+    if (S.status === 'known' && !known[w.w]) return false;
+    if (S.status === 'new' && known[w.w]) return false;
+    if (!q) return true;
+    return w.w.toLowerCase().indexOf(q) > -1 || w.vi.toLowerCase().indexOf(q) > -1;
+  });
+}
+function cardHtml(w) {
+  return '<article class="card' + (known[w.w] ? ' known' : '') + '">' +
+    '<div class="top"><div><h3 class="word">' + esc(w.w) + '</h3><div class="meta"><span class="ipa">/' + esc(w.ipa) + '/</span><span class="pos">' + esc(w.pos) + '</span></div></div>' +
+    '<div class="btns"><button type="button" class="ico" data-act="say" data-i="' + w.i + '" aria-label="Nghe từ ' + esc(w.w) + '">' + SPK + '</button>' +
+    '<button type="button" class="ico" data-act="slow" data-i="' + w.i + '" aria-label="Nghe chậm từ ' + esc(w.w) + '">Chậm</button></div></div>' +
+    '<p class="vi">' + esc(w.vi) + '</p>' +
+    '<p class="ex"><span>' + esc(w.ex) + '</span><em>' + esc(w.exvi) + '</em></p>' +
+    '<div class="foot"><button type="button" class="ico sm" data-act="sayex" data-i="' + w.i + '" aria-label="Nghe câu ví dụ">' + SPK + '</button>' +
+    '<button type="button" class="know" data-act="know" data-i="' + w.i + '" aria-pressed="' + (!!known[w.w]) + '">' + (known[w.w] ? 'Đã thuộc' : 'Đánh dấu đã thuộc') + '</button></div></article>';
+}
+function renderList() {
+  var ws = listWords();
+  var h = '<div class="toolbar"><input id="q" type="search" placeholder="Tìm từ tiếng Anh hoặc nghĩa tiếng Việt" value="' + esc(S.q) + '" aria-label="Tìm từ">' +
+    '<select id="st" aria-label="Lọc trạng thái"><option value="all">Tất cả</option><option value="new">Chưa thuộc</option><option value="known">Đã thuộc</option></select>' +
+    '<span class="count">' + ws.length + ' từ · ' + esc(topicName()) + '</span></div>';
+  h += ws.length ? '<div class="grid" id="grid">' + ws.map(cardHtml).join('') + '</div>' : '<div class="empty">Không có từ nào khớp. Hãy đổi từ khóa hoặc bộ lọc.</div>';
+  $('#view').innerHTML = h;
+  $('#st').value = S.status;
+}
+function refreshGrid() {
+  var ws = listWords();
+  $('.count').textContent = ws.length + ' từ · ' + topicName();
+  var g = $('#grid');
+  var html = ws.length ? ws.map(cardHtml).join('') : '';
+  if (!ws.length) { renderList(); return; }
+  if (!g) { renderList(); return; }
+  g.innerHTML = html;
+}
+
+/* ===== Flashcard ===== */
+function buildDeck(keepShuffle) {
+  var p = pool().filter(function (w) { return !S.onlyNew || !known[w.w]; });
+  S.deck = keepShuffle ? shuffle(p) : p.slice();
+  S.di = 0; S.flip = false;
+}
+function renderFlash(say) {
+  var d = S.deck;
+  var opts = '<div class="fopts"><label><input type="checkbox" id="auto" ' + (S.auto ? 'checked' : '') + '> Tự đọc khi sang thẻ mới</label>' +
+    '<label><input type="checkbox" id="onlyNew" ' + (S.onlyNew ? 'checked' : '') + '> Chỉ từ chưa thuộc</label>' +
+    '<button type="button" class="btn" data-act="shuffle">Xáo trộn</button></div>';
+  if (!d.length) { $('#view').innerHTML = '<div class="fwrap">' + opts + '<div class="empty">Không còn từ nào để ôn trong chủ đề này. Bạn đã thuộc hết, hãy bỏ chọn "Chỉ từ chưa thuộc" để ôn lại.</div></div>'; return; }
+  var w = d[S.di];
+  var h = '<div class="fwrap">' + opts + '<div class="fcount">' + (S.di + 1) + ' / ' + d.length + ' · ' + esc(topicName()) + '</div>' +
+    '<div class="scene"><div class="fc' + (S.flip ? ' flip' : '') + '" id="fc" data-act="flip" role="button" tabindex="0" aria-label="Lật thẻ">' +
+    '<div class="face front"><div class="big">' + esc(w.w) + '</div><span class="ipa">/' + esc(w.ipa) + '/</span>' +
+    '<button type="button" class="ico" data-act="say" data-i="' + w.i + '" aria-label="Nghe">' + SPK + ' Nghe</button><span class="hint">Chạm vào thẻ để xem nghĩa</span></div>' +
+    '<div class="face back"><div class="vi">' + esc(w.vi) + '</div><span class="pos">' + esc(w.pos) + '</span>' +
+    '<p class="ex"><span>' + esc(w.ex) + '</span><em>' + esc(w.exvi) + '</em></p>' +
+    '<button type="button" class="ico sm" data-act="sayex" data-i="' + w.i + '" aria-label="Nghe câu ví dụ">' + SPK + '</button></div></div></div>' +
+    '<div class="fbtns"><button type="button" class="btn" data-act="prev" ' + (S.di === 0 ? 'disabled' : '') + '>Trước</button>' +
+    '<button type="button" class="btn bad" data-act="fnew" data-i="' + w.i + '">Chưa thuộc</button>' +
+    '<button type="button" class="btn good" data-act="fknow" data-i="' + w.i + '">Đã thuộc</button>' +
+    '<button type="button" class="btn primary" data-act="next" ' + (S.di === d.length - 1 ? 'disabled' : '') + '>Sau</button></div>' +
+    '<div class="note">Phím tắt: Space để lật, mũi tên trái/phải để chuyển thẻ.</div></div>';
+  $('#view').innerHTML = h;
+  if (say && S.auto) speak(w.w, 0.85);
+}
+function goCard(n) {
+  if (n < 0 || n >= S.deck.length) return;
+  S.di = n; S.flip = false; renderFlash(true);
+}
+
+/* ===== Kiểm tra ===== */
+function renderQuizSetup() {
+  var n = pool().length;
+  $('#view').innerHTML = '<div class="quiz"><h2>Kiểm tra nhanh</h2><p style="margin:0;color:var(--muted)">10 câu hỏi từ chủ đề: <b style="color:var(--ink)">' + esc(topicName()) + '</b>. Đổi chủ đề ở thanh phía trên.</p>' +
+    '<div class="field"><label for="qm">Kiểu câu hỏi</label><select id="qm"><option value="vi">Xem từ tiếng Anh, chọn nghĩa tiếng Việt</option><option value="listen">Nghe phát âm, chọn từ tiếng Anh</option></select></div>' +
+    '<button type="button" class="btn primary" data-act="qstart" ' + (n < 2 ? 'disabled' : '') + '>Bắt đầu</button></div>';
+  $('#qm').value = S.qmode;
+}
+function startQuiz() {
+  var items = shuffle(pool()).slice(0, 10);
+  S.quiz = { items: items, i: 0, score: 0, wrong: [], done: false, answered: false, opts: [] };
+  renderQuestion();
+}
+function makeOpts(w) {
+  var others = shuffle(ALL.filter(function (x) { return x.w !== w.w && x.vi !== w.vi && x.pos === w.pos; }));
+  if (others.length < 3) others = shuffle(ALL.filter(function (x) { return x.w !== w.w && x.vi !== w.vi; }));
+  return shuffle([w].concat(others.slice(0, 3)));
+}
+function renderQuestion() {
+  var q = S.quiz;
+  if (q.i >= q.items.length) { return renderResult(); }
+  var w = q.items[q.i]; q.answered = false; q.opts = makeOpts(w);
+  var prompt = S.qmode === 'vi'
+    ? '<div class="qprompt"><span class="word">' + esc(w.w) + '</span><span class="ipa">/' + esc(w.ipa) + '/</span><button type="button" class="ico" data-act="say" data-i="' + w.i + '" aria-label="Nghe">' + SPK + '</button></div><div>Nghĩa tiếng Việt của từ này là gì?</div>'
+    : '<div class="qprompt"><button type="button" class="ico" data-act="say" data-i="' + w.i + '" aria-label="Nghe lại">' + SPK + ' Nghe lại</button><button type="button" class="ico" data-act="slow" data-i="' + w.i + '">Chậm</button></div><div>Bạn nghe thấy từ nào?</div>';
+  var opts = q.opts.map(function (o, k) {
+    return '<button type="button" class="opt" data-act="ans" data-k="' + k + '"><span>' + (S.qmode === 'vi' ? esc(o.vi) : esc(o.w)) + '</span>' + (S.qmode === 'vi' ? '' : '<span class="ipa">/' + esc(o.ipa) + '/</span>') + '</button>';
+  }).join('');
+  $('#view').innerHTML = '<div class="quiz"><div class="qtop"><span>Câu ' + (q.i + 1) + ' / ' + q.items.length + '</span><span>Đúng: ' + q.score + '</span></div>' +
+    '<div class="bar"><i style="width:' + (q.i / q.items.length * 100) + '%"></i></div>' + prompt +
+    '<div class="opts">' + opts + '</div><div class="feedback" id="fb" aria-live="polite"></div><div id="qnext"></div></div>';
+  if (S.qmode === 'listen') speak(w.w, 0.85);
+}
+function answer(k) {
+  var q = S.quiz; if (q.answered) return; q.answered = true;
+  var w = q.items[q.i], pick = q.opts[k], ok = pick.w === w.w;
+  if (ok) q.score++; else q.wrong.push(w);
+  document.querySelectorAll('.opt').forEach(function (b, idx) {
+    b.disabled = true;
+    if (q.opts[idx].w === w.w) b.classList.add('right'); else if (idx === k) b.classList.add('wrong');
+  });
+  $('#fb').innerHTML = ok ? 'Chính xác!' : 'Đáp án đúng: <b>' + esc(w.w) + '</b> /' + esc(w.ipa) + '/ = ' + esc(w.vi);
+  $('#fb').style.color = ok ? 'var(--good)' : 'var(--bad)';
+  $('#qnext').innerHTML = '<button type="button" class="btn primary" data-act="qnext">' + (q.i === q.items.length - 1 ? 'Xem kết quả' : 'Câu tiếp theo') + '</button>';
+  if (S.qmode === 'vi') speak(w.w, 0.9);
+}
+function renderResult() {
+  var q = S.quiz, n = q.items.length;
+  var msg = q.score === n ? 'Tuyệt vời, bạn đúng hết!' : q.score >= n * 0.7 ? 'Khá tốt. Ôn lại vài từ sai là xong.' : 'Cần ôn thêm. Hãy xem lại các từ bên dưới.';
+  var rev = q.wrong.length ? '<h3 style="margin:0">Từ cần ôn lại</h3><ul class="review">' + q.wrong.map(function (w) {
+    return '<li><b>' + esc(w.w) + '</b><span class="ipa">/' + esc(w.ipa) + '/</span><span>' + esc(w.vi) + '</span><button type="button" class="ico sm" data-act="say" data-i="' + w.i + '" aria-label="Nghe">' + SPK + '</button></li>';
+  }).join('') + '</ul>' : '';
+  $('#view').innerHTML = '<div class="quiz"><h2>Kết quả</h2><div class="score">' + q.score + '/' + n + '</div><p style="margin:0">' + msg + '</p>' + rev +
+    '<div class="fbtns" style="justify-content:flex-start"><button type="button" class="btn primary" data-act="qstart">Làm lại</button><button type="button" class="btn" data-act="qreset">Đổi kiểu câu hỏi</button></div></div>';
+  q.wrong.forEach(function (w) { delete known[w.w]; });
+  saveKnown(); renderProgress(); renderChips();
+}
+
+/* ===== Điều khiển chung ===== */
+function render(say) {
+  renderProgress(); renderChips();
+  document.querySelectorAll('.tabs button').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.v === S.tab); });
+  if (S.tab === 'list') renderList();
+  else if (S.tab === 'flash') { if (!S.deck.length || say === 'rebuild') buildDeck(false); renderFlash(false); }
+  else { if (S.quiz && !S.quiz.done && say !== 'rebuild') renderQuestion(); else { S.quiz = null; renderQuizSetup(); } }
+}
+document.addEventListener('click', function (e) {
+  var el = e.target.closest('[data-act]'); if (!el) return;
+  var a = el.dataset.act, i = el.dataset.i, w = i != null ? ALL[+i] : null;
+  if (el.tagName === 'BUTTON' && el.closest('#fc') && a !== 'flip') e.stopPropagation();
+  switch (a) {
+    case 'accent': S.accent = el.dataset.v; document.querySelectorAll('[data-act="accent"]').forEach(function (b) { b.setAttribute('aria-pressed', b === el); }); if (!voices.length) loadVoices(); toast(S.accent === 'en-US' ? 'Đã chọn giọng Mỹ' : 'Đã chọn giọng Anh'); break;
+    case 'tab': S.tab = el.dataset.v; S.quiz = null; if (S.tab === 'flash') buildDeck(false); render(); break;
+    case 'topic': S.topic = el.dataset.v; S.quiz = null; buildDeck(false); render('rebuild'); break;
+    case 'say': speak(w.w, 0.9, el); break;
+    case 'slow': speak(w.w, 0.55, el); break;
+    case 'sayex': speak(w.ex, 0.85, el); break;
+    case 'know': known[w.w] = !known[w.w]; if (!known[w.w]) delete known[w.w]; saveKnown(); renderProgress(); renderChips(); if (S.status === 'all') { var card = el.closest('.card'); card.classList.toggle('known', !!known[w.w]); el.setAttribute('aria-pressed', !!known[w.w]); el.textContent = known[w.w] ? 'Đã thuộc' : 'Đánh dấu đã thuộc'; } else refreshGrid(); break;
+    case 'flip': S.flip = !S.flip; $('#fc').classList.toggle('flip', S.flip); break;
+    case 'prev': goCard(S.di - 1); break;
+    case 'next': goCard(S.di + 1); break;
+    case 'fknow': known[w.w] = true; saveKnown(); renderProgress(); renderChips(); if (S.di < S.deck.length - 1) goCard(S.di + 1); else toast('Đã hết bộ thẻ.'); break;
+    case 'fnew': delete known[w.w]; saveKnown(); renderProgress(); renderChips(); if (S.di < S.deck.length - 1) goCard(S.di + 1); else toast('Đã hết bộ thẻ.'); break;
+    case 'shuffle': buildDeck(true); renderFlash(true); break;
+    case 'qstart': S.qmode = ($('#qm') || { value: S.qmode }).value; startQuiz(); break;
+    case 'qreset': S.quiz = null; renderQuizSetup(); break;
+    case 'ans': answer(+el.dataset.k); break;
+    case 'qnext': S.quiz.i++; renderQuestion(); break;
+  }
+});
+document.addEventListener('input', function (e) {
+  if (e.target.id === 'q') { S.q = e.target.value; refreshGrid(); }
+});
+document.addEventListener('change', function (e) {
+  if (e.target.id === 'st') { S.status = e.target.value; refreshGrid(); }
+  if (e.target.id === 'auto') S.auto = e.target.checked;
+  if (e.target.id === 'onlyNew') { S.onlyNew = e.target.checked; buildDeck(false); renderFlash(false); }
+  if (e.target.id === 'qm') S.qmode = e.target.value;
+});
+document.addEventListener('keydown', function (e) {
+  if (S.tab !== 'flash') return;
+  var t = e.target.tagName; if (t === 'INPUT' || t === 'SELECT' || t === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight') goCard(S.di + 1);
+  else if (e.key === 'ArrowLeft') goCard(S.di - 1);
+  else if (e.key === ' ' && S.deck.length) { e.preventDefault(); S.flip = !S.flip; $('#fc').classList.toggle('flip', S.flip); }
+});
+render();
+</script>
+
+</body>
+</html>

@@ -392,6 +392,7 @@ function authErr(e) {
   if (c === 'auth/invalid-email' || c === 'auth/invalid-credential' || c === 'auth/invalid-email-address') return 'Email hoặc mật khẩu không đúng.';
   if (c === 'auth/user-not-found' || c.indexOf('wrong-password') > -1 || c.indexOf('invalid-credential') > -1) return 'Email hoặc mật khẩu không đúng.';
   if (c.indexOf('email-already-in-use') > -1) return 'Email này đã được đăng ký. Hãy bấm "Đã có tài khoản" để đăng nhập.';
+  if (c.indexOf('operation-not-allowed') > -1 || c.indexOf('admin-restricted') > -1) return 'Phương thức đăng nhập này chưa được bật. Vào Firebase Console → Authentication → Sign-in method và bật Email/Password (và Google).';
   if (c === 'auth/weak-password') return 'Mật khẩu quá yếu — cần tối thiểu 6 ký tự.';
   if (c === 'auth/too-many-requests') return 'Bạn thử quá nhiều lần. Hãy chờ một lát rồi thử lại.';
   if (c === 'auth/network-request-failed') return 'Lỗi mạng. Kiểm tra kết nối Internet của bạn.';

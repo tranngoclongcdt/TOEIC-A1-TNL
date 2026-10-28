@@ -77,8 +77,9 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px s
 .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: var(--surface); border: 1px solid var(--line); padding: 5px; border-radius: 14px; }
 .tabs button { border: 0; background: transparent; padding: 10px 6px; border-radius: 10px; font: 700 16px var(--f-display); color: var(--muted); }
 .tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
-.chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 8px; scrollbar-width: thin; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 2px; }
 .chip { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surface); padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; white-space: nowrap; }
+.chip.more { border-style: dashed; color: var(--accent); font-weight: 600; }
 .chip small { color: var(--muted); margin-left: 4px; font-variant-numeric: tabular-nums; }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .chip[aria-pressed="true"] small { color: inherit; opacity: .7; }
@@ -235,7 +236,40 @@ salary|ˈsæləri|n|tiền lương|The salary is good.|Mức lương khá tốt.
 interview|ˈɪntərvjuː|n|buổi phỏng vấn|I have an interview today.|Hôm nay tôi có một buổi phỏng vấn.
 team|tiːm|n|đội, nhóm|Our team is small.|Nhóm của chúng tôi nhỏ.
 business|ˈbɪznəs|n|việc kinh doanh|He has his own business.|Anh ấy có việc kinh doanh riêng.
-apply|əˈplaɪ|v|nộp đơn, ứng tuyển|I want to apply for this job.|Tôi muốn ứng tuyển vào công việc này.`},
+apply|əˈplaɪ|v|nộp đơn, ứng tuyển|I want to apply for this job.|Tôi muốn ứng tuyển vào công việc này.
+accountant|əˈkaʊnt̬ənt|n|kế toán||
+actor|ˈæktɚ|n|diễn viên (nam; nữ là actress)||
+artist|ˈɑːrt̬ɪst|n|nghệ sỹ||
+astronaut|ˈæstrənɑːt|n|phi hành gia||
+baker|ˈbeɪkɚ|n|thợ nướng bánh||
+bellboy|ˈbelbɔɪ|n|nhân viên hành lý||
+bishop|ˈbɪʃəp|n|giám mục||
+butcher|ˈbʊtʃɚ|n|người mổ thịt||
+cashier|kæʃˈɪr|n|nhân viên thu ngân||
+chef|ʃef|n|đầu bếp||
+customs officer|ˈkʌstəmz ˈɑːfɪsɚ|n|nhân viên hải quan||
+delivery man|dɪˈlɪvɚimæn|n|nhân viên giao hàng||
+entrepreneur|ˌɑːntrəprəˈnɝː|n|nhà kinh doanh||
+factory worker|ˈfæktɚi ˈwɝːkɚ|n|công nhân nhà máy||
+florist|ˈflɔːrɪst|n|người bán hoa||
+hairdresser|ˈherˌdresɚ|n|thợ cắt tóc||
+judge|dʒʌdʒ|n|thẩm phán||
+lawyer|ˈlɑːjɚ|n|luật sư||
+miner|ˈmaɪnɚ|n|thợ mỏ||
+musician|mjuːˈzɪʃən|n|nhạc sĩ, nhà soạn nhạc||
+optician|ɑːpˈtɪʃən|n|chuyên gia nhãn khoa||
+pharmacist|ˈfɑːrməsɪst|n|dược sĩ||
+plumber|ˈplʌmɚ|n|thợ ống nước||
+politician|ˌpɑːləˈtɪʃən|n|chính trị gia||
+programmer|ˈproʊɡræmɚ|n|lập trình viên||
+real estate agent|ˈriːəl ɪsteɪt ˌeɪdʒənt|n|người môi giới bất động sản||
+receptionist|rɪˈsepʃənɪst|n|nhân viên lễ tân, tiếp tân||
+speaker|ˈspiːkɚ|n|diễn giả||
+street vendor|striːt ˈvendɚ|n|người bán hàng trên đường, bán hàng rong||
+tailor|ˈteɪlɚ|n|thợ may||
+taxi driver|ˈtæksi ˌdraɪvɚ|n|tài xế xe taxi||
+veterinarian|ˌvetərɪˈneriən|n|bác sỹ thú y||
+writer|ˈraɪt̬ɚ|n|người viết sách||`},
 {id:'shop', name:'Mua sắm', raw:`
 buy|baɪ|v|mua|I want to buy a new bag.|Tôi muốn mua một cái túi mới.
 sell|sel|v|bán|They sell fresh fruit.|Họ bán trái cây tươi.
@@ -269,7 +303,20 @@ passport|ˈpæspɔːrt|n|hộ chiếu|Show your passport, please.|Làm ơn xuấ
 luggage|ˈlʌɡɪdʒ|n|hành lý|My luggage is heavy.|Hành lý của tôi nặng.
 arrive|əˈraɪv|v|đến nơi|We arrive at six.|Chúng tôi đến nơi lúc sáu giờ.
 leave|liːv|v|rời đi|I leave home at seven.|Tôi rời nhà lúc bảy giờ.
-road|roʊd|n|con đường|This road is busy.|Con đường này đông xe.`},
+road|roʊd|n|con đường|This road is busy.|Con đường này đông xe.
+check-in|tʃekɪn|n|đăng ký phòng ở khách sạn||
+cruise|kruːz|n|chuyến đi chơi trên biển||
+depart|dɪˈpɑːrt|v|khởi hành||
+destination|ˌdestəˈneɪʃən|n|điểm đến||
+expedition|ˌekspəˈdɪʃən|n|cuộc thám hiểm||
+journey|ˈdʒɝːni|n|hành trình||
+land|lænd|v|hạ cánh||
+passenger|ˈpæsəndʒɚ|n|hành khách||
+route|ruːt|n|lộ trình, hành trình||
+safari|səˈfɑːri|n|cuộc đi săn||
+tour|tʊr|n|chuyến đi du lịch||
+visit|ˈvɪzɪt|v|thăm viếng||
+voyage|ˈvɔɪɪdʒ|n|chuyến du lịch dài ngày||`},
 {id:'food', name:'Ăn uống', raw:`
 food|fuːd|n|thức ăn|The food is delicious.|Thức ăn rất ngon.
 water|ˈwɔːtər|n|nước|Can I have some water?|Cho tôi xin ít nước được không?
@@ -286,7 +333,41 @@ lunch|lʌntʃ|n|bữa trưa|Let's have lunch together.|Cùng ăn trưa nhé.
 dinner|ˈdɪnər|n|bữa tối|Dinner is ready.|Bữa tối đã sẵn sàng.
 restaurant|ˈrestrɑːnt|n|nhà hàng|This restaurant is popular.|Nhà hàng này nổi tiếng.
 menu|ˈmenjuː|n|thực đơn|May I see the menu?|Cho tôi xem thực đơn được không?
-order|ˈɔːrdər|v|gọi món, đặt hàng|I would like to order now.|Tôi muốn gọi món bây giờ.`},
+order|ˈɔːrdər|v|gọi món, đặt hàng|I would like to order now.|Tôi muốn gọi món bây giờ.
+bacon|ˈbeɪkən|n|thịt xông khói||
+bagel|ˈbeɪɡəl|n|bánh vòng||
+baguette|bæɡˈet|n|bánh mỳ dài||
+breadstick|ˈbredstɪk|n|bánh mỳ que||
+cheese|tʃiːz|n|phó mát||
+chicken nugget|ˈtʃɪkɪn ˈnʌɡɪt|n|gà viên chiên||
+croissant|kwɑːˈsɑ̃ː|n|bánh sừng bò||
+donut|ˈdoʊnʌt|n|bánh rán||
+egg|eɡ|n|trứng||
+fish and chips|ˌfɪʃ en ˈtʃɪps|n|cá tẩm bột chiên dùng với khoai tây chiên||
+French fries|ˈfrentʃ ˈfrɑɪz|n|khoai tây chiên||
+ham|hæm|n|thịt giăm bông muối||
+hamburger|ˈhæmˌbɝːɡɚ|n|lát thịt băm hình tròn (thường kẹp với bánh mỳ)||
+hot chocolate|ˌhɑːt ˈtʃɑːklət|n|sô cô la nóng||
+hot dog|ˈhɑːt ˌdɑːɡ|n|bánh mỳ kẹp xúc xích||
+ice cream|ˈaɪs ˌkriːm|n|kem||
+jelly roll|ˈdʒeli ˌroʊl|n|bánh cuộn (mứt, sô cô la...)||
+marmalade|ˈmɑːrməleɪd|n|mứt cam||
+milk|mɪlk|n|sữa||
+muffin|ˈmʌfɪn|n|bánh nướng xốp||
+onion ring|ˈʌnjən ˌrɪŋ|n|vòng hành||
+orange juice|ˈɔːrɪndʒ ˌdʒuːs|n|nước cam||
+pancake|ˈpænkeɪk|n|bánh kếp||
+pita|ˈpɪt̬ə|n|bánh mỳ ổ tròn dẹt||
+pizza|ˈpiːtsə|n|bánh pizza||
+porridge|ˈpɔːrɪdʒ|n|cháo đặc||
+pretzel|ˈpretsəl|n|bánh xoắn||
+salad|ˈsæləd|n|rau trộn, nộm rau||
+sandwich|ˈsænwɪtʃ|n|bánh mỳ kẹp||
+sausage|ˈsɑːsɪdʒ|n|xúc xích||
+taco|ˈtɑːkoʊ|n|bánh kẹp Mexico||
+toast|toʊst|n|bánh mỳ nướng||
+waffle|ˈwɑːfəl|n|bánh quế||
+yogurt|ˈjoʊɡɚt|n|sữa chua||`},
 {id:'people', name:'Gia đình & con người', raw:`
 family|ˈfæməli|n|gia đình|I love my family.|Tôi yêu gia đình mình.
 father|ˈfɑːðər|n|bố, cha|My father is a driver.|Bố tôi là tài xế.
@@ -303,7 +384,84 @@ baby|ˈbeɪbi|n|em bé|The baby is sleeping.|Em bé đang ngủ.
 husband|ˈhʌzbənd|n|chồng|Her husband works here.|Chồng cô ấy làm việc ở đây.
 wife|waɪf|n|vợ|His wife is a teacher.|Vợ anh ấy là giáo viên.
 people|ˈpiːpl|n|mọi người|Many people are here.|Nhiều người đang ở đây.
-neighbor|ˈneɪbər|n|hàng xóm|My neighbor is friendly.|Hàng xóm của tôi thân thiện.`},
+neighbor|ˈneɪbər|n|hàng xóm|My neighbor is friendly.|Hàng xóm của tôi thân thiện.
+ancestor|ˈænsestɚ|n|tổ tiên||
+aunt|ænt|n|cô, dì||
+bachelor|ˈbætʃəlɚ|n|trai tân, người chưa vợ||
+birth mother|ˈbɝːθ ˌmʌðɚ|n|mẹ đẻ||
+blood relative|ˌblʌd ˈrelətɪv|n|quan hệ máu mủ||
+bride|braɪd|n|cô dâu||
+bridegroom|ˈbraɪdɡruːm|n|chú rể||
+brother-in-law|ˈbrʌðɚɪnlɑː|n|anh (em) rể, anh (em) vợ||
+brotherhood|ˈbrʌðɚhʊd|n|tình anh em, huynh đệ||
+brotherly|ˈbrʌðɚli|adj, adv|thân thiết như anh em||
+care-giver|ˈkerˌɡɪvɚ|n|điều dưỡng viên||
+childhood|ˈtʃaɪldhʊd|n|tuổi thơ||
+children|ˈtʃɪldrən|n|những đứa con||
+clan|klæn|n|thị tộc, gia tộc||
+close-knit|ˌkloʊsˈnɪt|adj|gắn bó khăng khít||
+connection|kəˈnekʃən|n|mối quan hệ||
+cousin|ˈkʌzən|n|anh em họ||
+dad|dæd|n|bố||
+daughter-in-la w|ˈdɑːt̬ɚɪnlɑː|n|con dâu||
+descendant|dɪˈsendənt|n|con cháu, hậu duệ||
+divorce|dɪˈvɔːrs|n, v|li dị||
+eligible|ˈelədʒəbəl|adj|đủ tư cách||
+engaged|ɪnˈɡeɪdʒd|adj|đính ước, hứa hôn||
+engagement|ɪnˈɡeɪdʒmənt|n|sự hẹn ước, hứa hôn||
+estranged|ɪˈstreɪndʒd|adj|ly thân||
+ex-husband|ˌeksˈhʌzbənd|n|chồng cũ||
+ex-wife|ˌeksˈwaɪf|n|vợ cũ||
+extended family|ɪkˌstendɪd ˈfæməli|n|đại gia đình||
+family tree|ˌfæməli ˈtriː|n|cây phả hệ||
+father-in-law|ˈfɑːðɚɪnlɑː|n|bố vợ, bố chồng||
+fiancée|ˌfiːɑːnˈseɪ|n|hôn thê, vợ chưa cưới||
+first born|ˈfɝːstbɔːrn|adj, n|đầu lòng, con đầu lòng||
+first cousin|ˌfɝːst ˈkʌzən|n|anh, chị, em họ ruột||
+flesh and blood|ˈfleʃ ən ˈblʌd|n|người thân, gia đình máu mủ||
+folks|foʊks|n|người thân thuộc||
+foster|ˈfɑːstɚ|v|nuôi dưỡng, nuôi nấng||
+foster child|ˈfɑːstɚ tʃaɪld|n|con nuôi||
+foster father|ˈfɑːstɚ fɑːðɚ|n|cha nuôi||
+foster mother|ˈfɑːstɚˈmʌðɚ|n|mẹ nuôi||
+fraternal|frəˈtɝːnəl|adj|(thuộc) anh em||
+genealogy|ˌdʒiːniˈælədʒi|n|bảng phả hệ||
+grandchild|ˈɡræntʃaɪld|n|cháu||
+grandfather|ˈɡrænfɑːðɚ|n|ông nội (ngoại)||
+grandmother|ˈɡrænmʌðɚ|n|bà nội (ngoại)||
+grandparent|ˈɡrænperənt|n|ông (bà)||
+granny|ˈɡræni|n|bà nội (ngoại)||
+great-aunt|ˌɡreɪtˈænt|n|bà cô, bà bác||
+great-grandda ughter|ˌɡreɪtˈɡrændɑːt̬ ɚ|n|chắt gái||
+great-grandfat her|ˌɡreɪtˈɡrænfɑːð ɚ|n|ông cố, cụ ông||
+great-grandmo ther|ˌɡreɪtˈɡræmmʌð ər|n|bà cố, cụ bà||
+great-grandpar ent|ˌɡreɪtˈɡrænperə nt|n|ông (bà) cố||
+great-grandso n|ˌɡreɪtˈɡrænsʌn|n|chắt trai||
+great-uncle|ˌɡreɪtˈʌŋkəl|n|ông (bà) trẻ||
+groom|ɡruːm|n|chú rể||
+grown-up|ˌɡroʊnˈʌp|n, adj|người lớn, người trưởng thành; đã trưởng thành||
+half-brother|ˈhæfˌbrʌðɚ|n|anh (em) cùng cha khác mẹ, anh (em) cùng mẹ khác cha||
+half-sister|ˈhæfˌsɪstɚ|n|chị (em) cùng cha khác mẹ, chị (em) cùng mẹ khác cha||
+heir|er|n|người thừa kế (nam)||
+heiress|ˈeres|n|người thừa kế (nữ)||
+helpmate|ˈhelpmeɪt|n|bạn đời||
+hereditary|həˈredəteri|adj|di truyền||
+heritage|ˈherɪt̬ɪdʒ|n|tài sản thừa kế, di sản||
+history|ˈhɪst̬ɚi|n|lịch sử gia đình||
+household|ˈhaʊshoʊld|n|hộ gia đình||
+identical twin|aɪˌdent̬əkəl ˈtwɪn|n|sinh đôi giống hệt||
+in-law|ˈɪnlɑː|adj|bố (mẹ) chồng bố (mẹ) vợ||
+infancy|ˈɪnfənsi|n|tuổi bế ẵm, tuổi thơ bé||
+infant|ˈɪnfənt|n, adj|đứa bé sơ sinh||
+inherit|ɪnˈherɪt|v|thừa hưởng, thừa kế||
+inheritance|ɪnˈherɪtəns|n|sự thừa kế, của thừa kế||
+juvenile|ˈdʒuːvənəl|n, adj|người chưa đến tuổi trưởng thành, vị thành niên||
+kin|kɪn|n, adj|dòng họ, gia đình||
+kindred|ˈkɪndrəd|n, adj|họ hàng thân thích||
+kinfolk|ˈkɪnfoʊk|n|người thân, họ hàng||
+kinship|ˈkɪnʃɪp|n|tình thân||
+kith|ˌkɪθənˈkɪn|n|họ hàng gia đình||
+lineage|ˈlɪniɪdʒ|n|nòi giống, dòng dõi||`},
 {id:'time', name:'Thời gian', raw:`
 time|taɪm|n|thời gian, giờ|What time is it?|Bây giờ là mấy giờ?
 day|deɪ|n|ngày|Have a nice day.|Chúc một ngày tốt lành.
@@ -395,7 +553,830 @@ hello|həˈloʊ|exc|xin chào|Hello, nice to meet you.|Xin chào, rất vui đư
 goodbye|ɡʊdˈbaɪ|exc|tạm biệt|Goodbye, see you soon.|Tạm biệt, hẹn sớm gặp lại.
 welcome|ˈwelkəm|exc|chào mừng|Welcome to our company.|Chào mừng đến với công ty chúng tôi.
 yes|jes|exc|vâng, có|Yes, I can.|Vâng, tôi làm được.
-no|noʊ|exc|không|No, thank you.|Không, cảm ơn.`}
+no|noʊ|exc|không|No, thank you.|Không, cảm ơn.`},
+{id:'edu', name:'Giáo dục', raw:`
+assignment|əˈsaɪnmənt|n|bài tập tiểu luận||
+boarding school|ˈbɔːrdɪŋ ˌskuːl|n|trường nội trú||
+campus|ˈkæmpəs|n|khu trường học, địa điểm trường học||
+co-education|ˌkoʊedʒəˈkeɪʃən|n|nam nữ đồng giáo||
+concentrate|ˈkɑːnsəntreɪt|v|tập trung||
+coursework|ˈkɔːrswɝːk|n|đồ án môn học||
+curriculum|kəˈrɪkjələm|n|chương trình giảng dạy||
+distance learning|ˈdɪstəns ˌlɝːnɪŋ|n|việc học từ xa, học trực tuyến||
+eager beaver|ˌiːɡɚ ˈbiːvɚ|n|người chăm chỉ, tham việc||
+enroll|ɪnˈrəʊl|v|đăng ký||
+evaluation|ɪˌvæljuˈeɪʃən|n|sự đánh giá||
+fellowship|ˈfeloʊʃɪp|n|đội nhóm; học bổng nghiên cứu sinh||
+final (exam)|ˈfaɪnəl ɪɡˈzæm|n|bài thi cuối kỳ||
+graduate|ˈɡrædʒuət|v|tốt nghiệp, ra trường||
+higher education|ˌhaɪɚ edjʊˈkeɪʃən|n|giáo dục cấp đại học||
+illiterate|ɪˈlɪt̬ɚət|n|mù chữ, thất học||
+institution|ˌɪnstəˈtuːʃən|n|viện, cơ quan||
+internship|ˈɪntɝːnʃɪp|n|kỳ thực tập||
+kindergarten|ˈkɪndɚˌɡɑːrtən|n|lớp mẫu giáo, nhà trẻ||
+lecture|ˈlektʃɚ|n|bài giảng, bài diễn thuyết||
+literacy|ˈlɪt̬ɚəsi|n|khả năng biết đọc và viết||
+material|məˈtɪriəl|n|học liệu||
+physical education|ˌfɪzɪkəl edjʊˈkeɪ ʃən|n|giáo dục thể chất||
+plagiarize|ˈpleɪdʒəraɪz|v|đạo văn, sao chép||
+practice|ˈpræktɪs|n|bài luyện tập||
+premise|ˈpremɪs|n|giả thuyết, tiền đề||
+preschool|ˈpriːskuːl|n, adj|trường mầm non||
+primary school|ˈpraɪmɚi ˌskuːl|n|trường tiểu học, trường cấp 1||
+private school|ˌpraɪvət ˈskuːl|n|trường tư||
+qualification|ˌkwɑːləfəˈkeɪʃən|n|năng lực, trình độ chuyên môn||
+secondary school|ˈsekənderi ˌskuːl|n|trường trung học, trường cấp 2||
+syllabus|ˈsɪləbəs|n|giáo trình||
+teacher's pet|ˌtiːtʃɚz ˈpet|n|học sinh cưng của giáo viên||
+thesis|ˈθiːsɪs|n|luận văn, luận án||
+tuition|tuːˈɪʃən|n|hoạt động giảng dạy, hướng dẫn||
+undergraduate|ˌʌndɚˈɡrædʒuət|n|sinh viên chưa tốt nghiệp||
+vocational school|voʊˈkeɪʃənəl ˌskuːl|n|trường dạy nghề||`},
+{id:'schoolobj', name:'Đồ dùng học tập', raw:`
+backpack|ˈbækpæk|n|ba lô, cặp đeo sau lưng||
+ballpoint pen|ˌbɑːlpɔɪnt ˈpen|n|bút bi||
+beaker|ˈbiːkɚ|n|cốc đong trong phòng thí nghiệm||
+binder|ˈbaɪndɚ|n|bìa rời||
+blackboard|ˈblækbɔːrd|n|bảng đen||
+book|bʊk|n|quyển sách||
+calculator|ˈkælkjəleɪt̬ɚ|n|máy tính bỏ túi||
+chair|tʃer|n|ghế||
+clip|klɪp|n|kẹp ghim||
+clock|klɑːk|n|đồng hồ||
+compass|ˈkʌmpəs|n|la bàn||
+eraser|ɪˈreɪsɚ|n|tẩy, gôm||
+funnel|ˈfʌnəl|n|phễu||
+globe|ɡloʊb|n|quả địa cầu||
+glue|ɡluː|n|keo hồ||
+highlighter|ˈhaɪˌlaɪt̬ɚ|n|bút nhớ||
+magnifying glass|ˈmæɡnəfaɪɪŋ ˌɡlæs|n|kính lúp||
+paint brush|ˌbrɑːd ˈbrʌʃ|n|cọ tô màu||
+pin|pɪn|n|đinh ghim||
+protractor|prəˈtræktɚ|n|thước đo góc||
+scissors|ˈsɪzɚz|n|kéo||
+scotch tape|ˌskɑːtʃ ˈteɪp|n|băng keo||
+set square|ˈset ˌskwer|n|thước vuông, ê-ke||
+stapler|ˈsteɪplɚ|n|cái dập ghim||
+test tube|ˈtest ˌtuːb|n|ống thí nghiệm||`},
+{id:'house', name:'Nhà cửa', raw:`
+accommodati on|əˌkɑːməˈdeɪʃən|n|chỗ ở||
+armchair|ˈɑːrmtʃer|n|ghế bành, ghế có tựa tay||
+attic|ˈæt̬ɪk|n|tum, gác mái||
+balcony|ˈbælkəni|n|ban công||
+basement|ˈbeɪsmənt|n|tầng hầm, nền móng||
+bathtub|ˈbæθtʌb|n|bồn tắm||
+bedroom|ˈbedruːm|n|phòng ngủ||
+bleach|bliːtʃ|n|chất tẩy trắng||
+broom|bruːm|n|cái chổi||
+bucket|ˈbʌkɪt|n|xô||
+chimney|ˈtʃɪmni|n|ống khói||
+closet|ˈklɑːzət|n|phòng để đồ, phòng kho||
+cloth|klɑːθ|n|miếng vải, mảnh vải||
+cottage|ˈkɑːt̬ɪdʒ|n|nhà tranh||
+couch|kaʊtʃ|n|ghế dài, trường kỷ, đi văng||
+counter|ˈkaʊnt̬ɚ|n|kệ bếp||
+doorstep|ˈdɔːrstep|n|ngưỡng cửa, bậc cửa ra vào||
+doorway|ˈdɔːrweɪ|n|lối ra vào sát cửa||
+dustpan|ˈdʌstpæn|n|xẻng hốt rác||
+entrance|ˈentrəns|n|lối vào, cổng vào||
+garage|ɡəˈrɑːʒ|n|ga ra, hầm để xe||
+hose|hoʊz|n|ống cao su dài||
+iron|aɪrn|n|bàn là, máy ủi||
+ironing board|ˈaɪrnɪŋ ˌbɔːrd|n|bàn để là quần áo||
+kettle|ˈket̬əl|n|ấm đun nước||
+laundry basket|ˈlɑːndri ˌbæskɪt|n|giỏ đựng quần áo||
+laundry detergent|ˈlɑːndri dɪˌtɝːdʒənt|n|dung dịch tẩy quần áo||
+mop|mɑːp|n|chổi lau nhà||
+napkin|ˈnæpkɪn|n|khăn ăn||
+oven|ˈʌvən|n|lò nướng||
+pantry|ˈpæntri|n|phòng để thức ăn, phòng ăn||
+patio|ˈpæt̬ioʊ|n|hiên, sân hè||
+pillow|ˈpɪloʊ|n|gối||
+roof|ruːf|n|mái nhà||
+rubber gloves|ˈrʌbɚ ˌɡlʌv|n|găng tay cao su||
+rug|rʌɡ|n|thảm trải sàn||
+scrub brush|ˈskrʌbɪŋ ˌbrʌʃ|n|bàn chải cọ||
+shower|ˈʃaʊɚ|n|vòi hoa sen||
+sink|sɪŋk|n|bồn rửa, chậu rửa mặt||
+sponge|spʌndʒ|n|miếng bọt biển||
+squeegee mop|ˈskwiːdʒiː ˌmɑːp|n|chổi lau nhà dẹt||
+stove|stoʊv|n|bếp lò||
+toaster|ˈtoʊstɚ|n|máy nướng bánh mỳ||
+toilet|ˈtɔɪlət|n|bồn cầu||
+towel|taʊəl|n|khăn vải||
+trash can|ˈtræʃ ˌkæn|n|thùng rác||
+wardrobe|ˈwɔːrdroʊb|n|tủ quần áo||
+washing machine|ˈwɑːʃɪŋ məˌʃiːn|n|máy giặt||`},
+{id:'body', name:'Bộ phận cơ thể', raw:`
+ankle|ˈæŋkəl|n|mắt cá chân||
+arm|ɑːrm|n|cánh tay||
+armpit|ˈɑːrmpɪt|n|nách||
+beard|bɪrd|n|râu||
+breast|brest|n|ngực, vú (phụ nữ)||
+calf|kæf|n|bắp chân||
+cheek|tʃiːk|n|má||
+chest|tʃest|n|ngực (chung)||
+chin|tʃɪn|n|cằm||
+earlobe|ˈɪrloʊb|n|dái tai||
+elbow|ˈelboʊ|n|khuỷu tay||
+eyebrow|ˈaɪbraʊ|n|lông mày||
+eyelash|ˈaɪlæʃ|n|lông mi||
+eyelid|ˈaɪlɪd|n|mí mắt||
+face|feɪs|n|gương mặt||
+finger|ˈfɪŋɡɚ|n|ngón tay||
+forearm|ˈfɔːrɑːrm|n|cẳng tay||
+forehead|ˈfɑːrɪd|n|trán||
+gum|ɡʌm|n|nướu, lợi||
+heel|hiːl|n|gót chân||
+hip|hɪp|n|hông||
+index finger|ˈɪndeks ˌfɪŋɡɚ|n|ngón tay trỏ||
+jaw|dʒɑː|n|hàm, quai hàm||
+knee|niː|n|đầu gối||
+knuckle|ˈnʌkəl|n|khớp đốt ngón tay (đặc biệt là đoạn nối giữa ngón tay và bàn tay)||
+leg|leɡ|n|chân||
+lip|lɪp|n|môi||
+mouth|maʊθ|n|miệng||
+mustache|ˈmʌstæʃ|n|râu mép, ria||`},
+{id:'move', name:'Động tác cơ thể', raw:`
+bend|bend|v|cúi, uốn cong||
+break|breɪk|v|làm vỡ, bẻ gãy||
+carry|ˈkeri|v|mang, vác||
+cartwheel|ˈkɑːrtwiːl|v|nhào lộn||
+catch|kætʃ|v|bắt, đỡ||
+clap|klæp|v|vỗ tay||
+crawl|krɑːl|v|bò, trườn||
+cry|kraɪ|v|khóc lóc||
+dance|dæns|v|nhảy múa, khiêu vũ||
+dive|daɪv|v|nhảy lao xuống nước, lặn||
+drag|dræɡ|v|lôi, kéo||
+drop|drɑːp|v|làm rơi||
+hit|hɪt|v|đánh, va phải||
+hold|hoʊld|v|nắm, giữ||
+jog|dʒɑːɡ|v|chạy bộ||
+jump|dʒʌmp|v|nhảy, giật mình||
+kick|kɪk|v|đá||
+kiss|kɪs|v|hôn||
+kneel|niːl|v|quỳ gối||
+laugh|læf|v|cười lớn||
+lean|liːn|v|dựa, tựa||
+leap|liːp|v|nhảy vọt||
+lie down|laɪ daʊn|v|nằm xuống, ngả lưng||
+lift|lɪft|v|nâng lên||
+look|lʊk|v|nhìn, ngắm||
+march|mɑːrtʃ|v|diễu hành, hành quân||
+point|pɔɪnt|v|chỉ, trỏ||
+pour|pɔːr|v|đổ, rót||
+pull|pʊl|v|kéo||
+punch|pʌntʃ|v|đấm, thọi||
+push|pʊʃ|v|xô đẩy||
+put down|pʊt daʊn|v|đặt xuống||
+run|rʌn|v|chạy||
+sit|sɪt|v|ngồi||
+slip|slɪp|v|trượt, tuột||
+squat|skwɑːt|v|ngồi xổm||
+stand|stænd|v|đứng yên||
+stretch|stretʃ|v|vươn (vai..), ưỡn lưng||
+talk|tɑːk|v|nói chuyện, trò chuyện||
+throw|θroʊ|v|ném, quăng, vứt||
+tiptoe|ˈtɪptoʊ|v|đi nhón chân||
+walk|wɑːk|v|đi bộ||
+wave|weɪv|v|vẫy tay||`},
+{id:'clothes', name:'Quần áo & phụ kiện', raw:`
+bathrobe|ˈbæθroʊb|n|áo choàng tắm||
+belt|belt|n|thắt lưng||
+blazer|ˈbleɪzɚ|n|áo khoác dáng dài||
+boot|buːt|n|ủng, giày cao cổ||
+bow tie|ˌboʊ ˈtaɪ|n|nơ con bướm||
+cap|kæp|n|mũ lưỡi trai||
+cardigan|ˈkɑːrdɪɡən|n|áo đan len||
+cargo pants|ˈkɑːrɡoʊ ˌpænts|n|quần túi hộp||
+flip-flop|ˈflɪpflɑːp|n|dép tông, dép xỏ ngón||
+glasses|ˈɡlæsəz|n|kính mắt||
+gloves|ɡlʌv|n|găng tay, bao tay||
+handbag|ˈhændbæɡ|n|túi xách||
+Hawaiian shirt|həˌwaɪən ˈʃɝːt|n|áo sơ mi Hawaii||
+jacket|ˈdʒækɪt|n|áo vét||
+jeans|dʒiːnz|n|quần bò jeans||
+jumper|ˈdʒʌmpɚ|n|áo len chui đầu||
+polo shirt|ˈpoʊloʊ ˌʃɝːt|n|áo polo có cổ||
+pullover|ˈpʊlˌoʊvɚ|n|áo len chui đầu||
+scarf|skɑːrf|n|khăn choàng||
+shirt|ʃɝːt|n|áo sơ mi||
+shorts|ʃɔːrts|n|quần sóoc, quần đùi||
+singlet|ˈsɪŋɡlət|n|áo lót, áo may ô||
+socks|sɑːk|n|tất, vớ||
+suit|suːt|n|bộ com lê, Âu phục||
+sunglasses|ˈsʌnˌɡlæsɪz|n|kính râm, kính mát||
+sweater|ˈswet̬ɚ|n|áo len dài tay||
+swimsuit|ˈswɪmsuːt|n|đồ tắm, đồ bơi||
+t-shirt|ˈtiːʃɝːt|n|áo phông||
+tie|taɪ|n|cà vạt, nơ||
+trench coat|ˈtrentʃ ˌkoʊt|n|áo choàng||
+umbrella|ʌmˈbrelə|n|ô||
+underpants|ˈʌndɚpænts|n|đồ lót nam||
+vest|vest|n|áo gi-lê, áo vét||
+waistcoat|ˈweskət|n|áo gi-lê (áo chẽn)||
+wallet|ˈwɑːlɪt|n|ví, bóp||
+watch|wɑːtʃ|n|đồng hồ||`},
+{id:'color', name:'Màu sắc & hình dạng', raw:`
+yellow|ˈjeloʊ|n, adj|màu vàng||
+white|waɪt|n, adj|màu trắng||
+wheat|wiːt|n, adj|màu vàng đất||
+teal|tiːl|n, adj|màu xanh mòng két (xanh lam pha xanh lục đậm)||
+silver|ˈsɪlvɚ|n, adj|màu bạc||
+sanguine|ˈsæŋɡwɪn|n, adj|đỏ thẫm (như máu)||
+red|red|n, adj|màu đỏ||
+purple|ˈpɝːpəl|n, adj|màu tím||
+navy (blue)|ˈneɪvi ˈbluː|n, adj|màu xanh tím than||
+maroon|məˈruːn|n, adj|màu nâu sẫm, màu hạt dẻ||
+magenta|məˈdʒentə|n, adj|màu hồng sẫm||
+ivory|ˈaɪvɚi|n, adj|màu trắng ngà||
+indigo|ˈɪndɪɡoʊ|n, adj|màu chàm||
+green|ɡriːn|n, adj|xanh dương, xanh lá cây||
+gray|ɡreɪ|n, adj|màu xám||
+fuchsia|ˈfjuːʃə|n, adj|màu hồng hoa Vân Anh||
+cyan|ˈsaɪən|n, adj|màu xanh lơ||
+crimson|ˈkrɪmzən|n, adj|màu đỏ thẫm||
+coral|ˈkɔːrəl|n, adj|màu hồng san hô||
+charcoal|ˈtʃɑːrkoʊl|n, adj|màu than chì||
+burgundy|ˈbɝːɡəndi|n, adj|màu đỏ rượu, đỏ tía||
+brown|braʊn|n, adj|màu nâu||
+blue|bluː|n, adj|màu xanh lam, xanh nước biển||
+blond|blɑnd|n, adj|vàng hoe||
+black|blæk|n, adj|màu đen||
+beige|beɪʒ|n, adj|màu be||
+azure|ˈæʒɚ|n, adj|màu xanh da trời, xanh ngắt||
+aquamarine|ˌækwəməˈriːn|n, adj|màu xanh ngọc||
+arrow|ˈeroʊ|n|hình mũi tên||
+circle|ˈsɝːkəl|n|đường tròn||
+cone|koʊn|n|hình nón||
+crescent|ˈkresənt|n|hình lưỡi liềm||
+cross|krɑːs|n|hình chữ thập||
+cube|kjuːb|n|hình lập phương, hình khối||
+curve|wedʒ|n|đường cong||
+cylinder|ˈsɪlɪndɚ|n|hình trụ||
+decagon|ˈdekəɡɑːn|n|hình mười cạnh||
+diamond|ˈdaɪəmənd|n|hình kim cương||
+ellipse|iˈlɪps|n|hình Elip||
+equilateral triangle|ˌikwəˈlæt̬ərəl ˈtrɑɪˌæŋɡəl|n|tam giác đều||
+heart|hɑːrt|n|hình trái tim||
+heptagon|ˈheptəɡɑːn|n|hình bảy cạnh||
+hexagon|ˈheksəɡɑːn|n|hình lục giác (sáu cạnh)||
+isosceles triangle|aɪˌsɑːsəliːz ˈtraɪæŋ ɡəl|n|tam giác cân||
+nonagon|ˈɑːktəɡɑːn|n|hình cửu giác (chín cạnh)||
+octagon|ˈɑːktəɡɑːn|n|hình bát giác||
+orb|ɔːrb|n|hình cầu, quả cầu||
+oval|ˈoʊvəl|n|hình trái xoan, hình bầu dục||
+parallelogram|ˌperəˈleləɡræm|n|hình bình hành||
+pentagon|ˈpentəɡən|n|hình ngũ giác (năm cạnh)||
+pyramid|ˈpɪrəmɪd|n|hình chóp||
+rectangle|ˈrektæŋɡəl|n|hình chữ nhật||
+rhombus|ˈrɑːmbaɪ|n|hình thoi||
+right-angled triangle|ˌraɪtæŋɡəld ˈtraɪæŋ ɡəl|n|tam giác vuông||
+scalene triangle|ˌskeɪliːn ˈtraɪæŋɡəl|n|tam giác thường||
+semicircle|ˈsemiˌsɝːkəl|n|hình bán cầu||
+sphere|sfɪr|n|hình cầu, khối cầu||
+square|skwer|n|hình vuông||
+star|stɑːr|n|hình ngôi sao||
+trapezoid|ˈtræpɪzɔɪd|n|hình thang||
+triangle|ˈtraɪæŋɡəl|n|hình tam giác||
+wedge|wedʒ|n|hình chữ V||`},
+{id:'fruit', name:'Rau quả', raw:`
+apple|ˈæpəl|n|quả táo||
+apricot|ˈeɪprɪkɑːt|n|quả mơ||
+artichoke|ˈɑːrt̬ətʃoʊk|n|Atiso||
+asparagus|əˈsperəɡəs|n|măng tây||
+avocado|ˌɑːvəˈkɑːdoʊ|n|quả bơ||
+banana|bəˈnænə|n|quả chuối||
+bean|biːn|n|hạt đậu||
+beetroot|ˈbiːtruːt|n|củ cải đường, củ dền||
+blueberry|ˈbluːˌbəri|n|việt quất||
+broccoli|ˈbrɑːkəli|n|bông cải xanh||
+Brussels sprout|ˌbrʌsəlz ˈspraʊt|n|cải Brussel||
+cabbage|ˈkæbɪdʒ|n|bắp cải||
+carrot|ˈkerət|n|củ cà rốt||
+cauliflower|ˈkɑːləˌflaʊɚ|n|súp lơ||
+celery|ˈselɚi|n|cần tây||
+cherry|ˈtʃeri|n|quả anh đào||
+chili pepper|ˈtʃɪli ˌpepər|n|ớt đỏ||
+coconut|ˈkoʊkənʌt|n|quả dừa||
+corn|kɔːrn|n|ngô, bắp||
+courgette|kʊrˈʒet|n|bí ngòi (còn gọi là zucchini)||
+cucumber|ˈkjuːkʌmbɚ|n|dưa chuột||
+eggplant|ˈeɡplænt|n|cà tím, cà bung||
+garlic|ˈɡɑːrlɪk|n|tỏi||
+ginger|ˈdʒɪndʒɚ|n|gừng||
+grape|ɡreɪp|n|nho||
+grapefruit|ˈɡreɪpfruːt|n|bưởi chùm (lai giữa cam và bưởi)||
+jackfruit|ˈdʒækfruːt|n|quả mít||
+kiwi|ˈkiːwiː|n|quả kiwi (dương đào)||
+leek|liːk|n|tỏi tây||
+lemon|ˈlemən|n|chanh vàng||
+lettuce|ˈlet̬ɪs|n|ra diếp||
+lime|laɪm|n|chanh xanh||
+mandarin|ˈmændɚɪn|n|quả quýt||
+mango|ˈmæŋɡoʊ|n|quả xoài||
+melon|ˈmelən|n|quả dưa||
+mushroom|ˈmʌʃruːm|n|nấm||
+nectarine|ˌnektəˈriːn|n|quả xuân đào||
+onion|ˈʌnjən|n|củ hành||
+orange|ˈɔːrɪndʒ|n, adj|quả cam; màu cam||
+papaya|pəˈpaɪə|n|quả đu đủ||
+pea|piː|n|đậu Hà Lan||
+peach|piːtʃ|n|quả đào||
+pear|per|n|quả lê||
+pineapple|ˈpaɪnˌæpəl|n|quả dứa||
+plum|plʌm|n|quả mận||
+pomegranate|ˈpɑːməˌɡrænɪt|n|quả lưu||
+potato|pəˈteɪt̬oʊ|n|củ khoai tây||
+pumpkin|ˈpʌmpkɪn|n|bí ngô, bí đỏ||
+radish|ˈrædɪʃ|n|củ cải đỏ||
+raspberry|ˈræzberi|n|quả mâm xôi||
+spinach|ˈspɪnɪtʃ|n|rau bina||
+spring Onion|ˌsprɪŋ ˈʌnjən|n|hành lá xanh||
+squash|skwɑːʃ|n|cây bí, quả bí||
+starfruit|ˈstɑːrfruːt|n|quả khế||
+strawberry|ˈstrɑːˌberi|n|quả dâu tây||
+sweet potato|ˌswiːt pəˈteɪt̬oʊ|n|khoai lang||
+tomato|təˈmeɪt̬oʊ|n|quả cà chua||
+turnip|ˈtɝːnɪp|n|củ cải trắng||
+watermelon|ˈwɑːt̬ɚˌmelən|n|dưa hấu||`},
+{id:'cook', name:'Nấu nướng', raw:`
+bake|beɪk|v|nướng||
+barbecue|ˈbɑːrbəkjuː|v|nướng, quay thịt trên lò||
+baste|beɪst|v|phết||
+blanch|blæntʃ|v|chần thức ăn||
+blend|blend|v|trộn||
+boil|bɔɪl|v|đun sôi||
+braise|breɪz|v|om (thịt...)||
+brew|bruː|v|ủ (trà, rượu...)||
+caramelize|ˈkɑːrməlaɪz|v|thắng đường||
+char-broil|ˈtʃɑːrbrɔɪl|v|nấu thức ăn trên vỉ nướng||
+chill|tʃɪl|v|làm tan giá, rã đông||
+chop|tʃɑːp|v|chặt, bổ||
+chunk|tʃʌŋk|v, n|cắt khúc, khúc||
+churn|tʃɝːn|v, n|đánh, khuấy sữa||
+coddle|ˈkɑːdəl|v|tần, hầm||
+congeal|kənˈdʒiːl|v|làm đông, làm cô đặc lại||
+cool|kuːl|v|để nguội||
+deglaze|ˌdiːˈɡleɪz|v|làm nước xốt||
+descale|ˌdiːˈskeɪl|v|cạo cặn||
+dice|daɪs|v|thái hạt lựu||
+dip|dɪp|v|nhúng, ngâm||
+ferment|fɚˈment|v|lên men||
+fillet|ˈfɪlɪt|v|róc xương, lạng thịt||
+flambé|flɑːmˈbeɪ|v|đốt rượu||
+flavor|ˈfleɪvɚ|v|tẩm gia vị||
+fold|foʊld|v|quấy, trộn||
+garnish|ˈɡɑːrnɪʃ|v|trang trí, bày biện||
+knead|niːd|v|nhào bột||
+layer|ˈleɪɚ|v|xếp từng lớp||
+leaven|ˈlevən|v|làm men nở||
+marinate|ˈmerəneɪt|v|ướp thịt||
+mash|mæʃ|v|nghiền, làm nát||
+measure|ˈmeʒɚ|v|cân đếm||
+melt|melt|v|làm tan chảy||
+mince|mɪns|v|băm, xay||
+pinch|pɪntʃ|v|véo||
+precook|ˌpriːˈkʊk|v|nấu sơ qua||
+prepare|prɪˈper|v|sơ chế, chuẩn bị||
+press|pres|v|ấn, ép||
+pulp|pʌlp|v|nghiền nhão, nghiền nát||
+raw|rɑː|adj|sống||
+refrigerate|rɪˈfrɪdʒəreɪt|v|ướp lạnh||
+roast|roʊst|v|quay, nướng||
+roll|roʊl|v|cuộn||
+salt|sɑːlt|v|ướp gia vị, rắc muối||
+saute|sɔːˈteɪ|v|rán, áp chảo||
+scald|skɑːld|v|đun gần sôi||
+scramble|ˈskræmbəl|v|trưng (bác) trứng||
+shell|ʃel|v|bóc vỏ||
+shred|ʃred|v|xé nhỏ||
+shuck|ʃʌk|v|bóc vỏ, lột vỏ||
+sieve|sɪv|v|sàng, rây||
+sift|sɪft|v|sàng, rắc||
+simmer|ˈsɪmɚ|v|ninh nhỏ lửa||
+skewer|ˈskjuːɚ|v|xiên thịt||
+skim|skɪm|v|vớt bọt, vớt váng||
+slice|slaɪs|v|thái||
+souse|saʊs|v|ngâm, giầm||
+sprinkle|ˈsprɪŋkəl|v|rắc||
+steam|stiːm|v|hấp||
+steep|stiːp|v|ngâm vào nước||
+stew|stuː|v|hầm, ninh nhừ||
+stir|stɝː|v|xào, quấy||
+sweeten|ˈswiːtən|v|làm ngọt||
+wash|wɑːʃ|v|rửa||`},
+{id:'vehicle', name:'Phương tiện giao thông', raw:`
+aerial|ˈeriəl|adj|trên không||
+aerial tramway|ˈeriəl ˈtræmweɪ|n|cáp treo||
+airplane|ˈerpleɪn|n|máy bay||
+ambulance|ˈæmbjələns|n|xe cứu thương||
+automobile|ˈɑːt̬əmoʊbiːl|n|xe ô tô||
+baby carriage|ˈbeɪbi ˌkerɪdʒ|n|xe đẩy trẻ con||
+bicycle|ˈbaɪsəkəl|n|xe đạp||
+boat|boʊt|n|tàu thuyền||
+carriage|ˈkerɪdʒ|n|xe ngựa||
+cement mixer|sɪˈment ˌmɪksɚ|n|máy trộn xi măng||
+crane|kreɪn|n|cần cẩu, cần trục||
+dump truck|ˈdʌmp ˌtrʌk|n|xe tải tự đổ||
+emergency|ɪˈmɝːdʒənsi|n|thắng tay khẩn cấp||
+fire engine|ˈfaɪr ˌendʒɪn|n|xe cứu hỏa||
+forklift|ˈfɔrkˌlift|n|xe nâng||
+helicopter|ˈheləˌkɑːptɚ|n|trực thăng||
+motorcycle|ˈmoʊt̬ɚˌsaɪkəl|n|xe mô tô||
+mountain bike|ˈmaʊntən ˌbaɪk|n|xe đạp leo núi||
+police car|pəˈliːs ˌkɑːr|n|xe cảnh sát||
+propeller|prəˈpelɚ|n|chân vịt, máy đẩy||
+rearview mirror|ˌrɪrvju ˈmɪrɚ|n|gương chiếu hậu||
+rowboat|ˈroʊˌboʊt|n|thuyền có mái chèo||
+scooter|ˈskuːt̬ɚ|n|xe máy tay ga||
+seat belt|ˈsiːt ˌbelt|n|dây đai an toàn||
+skateboard|ˈskeɪtbɔːrd|n|ván trượt||
+streetcar|ˈstriːtkɑːr|n|xe điện||
+subway|ˈsʌbweɪ|n|đường ngầm||
+tractor|ˈtræktɚ|n|máy kéo||
+tramway|ˈtræmweɪ|n|đường tàu điện||
+van|væn|n|xe tải||
+vehicle|ˈviːəkəl|n|phương tiện giao thông||
+windscreen wiper|ˈwɪndskriːn ˌwaɪpɚ|n|cần gạt nước||`},
+{id:'animal', name:'Động vật', raw:`
+bald eagle|ˌbɑːld ˈiːɡəl|n|đại bàng trắng||
+bee|biː|n|con ong||
+blackbird|ˈblækbɝːd|n|chim két||
+cat|kæt|n|con mèo||
+chicken|ˈtʃɪkɪn|n|con gà||
+chimpanzee|ˌtʃɪmpænˈziː|n|con tinh tinh||
+cow|kaʊ|n|con bò||
+coyote|kaɪˈoʊt̬i|n|chó sói đồng cỏ||
+crab|kræb|n|con cua||
+crow|kroʊ|n|(một loại) quạ||
+deer|dɪr|n|con hươu, nai||
+dog|dɑːɡ|n|con chó||
+dove|dʌv|n|chim bồ câu||
+duck|dʌk|n|con vịt||
+elephant|ˈeləfənt|n|con voi||
+flamingo|fləˈmɪŋɡoʊ|n|chim hồng hạc||
+fox|fɑːks|n|con cáo||
+giraffe|dʒɪˈræf|n|hươu cao cổ||
+goat|ɡoʊt|n|con dê||
+goldfish|ˈɡoʊldfɪʃ|n|cá vàng||
+goose|ɡuːs|n|con ngỗng||
+hamster|ˈhæmstɚ|n|chuột đồng||
+hawk|hɑːk|n|chim diều hâu||
+hedgehog|ˈhedʒhɑːɡ|n|con nhím||
+hippopotamus|ˌhɪpəˈpɑːt̬əməs|n|hà mã||
+horse|hɔːrs|n|con ngựa||
+kangaroo|ˌkæŋɡəˈruː|n|chuột túi||
+kitten|ˈkɪt̬ən|n|mèo con||
+koala|koʊˈɑːlə|n|gấu túi||
+leopard|ˈlepɚd|n|con báo||
+lion|ˈlaɪən|n|sư tử||
+mole|moʊl|n|chuột chũi||
+monkey|ˈmʌŋki|n|con khỉ||
+mouse|maʊs|n|con chuột||
+ostrich|ˈɑːstrɪtʃ|n|đà điểu||
+otter|ˈɑːt̬ɚ|n|rái cá||
+owl|aʊl|n|con cú||
+ox|ɑːks|n|con bò đực||
+panda|ˈpændə|n|gấu trúc||
+parrot|ˈperət|n|con vẹt||
+peacock|ˈpiːkɑːk|n|con công||
+penguin|ˈpeŋɡwɪn|n|chim cánh cụt||
+pig|pɪɡ|n|con lợn, heo||
+pigeon|ˈpɪdʒən|n|chim bồ câu (lớn hơn)||
+puppy|ˈpʌpi|n|chó con||
+rabbit|ˈræbɪt|n|con thỏ||
+raven|ˈreɪvən|n|(một loại) quạ||
+robin|ˈrɑːbɪn|n|chim cổ đỏ||
+seagull|ˈsiːɡʌl|n|mòng biển, hải âu||
+sheep|ʃiːp|n|con cừu||
+shrimp|ʃrɪmp|n|con tôm||
+sparrow|ˈsperoʊ|n|chim sẻ||
+squirrel|ˈskwɝːəl|n|con sóc||
+stork|stɔːrk|n|con cò||
+swallow|ˈswɑːloʊ|n|chim nhạn, én||
+swan|swɑːn|n|thiên nga||
+turkey|ˈtɝːki|n|con gà tây||
+turtle|ˈtɝːt̬əl|n|con rùa||
+walrus|ˈwɑːlrəs|n|hải mã||
+woodpecker|ˈwʊdˌpekɚ|n|chim gõ kiến||`},
+{id:'nature', name:'Thiên nhiên', raw:`
+animal|ˈænɪməl|n|động vật, thú vật||
+Arctic|ˈɑːrktɪk|n, adj|vùng Bắc Cực; (thuộc) Bắc Cực||
+atmosphere|ˈætməsfɪr|n|khí quyển||
+beach|biːtʃ|n|bãi biển||
+breezy|ˈbriːzi|adj|gió thổi hiu mát||
+bush|bʊʃ|n|bụi cây, bụi rậm||
+cave|keɪv|n|hang động||
+cliff|klɪf|n|vách đá||
+coal|koʊl|n|than đá||
+creek|kriːk|n|lạch, nhánh sông, sông con||
+daisy|ˈdeɪzi|n|hoa cúc||
+deforestation|diːˌfɔːrəˈsteɪʃən|n|sự tàn phá rừng||
+desert|ˈdezɚt|n|sa mạc, hoang mạc||
+ecological|ˌiːkəˈlɑːdʒɪkəl|adj|(thuộc) sinh thái||
+environment|ɪnˈvaɪrənmənt|n|môi trường||
+eruption|ɪˈrʌpʃən|n|sự phun trào (núi lửa)||
+flood|flʌd|n|lũ lụt||
+flower|ˈflaʊɚ|n|hoa||
+fossil|ˈfɑːsəl|n, adj|chất liệu hóa thạch; hóa thạch, hóa đá||
+gloomy|ˈɡluːmi|adj|u ám, ảm đạm||
+graze|ɡreɪz|v|thả (súc vật) ăn cỏ||
+herd|hɝːd|n|bầy, đàn (vật nuôi)||
+highland|ˈhaɪlənd|n|cao nguyên||
+hurricane|ˈhɝːɪkeɪn|n|bão||
+insect|ˈɪnsekt|n|côn trùng, sâu bọ||
+livestock|ˈlaɪvstɑːk|n|vật nuôi, thú nuôi||
+meadow|ˈmedoʊ|n|đồng cỏ, bãi cỏ||
+misty|misty|adj|có sương mù||
+mountain|ˈmaʊntən|n|núi, dãy núi||
+mud|mʌd|n|bùn||
+overcast|ˈoʊvɚkæst|v, adj|mây phủ; tối sầm do mây phủ||
+peninsula|pəˈnɪnsələ|n|bán đảo||
+petal|ˈpet̬əl|n|cánh hoa||
+planet|ˈplænɪt|n|hành tinh||
+pollution|pəˈluːʃən|n|ô nhiễm||
+pond|pɑːnd|n|ao nước||
+river|ˈrɪvɚ|n|dòng sông||
+riverbank|ˈrɪvəˌbæŋk|n|bờ sông, bãi sông, vùng đất ven sông||
+root|ruːt|n|gốc, rễ cây||
+rubbish|ˈrʌbɪʃ|n|rác rưởi||
+savanna|səˈvænə|n|hoang mạc, thảo nguyên||
+scenery|ˈsiːnɚi|n|phong cảnh, cảnh vật||
+sea|siː|n|biển||
+season|ˈsiːzən|n|mùa trong năm||
+seed|siːd|n|hạt giống||
+slaughter|ˈslɑːt̬ɚ|n, v|sự giết mổ; giết mổ thịt||
+sleet|sliːt|n, v|mưa tuyết, mưa đá; trời mưa tuyết||
+slope|sloʊp|n|dốc||
+snowslide|ˈsnoʊslaɪd|n|tuyết lở||
+soil|sɔɪl|n|đất trồng, đất dai||
+solar|ˈsoʊlɚ|adj|(thuộc) mặt trời||
+sunshine|ˈsʌnʃaɪn|n|ánh sáng mặt trời, ánh nắng||
+sustainable|səˈsteɪnəbəl|adj|bền vững||
+temperature|ˈtempɚətʃɚ|n|nhiệt độ||
+tornado|tɔːrˈneɪdoʊ|n|lốc xoáy||
+tsunami|tsuːˈnɑːmi|n|sóng thần||
+valley|ˈvæli|n|thung lũng, châu thổ, lưu vực||
+vapor|ˈveɪpər|v|bốc hơi||
+vivid|ˈvɪvɪd|adj|sống động, mãnh liệt||
+volcano|vɑːlˈkeɪnoʊ|n|núi lửa||
+waterfall|ˈwɑːt̬ɚfɑːl|n|thác nước||
+wild|waɪld|n, adj|thiên nhiên hoang dại; hoang dại||
+wildlife|ˈwaɪldlaɪf|n|sinh vật hoang dã, thiên nhiên hoang dã||
+winter|ˈwɪnt̬ɚ|n|mùa đông||`},
+{id:'leisure', name:'Giải trí', raw:`
+activity|ækˈtɪvət̬i|n|hoạt động||
+art gallery|ˈɑːrt ˌɡælɚi|n|phòng trưng bày tranh, bảo tàng nghệ thuật||
+ballet|bælˈeɪ|n|ba lê, kịch múa||
+bar|bɑːr|n|quán rượu, quầy bán rượu||
+bowling|ˈboʊlɪŋ|n|trò chơi lăn bóng, bowling||
+cafè|kæfˈeɪ|n|quán cà phê||
+cheat|tʃiːt|n, v|trò lừa đảo; gian lận, lừa đảo||
+cinema|ˈsɪnəmə|n|rạp chiếu phim||
+circus|ˈsɝːkəs|n|rạp xiếc||
+concert|ˈkɑːnsɚt|n|buổi hòa nhạc||
+concert hall|ˈkɑːnsɚt ˌhɑːl|n|phòng hòa nhạc||
+cosplay|ˈkɑːzpleɪ|n|trò chơi hóa trang||
+dartboard|ˈdɑːrtbɔːrd|n|tấm bia trong trò chơi phi tiêu||
+exhibition|ˌeksəˈbɪʃən|n|buổi triển lãm, trưng bày||
+exhibition center|ˌeksəˈbɪʃən ˌsent̬ɚ|n|hội chợ thương mại, trung tâm triển lãm||
+film|fɪlm|n|phim, phim ảnh||
+handcraft|ˈhændkræft|n|nghề thủ công, hoạt động thủ công||
+leisure centre|ˈliːʒɚ ˌsent̬ɚ|n|khu vui chơi, trung tâm giải trí||
+monopoly|məˈnɑːpəli|n|trò chơi cờ tỷ phú||
+museum|mjuːˈziːəm|n|bảo tàng||
+nightclub|ˈnaɪtklʌb|n|hộp đêm||
+opera|ˈɑːpɚə|n|nhạc kịch||
+opera house|ˈɑːpɚə ˌhaʊs|n|nhà hát||
+play|pleɪ|n, v|sự vui đùa; vui chơi||
+pub|pʌb|n|nơi phục vụ đồ uống có cồn||
+puzzle|ˈpʌzəl|n|trò chơi xếp hình||
+quiz|kwɪz|n|trò chơi đố vui||
+soft play|ˌsɑːft ˈpleɪ|n|trò chơi nhẹ nhàng dành cho trẻ em||
+stadium|ˈsteɪdiəm|n|sân vận động||
+theater|ˈθiːət̬ɚ|n|nhà hát, rạp hát||
+zoo|zuː|n|sở thú||`},
+{id:'char', name:'Tính cách', raw:`
+active|ˈæktɪv|adj|năng nổ, lanh lợi||
+alert|əˈlɝːt|adj|tỉnh táo, cảnh giác||
+ambitious|æmˈbɪʃəs|adj|tham vọng||
+attentive|əˈtent̬ɪv|adj|chăm chú, chú tâm||
+bold|boʊld|adj|táo bạo, mạo hiểm||
+brave|breɪv|adj|dũng cảm, gan dạ||
+careful|ˈkerfəl|adj|cẩn thận, thận trọng||
+careless|ˈkerləs|adj|bất cẩn, cẩu thả||
+cautious|ˈkɑːʃəs|adj|thận trọng, cẩn thận||
+conscientious|ˌkɑːnʃiˈenʃəs|adj|chu đáo, tỉ mỉ||
+courageous|kəˈreɪdʒəs|adj|can đảm||
+crafty|ˈkræfti|adj|láu cá, xảo quyệt||
+cunning|ˈkʌnɪŋ|adj|xảo trá, khôn lỏi||
+deceitful|dɪˈsiːtfəl|adj|dối trá||
+decent|ˈdiːsənt|adj|lịch sự, tao nhã||
+dependable|dɪˈpendəbəl|adj|đáng tin cậy||
+determined|dɪˈtɝːmɪnd|adj|quyết tâm||
+devoted|dɪˈvoʊt̬ɪd|adj|hết lòng, tận tâm, tận tụy||
+diligent|ˈdɪlədʒənt|adj|siêng năng, cần cù||
+disciplined|ˈdɪsəplɪnd|adj|có tính kỷ luật||
+dishonest|dɪˈsɑːnɪst|adj|bất lương, dối trá||
+disloyal|ˌdɪsˈlɔɪəl|adj|phản trắc, phản bội||
+energetic|ˌenɚˈdʒet̬ɪk|adj|giàu năng lượng||
+fair|fer|adj|ngay thẳng||
+faithful|ˈfeɪθfəl|adj|trung thành, chung thủy||
+fearless|ˈfɪrləs|adj|bạo dạn||
+forgetful|fɚˈɡetfəl|adj|hay quên||
+hard-headed|ˌhɑːrdˈhedɪd|adj|cứng đầu, ương ngạnh||
+hardworking|ˈhɑrdˈwɜrkɪŋ|adj|chăm chỉ, chịu khó||
+hardy|ˈhɑːrdi|adj|táo bạo, gan dạ||
+honest|ˈɑːnɪst|adj|chân thật, trung thành||
+idle|ˈaɪdəl|adj|nhàn rỗi, lười nhác||
+immature|ˌɪməˈtʊr|adj|non nớt, thiếu chín chắn||
+impartial|ɪmˈpɑːrʃəl|adj|trung lập, ngay thẳng||
+inattentive|ˌɪnəˈtent̬ɪv|adj|lơ đễnh, thiếu tập trung||
+independent|ˌɪndɪˈpendənt|adj|tự lập||
+inert|ˌɪnˈɝːt|adj|trì trệ, chậm chạp||
+insightful|ˈɪnsaɪtfəl|adj|sâu sắc, sáng suốt||
+insincere|ˌɪnsɪnˈsɪr|adj|không thành thực, giả dối||
+irrational|ɪˈræʃənəl|adj|không hợp lý||
+irresponsible|ˌɪrəˈspɑːnsəbəl|adj|thiếu trách nhiệm||
+lazy|ˈleɪzi|adj|lười biếng||
+level-headed|ˌlevəlˈhedɪd|adj|bình tĩnh, điềm đạm||
+loyal|ˈlɔɪəl|adj|trung thành, trung kiên||
+mature|məˈtʊr|adj|trưởng thành, chững chạc||
+methodical|məˈθɑːdɪkəl|adj|ngăn nắp, cẩn thận||
+naive|naɪˈiːv|adj|ngây thơ||
+objective|əbˈdʒektɪv|adj|khách quan||
+observant|əbˈzɝːvənt|adj|tinh ý, hay quan sát||
+opinionated|əˈpɪnjəneɪt̬ɪd|adj|cứng đầu, ngoan cố||
+organized|ˈɔːrɡənaɪzd|adj|có trật tự, ngăn nắp||
+passive|ˈpæsɪv|adj|nhiệt huyết||
+perceptive|pɚˈseptɪv|adj|mẫn cảm, sâu sắc||
+persevering|ˌpɝːsəˈvɪrɪŋ|adj|kiên nhẫn, bền bỉ||
+practical|ˈpræktɪkəl|adj|thực tế, thực tiễn||
+prudent|ˈpruːdənt|adj|thận trọng, khôn ngoan||
+quick|kwɪk|adj|nhanh nhẹn||
+rational|ˈræʃənəl|adj|có lý trí||
+reasonable|ˈriːzənəbəl|adj|biết điều||
+reckless|ˈrekləs|adj|liều lĩnh, táo bạo||
+reliable|rɪˈlaɪəbəl|adj|đáng tin tưởng||
+resolute|ˈrezəluːt|adj|cương quyết||
+responsible|rɪˈspɑːnsəbəl|adj|có trách nhiệm||
+scrupulous|ˈskruːpjələs|adj|kĩ lưỡng, tỉ mỉ, thận trọng||
+sensible|ˈsensəbəl|adj|khôn ngoan, có óc phán xét||
+shallow|ˈʃæloʊ|adj|nông cạn||
+shrewd|ʃruːd|adj|khôn ngoan||
+sincere|sɪnˈsɪr|adj|chân thành||
+sluggish|ˈslʌɡɪʃ|adj|uể oải, lờ đờ||
+sly|slaɪ|adj|ranh mãnh, quỷ quyệt||
+strong|strɑːŋ|adj|mạnh mẽ, đanh thép||
+strong-minded|ˌstrɑːŋˈmaɪndɪd|adj|cứng cỏi, kiên quyết||
+strong-willed|ˌstrɑːŋˈwɪld|adj|cứng cỏi||
+stubborn|ˈstʌbɚn|adj|bướng bỉnh, ngang ngạnh||
+superficial|ˌsuːpɚˈfɪʃəl|adj|hời hợt, nông cạn||
+superstitious|ˌsuːpɚˈstɪʃəs|adj|mê tín||
+thorough|ˈθɝːə|adj|kỹ lưỡng, thấu đáo||
+timid|ˈtɪmɪd|adj|rụt rè, bẽn lẽn||
+tough|tʌf|adj|cứng rắn||
+treacherous|ˈtretʃɚəs|adj|bội bạc||
+trustworthy|ˈtrʌstˌwɝːði|adj|đáng tin||
+truthful|ˈtruːθfəl|adj|thật thà, chân thật||
+unbiased|ʌnˈbaɪəst|adj|không thiên vị||
+unpredictable|ˌʌnprɪˈdɪktəbəl|adj|khó đoán, khôn lường||
+unreasonable|ʌnˈriːzənəbəl|adj|vô lý, quá đáng||
+unreliable|ˌʌnrɪˈlaɪəbəl|adj|không đáng tin||
+unscrupulous|ʌnˈskruːpjələs|adj|cẩu thả||
+vigorous|ˈvɪɡɚəs|adj|mạnh mẽ, sôi nổi||
+weak|wiːk|adj|yếu đuối||`},
+{id:'emo', name:'Cảm xúc', raw:`
+accepting|əkˈseptɪŋ|adj|chấp nhận||
+admiration|ˌædməˈreɪʃən|n|sự ngưỡng mộ||
+adoring|əˈdɔːrɪŋ|adj|tha thiết, trìu mến||
+annoyed|əˈnɔɪd|adj|khó chịu, bực bội, bị làm phiền||
+antsy|ˈæntsi|adj|căng thẳng, sốt ruột||
+anxious|ˈæŋkʃəs|adj|lo âu, bồn chồn||
+apologetic|əˌpɑːləˈdʒet̬ɪk|adj|hối lỗi, biện hộ||
+appalled|əˈpɑːld|adj|kinh hãi, sợ sệt||
+astonished|əˈstɑːnɪʃt|adj|kinh ngạc||
+awed|ɑːd|adj|thán phục, nể sợ||
+bashful|ˈbæʃfəl|adj|rụt rè, bẽn lẽn||
+bemused|bɪˈmjuːzd|adj|sửng sốt, kinh ngạc||
+bored|bɔːrd|adj|buồn chán, tẻ nhạt||
+bothered|ˈbɑːðɚd|adj|bực mình, khó chịu||
+brooding|ˈbruːdɪŋ|adj|ủ ê, não nề||
+calm|kɑːm|adj|bình tĩnh||
+captivated|ˈkæptɪveɪtɪd|adj|bị hớp hồn, choáng ngợp||
+carefree|ˈkerfriː|adj|vô tư lự||
+certain|ˈsɝːtən|adj|quả quyết, chắc chắn||
+clueless|ˈkluːləs|adj|ngây người||
+cranky|ˈkræŋki|adj|kỳ quặc||
+delighted|dɪˈlaɪt̬ɪd|adj|vui mừng, mừng rỡ||
+delirious|dɪˈlɪriəs|adj|cuồng nhiệt, điên cuồng||
+derisive|dɪˈraɪsɪv|adj|nhạo báng, giễu cợt||
+desperate|ˈdespɚət|adj|tuyệt vọng, chán trường||
+disturbed|dɪˈstɝːbd|adj|bối rối, lúng túng||
+dopey|ˈdoʊpi|adj|mơ màng, uể oải||
+doubtful|ˈdaʊtfəl|adj|nghi hoặc, hoài nghi||
+down|daʊn|adj|nản lòng, chán nản||
+drained|dreɪnd|adj|kiệt sức||
+edgy|ˈedʒi|adj|cáu kỉnh||
+elated|iˈleɪt̬ɪd|adj|phẩn khởi, hân hoan||
+embarrassed|ɪmˈberəst|adj|xấu hổ, ngại ngùng||
+empathetic|ˌempəˈθet̬ɪk|adj|đồng cảm, xót xa||
+engrossed|ɪnˈɡroʊst|adj|bị mê hoặc||
+enlightened|ɪnˈlaɪt̬ənd|adj|được làm sáng tỏ, được thông suốt||
+envious|ˈenviəs|adj|ghen tị, độ kỵ||
+excited|ɪkˈsaɪt̬ɪd|adj|hưng phấn, sôi nổi||
+excluded|ɪkˈskluːd|adj|bị bỏ rơi, cảm giác lạc lõng||
+exhausted|ɪɡˈzɑːstɪd|adj|mệt lử||
+flabbergasted|ˈflæbɚɡæstɪd|adj|sửng sốt, thất kinh||
+foolish|ˈfuːlɪʃ|adj|dại dột||
+frazzled|ˈfræzəld|adj|mệt rã rời, kiệt quệ||
+fretful|ˈfretfəl|adj|bực tức, khó chịu||
+frustrated|ˈfrʌstreɪt̬ɪd|adj|nản lòng, nản chí||
+furious|ˈfʊriəs|adj|giận dữ, điên tiết||
+giddy|ˈɡɪdi|adj|chóng mặt, choáng váng||
+glad|ɡlæd|adj|vui sướng||
+gleeful|ˈɡliːfəl|adj|hân hoan, mừng rỡ||
+guarded|ˈɡɑːrdɪd|adj|thận trọng, ý tứ||
+guilty|ˈɡɪlti|adj|mặc cảm, cảm thấy tội lỗi||
+hankering|ˈhæŋkɚɪŋ|n|khao khát, thèm muốn||
+hesitant|ˈhezətənt|adj|do dự, ngập ngừng||
+hollow|ˈhɑːloʊ|adj|trống rỗng||
+horrified|ˈhɔːrəfaɪd|adj|khiếp sợ||
+hostile|ˈhɑːstəl|adj|chống đối, thù địch||
+humiliated|hjuːˈmɪlieɪt̬ɪd|adj|cảm giác bẽ mặt, xấu hổ||
+hysterical|hɪˈsterɪkəl|adj|kích động, cuồng loạn||
+indifferent|ɪnˈdɪfɚənt|adj|dửng dưng, lãnh đạm, thờ ơ||
+indignant|ɪnˈdɪɡnənt|adj|căm phẫn, phẫn nộ||
+intense|ɪnˈtens|adj|mãnh liệt, nồng nhiệt||
+interested|ˈɪntrɪstɪd|adj|hứng thú, thích thú||
+intoxicated|ɪnˈtɑːksɪkeɪt̬ɪd|adj|say sưa||
+irritated|ˈɪrəteɪt̬ɪd|adj|tức tối, khó chịu||
+jittery|ˈdʒɪt̬ɚi|adj|bồn chồn, dễ bị kích động||
+jocular|ˈdʒɑːkjəlɚ|adj|hài hước, vui vẻ||
+jolly|ˈdʒɑːli|adj|vui tươi, nhộn nhịp||
+joyful|ˈdʒɔɪfəl|adj|hân hoan, vui mừng||
+jumpy|ˈdʒɔɪfəl|adj|giật mình, hốt hoảng||
+keen|kiːn|adj|say mê, ham thích||
+lethargic|ləˈθɑːrdʒɪk|adj|mệt mỏi, uể oải||
+lonely|ˈloʊnli|adj|cô đơn||
+longing|ˈlɑːŋɪŋ|adj|thèm khát, thèm muốn||
+lost|lɑːst|adj|lạc lõng, mất phương hướng||
+lucky|ˈlʌki|adj|may mắn||
+melancholic|ˌmeləŋˈkɑːlɪk|adj|u sầu, buồn bã||
+miserable|ˈmɪzɚəbəl|adj|khốn khổ, đáng thương||
+mortified|ˈmɔːrt̬əfaɪd|adj|xấu hổ, ái ngại||
+mournful|ˈmɔːrnfəl|adj|buồn rầu, ảm đạm||
+nasty|ˈnæsti|adj|tục tĩu||
+needy|ˈniːdi|adj|thiếu thốn (về mặt tình cảm)||
+nervous|ˈnɝːvəs|adj|lo lắng, bồn chồn||
+numb|nʌm|adj|lặng người||
+obsessed|əbˈsest|adj|ám ảnh||
+offended|əˈfendɪd|adj|phật ý, cảm thấy bị xúc phạm||
+optimistic|ˌɑːptəˈmɪstɪk|adj|lạc quan, yêu đời||
+overwhelmed|ˌoʊvɚˈwelmd|adj|choáng ngợp, quá tải||
+paranoid|ˈperənɔɪd|adj|hoang tưởng||
+passionate|ˈpæʃənət|adj|nồng nhiệt, thiết tha||
+peaceful|ˈpiːsfəl|adj|thanh thản, bình yên||
+perky|ˈpɝːki|adj|tươi tỉnh, vênh váo||
+perplexed|pɚˈplekst|adj|lúng túng, bối rối||
+pessimistic|ˌpesəˈmɪstɪk|adj|bi quan||
+petrified|ˈpetrəfaɪd|adj|làm sững sờ, chết điếng||
+positive|ˈpɑːzət̬ɪv|adj|tích cực, lạc quan||
+powerful|ˈpaʊɚfəl|adj|quyền thế, quyền lực||
+proud|praʊd|adj|hãnh diện, tự hào||
+rattled|ˈræt̬əld|adj|bồn chồn, lo lắng||
+reflective|rɪˈflektɪv|adj|trầm ngâm||
+regretful|rɪˈɡretfəl|adj|hối tiếc||
+relaxed|rɪˈlækst|adj|thư giãn, thoải mái||
+relieved|rɪˈliːvd|adj|nhẹ nhõm||
+remorseful|rɪˈmɔːrsfəl|adj|ăn năn, hối hận||
+rueful|ˈruːfəl|adj|buồn bã, rầu rĩ||
+satisfied|ˈsæt̬ɪsfaɪd|adj|thỏa mãn, hài lòng||
+self-conscious|ˌselfˈkɑːnʃəs|adj|e dè, ngượng nghịu||
+selfish|ˈselfɪʃ|adj|ích kỷ||
+sensitive|ˈsensət̬ɪv|adj|nhạy cảm, dễ tổn thương||
+shameful|ˈʃeɪmfəl|adj|đáng hổ thẹn, ngượng||
+shock|ʃɑːkt|adj|bất ngờ, sốc||
+smug|smʌɡ|adj|tự mãn||
+snappy|ˈsnæpi|adj|dễ gắt gỏng, cáu kỉnh||
+somber|ˈsɒmbər|adj|u sầu, ủ rũ||
+speechless|ˈspiːtʃləs|adj|câm nín||
+stressed|strest|adj|căng thẳng||
+stunned|stʌnd|adj|sững sờ, bất ngờ||
+submissive|səbˈmɪsɪv|adj|ngoan ngoãn, dễ bảo||
+suffering|səbˈmɪsɪv|adj|đau đớn, đau khổ||
+surprised|sɚˈpraɪzd|adj|bất ngờ, ngạc nhiên||
+thankful|ˈθæŋkfəl|adj|biết ơn||
+thoughtful|ˈθɑːtfəl|adj|trầm ngâm, suy tư||
+troubled|ˈtrʌbəld|adj|băn khoăn, lo lắng||
+upbeat|ˈʌpbiːt|adj|vui vẻ, phấn chấn||
+uptight|ˌʌpˈtaɪt|adj|căng thẳng, lo lắng||
+wary|ˈweri|adj|thận trọng, đề phòng||
+woeful|ˈwoʊfəl|adj|thiểu não, buồn rầu||
+wretched|ˈretʃɪd|adj|bất hạnh, đáng thương||
+zealous|ˈzeləs|adj|hăng hái, sốt sắng||`}
 ];
 
 var ALL = [];
@@ -409,7 +1390,7 @@ DATA.forEach(function (t) {
 });
 
 /* ===== Trạng thái ===== */
-var S = { tab: 'list', topic: 'all', q: '', status: 'all', accent: 'en-US', deck: [], di: 0, flip: false, auto: true, onlyNew: false, quiz: null, qmode: 'vi' };
+var S = { tab: 'list', topic: 'all', q: '', status: 'all', accent: 'en-US', deck: [], di: 0, flip: false, auto: true, onlyNew: false, quiz: null, qmode: 'vi', limit: 60, chipsOpen: false };
 var KEY = 'toeic-a1-known-v1';
 var known = {};
 try { known = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { known = {}; }
@@ -441,7 +1422,7 @@ function speak(text, rate, btn) {
   if (!('speechSynthesis' in window)) { toast('Trình duyệt này không hỗ trợ giọng đọc.'); return; }
   try {
     speechSynthesis.cancel();
-    var u = new SpeechSynthesisUtterance(text);
+    var u = new SpeechSynthesisUtterance(String(text).replace(/[()\/]/g, ' '));
     u.lang = S.accent; u.rate = rate || 0.9;
     var v = pickVoice(); if (v) u.voice = v;
     if (btn) { btn.classList.add('playing'); u.onend = u.onerror = function () { btn.classList.remove('playing'); }; }
@@ -458,11 +1439,19 @@ function renderProgress() {
   $('#pBar').style.width = pct + '%';
 }
 function renderChips() {
-  var h = '<button type="button" class="chip" data-act="topic" data-v="all" aria-pressed="' + (S.topic === 'all') + '">Tất cả<small>' + ALL.length + '</small></button>';
-  DATA.forEach(function (t) {
+  function chip(id, name, count) { return '<button type="button" class="chip" data-act="topic" data-v="' + id + '" aria-pressed="' + (S.topic === id) + '">' + esc(name) + '<small>' + count + '</small></button>'; }
+  var h = chip('all', 'Tất cả', ALL.length);
+  var list = DATA;
+  if (!S.chipsOpen) {
+    list = DATA.slice(0, 6);
+    var sel = DATA.filter(function (t) { return t.id === S.topic; })[0];
+    if (sel && list.indexOf(sel) < 0) list = list.concat([sel]);
+  }
+  list.forEach(function (t) {
     var k = t.words.filter(function (w) { return known[w.w]; }).length;
-    h += '<button type="button" class="chip" data-act="topic" data-v="' + t.id + '" aria-pressed="' + (S.topic === t.id) + '">' + esc(t.name) + '<small>' + k + '/' + t.words.length + '</small></button>';
+    h += chip(t.id, t.name, k + '/' + t.words.length);
   });
+  h += '<button type="button" class="chip more" data-act="chips">' + (S.chipsOpen ? 'Thu gọn' : 'Xem tất cả ' + DATA.length + ' chủ đề') + '</button>';
   $('#chips').innerHTML = h;
 }
 
@@ -482,27 +1471,27 @@ function cardHtml(w) {
     '<div class="btns"><button type="button" class="ico" data-act="say" data-i="' + w.i + '" aria-label="Nghe từ ' + esc(w.w) + '">' + SPK + '</button>' +
     '<button type="button" class="ico" data-act="slow" data-i="' + w.i + '" aria-label="Nghe chậm từ ' + esc(w.w) + '">Chậm</button></div></div>' +
     '<p class="vi">' + esc(w.vi) + '</p>' +
-    '<p class="ex"><span>' + esc(w.ex) + '</span><em>' + esc(w.exvi) + '</em></p>' +
-    '<div class="foot"><button type="button" class="ico sm" data-act="sayex" data-i="' + w.i + '" aria-label="Nghe câu ví dụ">' + SPK + '</button>' +
+    (w.ex ? '<p class="ex"><span>' + esc(w.ex) + '</span><em>' + esc(w.exvi) + '</em></p>' : '') +
+    '<div class="foot">' + (w.ex ? '<button type="button" class="ico sm" data-act="sayex" data-i="' + w.i + '" aria-label="Nghe câu ví dụ">' + SPK + '</button>' : '<span></span>') +
     '<button type="button" class="know" data-act="know" data-i="' + w.i + '" aria-pressed="' + (!!known[w.w]) + '">' + (known[w.w] ? 'Đã thuộc' : 'Đánh dấu đã thuộc') + '</button></div></article>';
 }
+function gridInner(ws) { return ws.slice(0, S.limit).map(cardHtml).join(''); }
+function moreHtml(ws) { return ws.length > S.limit ? '<button type="button" class="btn" data-act="more">Xem thêm ' + Math.min(60, ws.length - S.limit) + ' từ (còn ' + (ws.length - S.limit) + ')</button>' : ''; }
 function renderList() {
   var ws = listWords();
   var h = '<div class="toolbar"><input id="q" type="search" placeholder="Tìm từ tiếng Anh hoặc nghĩa tiếng Việt" value="' + esc(S.q) + '" aria-label="Tìm từ">' +
     '<select id="st" aria-label="Lọc trạng thái"><option value="all">Tất cả</option><option value="new">Chưa thuộc</option><option value="known">Đã thuộc</option></select>' +
     '<span class="count">' + ws.length + ' từ · ' + esc(topicName()) + '</span></div>';
-  h += ws.length ? '<div class="grid" id="grid">' + ws.map(cardHtml).join('') + '</div>' : '<div class="empty">Không có từ nào khớp. Hãy đổi từ khóa hoặc bộ lọc.</div>';
+  h += ws.length ? '<div class="grid" id="grid">' + gridInner(ws) + '</div><div class="fbtns" id="more">' + moreHtml(ws) + '</div>' : '<div class="empty">Không có từ nào khớp. Hãy đổi từ khóa hoặc bộ lọc.</div>';
   $('#view').innerHTML = h;
   $('#st').value = S.status;
 }
 function refreshGrid() {
   var ws = listWords();
+  if (!ws.length || !$('#grid')) { renderList(); return; }
   $('.count').textContent = ws.length + ' từ · ' + topicName();
-  var g = $('#grid');
-  var html = ws.length ? ws.map(cardHtml).join('') : '';
-  if (!ws.length) { renderList(); return; }
-  if (!g) { renderList(); return; }
-  g.innerHTML = html;
+  $('#grid').innerHTML = gridInner(ws);
+  $('#more').innerHTML = moreHtml(ws);
 }
 
 /* ===== Flashcard ===== */
@@ -523,8 +1512,7 @@ function renderFlash(say) {
     '<div class="face front"><div class="big">' + esc(w.w) + '</div><span class="ipa">/' + esc(w.ipa) + '/</span>' +
     '<button type="button" class="ico" data-act="say" data-i="' + w.i + '" aria-label="Nghe">' + SPK + ' Nghe</button><span class="hint">Chạm vào thẻ để xem nghĩa</span></div>' +
     '<div class="face back"><div class="vi">' + esc(w.vi) + '</div><span class="pos">' + esc(w.pos) + '</span>' +
-    '<p class="ex"><span>' + esc(w.ex) + '</span><em>' + esc(w.exvi) + '</em></p>' +
-    '<button type="button" class="ico sm" data-act="sayex" data-i="' + w.i + '" aria-label="Nghe câu ví dụ">' + SPK + '</button></div></div></div>' +
+    (w.ex ? '<p class="ex"><span>' + esc(w.ex) + '</span><em>' + esc(w.exvi) + '</em></p><button type="button" class="ico sm" data-act="sayex" data-i="' + w.i + '" aria-label="Nghe câu ví dụ">' + SPK + '</button>' : '') + '</div></div></div>' +
     '<div class="fbtns"><button type="button" class="btn" data-act="prev" ' + (S.di === 0 ? 'disabled' : '') + '>Trước</button>' +
     '<button type="button" class="btn bad" data-act="fnew" data-i="' + w.i + '">Chưa thuộc</button>' +
     '<button type="button" class="btn good" data-act="fknow" data-i="' + w.i + '">Đã thuộc</button>' +
@@ -611,7 +1599,9 @@ document.addEventListener('click', function (e) {
   switch (a) {
     case 'accent': S.accent = el.dataset.v; document.querySelectorAll('[data-act="accent"]').forEach(function (b) { b.setAttribute('aria-pressed', b === el); }); if (!voices.length) loadVoices(); toast(S.accent === 'en-US' ? 'Đã chọn giọng Mỹ' : 'Đã chọn giọng Anh'); break;
     case 'tab': S.tab = el.dataset.v; S.quiz = null; if (S.tab === 'flash') buildDeck(false); render(); break;
-    case 'topic': S.topic = el.dataset.v; S.quiz = null; buildDeck(false); render('rebuild'); break;
+    case 'chips': S.chipsOpen = !S.chipsOpen; renderChips(); break;
+    case 'more': S.limit += 60; refreshGrid(); break;
+    case 'topic': S.topic = el.dataset.v; S.limit = 60; S.quiz = null; buildDeck(false); render('rebuild'); break;
     case 'say': speak(w.w, 0.9, el); break;
     case 'slow': speak(w.w, 0.55, el); break;
     case 'sayex': speak(w.ex, 0.85, el); break;
@@ -629,10 +1619,10 @@ document.addEventListener('click', function (e) {
   }
 });
 document.addEventListener('input', function (e) {
-  if (e.target.id === 'q') { S.q = e.target.value; refreshGrid(); }
+  if (e.target.id === 'q') { S.q = e.target.value; S.limit = 60; refreshGrid(); }
 });
 document.addEventListener('change', function (e) {
-  if (e.target.id === 'st') { S.status = e.target.value; refreshGrid(); }
+  if (e.target.id === 'st') { S.status = e.target.value; S.limit = 60; refreshGrid(); }
   if (e.target.id === 'auto') S.auto = e.target.checked;
   if (e.target.id === 'onlyNew') { S.onlyNew = e.target.checked; buildDeck(false); renderFlash(false); }
   if (e.target.id === 'qm') S.qmode = e.target.value;

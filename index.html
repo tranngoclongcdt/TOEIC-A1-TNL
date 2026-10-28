@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Từ Vựng TOEIC A1</title>
+<title>Từ Vựng TOEIC A1-A2 — Học từ vựng có phiên âm & giọng đọc</title>
+<meta name="description" content="Học hơn 1.100 từ vựng TOEIC A1-A2 với phiên âm IPA, giọng đọc Anh/Mỹ, flashcard, bài kiểm tra và ôn tập ngắt quãng. Đồng bộ tiến độ theo tài khoản.">
+<meta name="theme-color" content="#2D59E8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232D59E8'/%3E%3Cpath d='M16 18h32v28H16z' fill='none' stroke='white' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M24 28h16M24 36h10' stroke='%23FFE75E' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=Noto+Sans:wght@400;500&display=swap">
 <style>
 /* Layout: ứng dụng một cột. Trên máy tính: thanh tab ở trên. Trên điện thoại: thanh tab cố định ở đáy. Tab Tổng quan có vòng mục tiêu ngày, thống kê, từ của ngày, tiến độ theo chủ đề, cài đặt. */
@@ -220,6 +223,13 @@ h2, h3 { text-wrap: balance; }
 .review { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
 .review li { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 10px 12px; border-radius: 10px; background: var(--bad-soft); }
 
+.linkbtn { justify-self: start; border: 0; background: none; padding: 0; color: var(--accent); font-size: 14px; font-weight: 600; text-decoration: underline; }
+.trouble { display: grid; gap: 10px; font-size: 14px; color: var(--muted); }
+.trouble summary { cursor: pointer; font-weight: 600; }
+.trouble .btn { width: 100%; font-size: 13px; padding: 9px 12px; }
+.foot-note { text-align: center; font-size: 12.5px; color: var(--muted); margin: 6px 0 0; }
+.foot-note a { color: var(--accent); }
+@media print { .tabs, .toolbar, .chips, .toast, .auth, .userbox, .seg { display: none !important; } body { padding: 0; background: #fff; } .card { box-shadow: none; break-inside: avoid; } }
 .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 14px; max-width: calc(100% - 32px); z-index: 30; }
 .note { font-size: 13px; color: var(--muted); text-align: center; margin: 0; }
 /* Màn hình đăng nhập / đăng ký */
@@ -261,7 +271,7 @@ h2, h3 { text-wrap: balance; }
     <div class="brand">
       <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 8h6M9 12h4"/></svg></div>
       <div>
-        <h1>Vocabulary</h1>
+        <h1>Từ vựng <mark>TOEIC</mark></h1>
         <p id="tagline"></p>
       </div>
     </div>
@@ -291,9 +301,10 @@ h2, h3 { text-wrap: balance; }
   <div id="chipwrap" hidden><div class="chips" id="chips" role="group" aria-label="Chủ đề"></div></div>
 
   <main id="view"></main>
-  <p class="note" id="cloudnote">Tiến độ được lưu theo tài khoản Firebase của bạn — học tới đâu, đồng bộ tới đó, máy nào đăng nhập cùng tài khoản đều thấy tiến độ.</p>
+  <p class="note" id="cloudnote">Tiến độ được lưu theo tài khoản của bạn — học tới đâu, đồng bộ tới đó, máy nào đăng nhập cùng tài khoản đều thấy tiến độ.</p>
+  <p class="foot-note">Dữ liệu từ vựng TOEIC A1-A2 · Phím tắt: Space lật thẻ, ← → chuyển thẻ, 1/2 chấm điểm</p>
 </div>
-<div class="toast" id="toast" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <!-- Màn hình đăng nhập / đăng ký: hiển thị khi chưa đăng nhập, che toàn bộ ứng dụng -->
 <div class="auth" id="auth" hidden>
@@ -309,13 +320,14 @@ h2, h3 { text-wrap: balance; }
     </div>
     <div class="field">
       <label for="aEmail">Email</label>
-      <input id="aEmail" type="email" autocomplete="email" placeholder="cnhung@email.com">
+      <input id="aEmail" type="email" autocomplete="email" placeholder="ten@email.com">
     </div>
     <div class="field">
       <label for="aPass">Mật khẩu</label>
       <input id="aPass" type="password" autocomplete="current-password" placeholder="Tối thiểu 6 ký tự">
     </div>
     <p class="aerr" id="aErr" role="alert"></p>
+    <button type="button" class="linkbtn" id="aForgot">Quên mật khẩu?</button>
     <button type="button" class="btn primary" id="aGo">Đăng nhập</button>
     <div class="hair">hoặc</div>
     <button type="button" class="btn gbtn" id="aGoogle">
@@ -323,8 +335,6 @@ h2, h3 { text-wrap: balance; }
       Tiếp tục với Google
     </button>
     <p class="hint" id="aHint">Đăng nhập để tiến độ học được lưu theo tài khoản của bạn.</p>
-    <p class="hint" id="aLastOut" style="color:var(--warn)"></p>
-    <button type="button" class="btn" id="aRetry">Đã về từ Google nhưng chưa vào được? Bấm để nhận lại phiên</button>
   </div>
 </div>
 
@@ -353,17 +363,20 @@ var $ = function (s) { return document.querySelector(s); };
 /* Ghi dữ liệu tiến độ hiện tại của máy lên Firestore (users/{uid}).
     Được gọi từ hàm save() — bấm liên tục cũng chỉ ghi 1 lần sau ~1.2 giây. */
 function cloudNow() {
-  if (!CLOUD.user) return;
+  if (!CLOUD.user || CLOUD.loading || !CLOUD.ready) return;
   clearTimeout(CLOUD.timer);
   CLOUD.timer = setTimeout(cloudPush, 1200);
 }
 function cloudPush() {
-  if (!CLOUD.user) return;
-  DB.collection('users').doc(CLOUD.user.uid).set({
+  /* Chỉ ghi khi đã tải xong dữ liệu đám mây — tránh ghi đè tiến độ thật bằng dữ liệu cũ trên máy khi mất mạng */
+  if (!CLOUD.user || !CLOUD.ready) return;
+  clearTimeout(CLOUD.timer);
+  /* Không dùng merge: nếu merge, các từ bị bỏ "đã thuộc" sẽ không bao giờ bị xóa khỏi đám mây */
+  return DB.collection('users').doc(CLOUD.user.uid).set({
     known: known, srs: srs, stats: stats, pref: pref,
     name: CLOUD.user.displayName || '', email: CLOUD.user.email || '',
     updatedAt: Date.now()
-  }, { merge: true })
+  })
   .catch(function (e) { console.warn('Lưu đám mây lỗi:', e); toast('Không đồng bộ được lên tài khoản — kiểm tra mạng rồi thử lại.'); });
 }
 
@@ -371,29 +384,57 @@ function cloudPush() {
    - Tài khoản đã có dữ liệu trên đám mây: lấy bản đám mây làm chuẩn.
    - Tài khoản mới chưa có gì: giữ dữ liệu đang nằm trong trình duyệt (nếu máy đó học từ trước) và đẩy lên tài khoản. */
 function cloudLoad(u) {
+  CLOUD.ready = false;
+  /* Đổi tài khoản trên cùng một trình duyệt: xóa tiến độ của người trước để không bị đẩy nhầm sang tài khoản mới */
+  try {
+    var last = localStorage.getItem('toeic-a1-uid-v1');
+    if (last && last !== u.uid) {
+      known = {}; srs = {}; stats = {};
+      CLOUD.loading = true;
+      save(KEYS.known, known); save(KEYS.srs, srs); save(KEYS.stats, stats);
+      CLOUD.loading = false;
+    }
+    localStorage.setItem('toeic-a1-uid-v1', u.uid);
+  } catch (e) {}
   DB.collection('users').doc(u.uid).get().then(function (doc) {
+    if (!CLOUD.user || CLOUD.user.uid !== u.uid) return; // đã đăng xuất / đổi tài khoản trong lúc chờ
     var d = doc.exists ? doc.data() : null;
+    CLOUD.ready = true;
     if (d && typeof d.known === 'object' && d.known) {
       known = d.known || {}; srs = d.srs || {}; stats = d.stats || {};
       var p = d.pref || {};
-      p.accent = p.accent || 'en-US'; p.rate = p.rate || 0.9; p.goal = p.goal || 10;
+      p.accent = p.accent || 'en-US'; p.rate = p.rate || 0.9; p.goal = p.goal || 10; p.theme = p.theme || 'auto';
       pref = p;
+      CLOUD.loading = true; // vừa tải từ đám mây về, không cần ghi ngược lên
       save(KEYS.known, known); save(KEYS.srs, srs); save(KEYS.stats, stats); save(KEYS.pref, pref);
+      CLOUD.loading = false;
+      if (typeof applyTheme === 'function') applyTheme();
     } else {
       cloudPush(); // tạo bản ghi đầu tiên cho tài khoản (kèm tiến độ cũ trên máy nếu có)
     }
     if (typeof render === 'function') render();
   }).catch(function (e) {
     console.warn('Nạp tiến độ lỗi:', e);
-    toast('Không tải được tiến độ từ tài khoản — đang dùng dữ liệu trên máy này.');
+    toast('Không tải được tiến độ từ tài khoản — sẽ tự thử lại khi có mạng.');
     if (typeof render === 'function') render();
   });
 }
+/* Mất mạng lúc đăng nhập thì tự nạp lại khi có mạng, để việc đồng bộ không bị tắt vĩnh viễn */
+window.addEventListener('online', function () { if (CLOUD.user && !CLOUD.ready) cloudLoad(CLOUD.user); });
 
 /* Thông báo lỗi xác thực bằng tiếng Việt */
 function authErr(e) {
   var c = e && e.code || '';
-  if (c === 'auth/invalid-email' || c === 'auth/invalid-credential' || c === 'auth/invalid-email-address') return 'Email hoặc mật khẩu không đúng.';
+  // Ghi chẩn đoán vào localStorage để tham chiếu trên màn hình (kèm thời điểm)
+  try {
+    var dg = JSON.parse(localStorage.getItem('toeic-auth-diag-v1') || '[]');
+    dg.unshift({ t: new Date().toTimeString().slice(0, 5), c: c || (e && e.message || 'unknown').toString().slice(0, 60) });
+    dg = dg.slice(0, 6);
+    localStorage.setItem('toeic-auth-diag-v1', JSON.stringify(dg));
+  } catch (err) {}
+  if (c === 'auth/invalid-email' || c === 'auth/invalid-email-address') return 'Email không hợp lệ. Hãy kiểm tra lại địa chỉ email.';
+  if (c === 'auth/user-disabled') return 'Tài khoản này đã bị vô hiệu hóa.';
+  if (c === 'auth/missing-password') return 'Bạn chưa nhập mật khẩu.';
   if (c === 'auth/user-not-found' || c.indexOf('wrong-password') > -1 || c.indexOf('invalid-credential') > -1) return 'Email hoặc mật khẩu không đúng.';
   if (c.indexOf('email-already-in-use') > -1) return 'Email này đã được đăng ký. Hãy bấm "Đã có tài khoản" để đăng nhập.';
   if (c.indexOf('operation-not-allowed') > -1 || c.indexOf('admin-restricted') > -1) return 'Phương thức đăng nhập này chưa được bật. Vào Firebase Console → Authentication → Sign-in method và bật Email/Password (và Google).';
@@ -412,8 +453,8 @@ function updateAuthUI(u) {
   ov.hidden = !!u;
   var ub = $('#userbox');
   ub.hidden = !u;
+  $('#aGo').disabled = false; $('#aGoogle').disabled = false; // nút đăng nhập từng bị khóa vĩnh viễn sau khi đăng xuất
   if (u) $('#uName').textContent = u.displayName || (u.email || 'Bạn').split('@')[0];
-  if (!u) { try { var o = localStorage.getItem('toeic-a1-authout-v1'); if (o) $('#aLastOut').textContent = '🔎 ' + o + ' — lưu ý: trình duyệt đang chặn lưu phiên (kiểm tra chế độ ẩn danh / chặn cookie).'; } catch (e) {} }
 }
 
 var AMODE = 'login';
@@ -427,7 +468,16 @@ function setMode(m) {
   $('#aGo').className = 'btn primary';
   $('#aHint').textContent = m === 'login' ? 'Đăng nhập để tiến độ học được lưu theo tài khoản của bạn.' : 'Tài khoản mới bắt đầu với tiến độ trống — mỗi tài khoản có dữ liệu riêng.';
   $('#aErr').textContent = '';
+  $('#aPass').setAttribute('autocomplete', m === 'login' ? 'current-password' : 'new-password');
+  $('#aForgot').hidden = m !== 'login';
 }
+$('#aForgot').onclick = function () {
+  var err = $('#aErr'), email = $('#aEmail').value.trim();
+  if (!email) { err.textContent = 'Hãy nhập email của bạn ở trên, rồi bấm "Quên mật khẩu?" lần nữa.'; return; }
+  AUTH.sendPasswordResetEmail(email).then(function () {
+    err.textContent = ''; toast('Đã gửi email đặt lại mật khẩu tới ' + email + '. Hãy kiểm tra cả hòm thư rác.');
+  }).catch(function (e) { err.textContent = authErr(e); });
+};
 $('#swLogin').onclick = function () { setMode('login'); };
 $('#swReg').onclick = function () { setMode('register'); };
 
@@ -447,6 +497,7 @@ $('#aGo').onclick = function () {
     AUTH.createUserWithEmailAndPassword(email, pass).then(function (cu) {
       return cu.user.updateProfile({ displayName: name }).then(function () {
         $('#uName').textContent = name; toast('Chào mừng ' + name + '!');
+        cloudPush(); // cập nhật tên hiển thị lên tài khoản
       });
     }).catch(function (e) { done(authErr(e)); });
   }
@@ -468,33 +519,22 @@ $('#aGoogle').onclick = function () {
   }
 };
 
-/* Bắt kết quả redirect từ Google: trả về trang xong nếu Google trả lỗi thì hiện ra */
-AUTH.getRedirectResult().catch(function (e) {
-  $('#aErr').textContent = authErr(e);
-});
-
-/* Nút thaoo của cầu cản: nếu về từ Google mà vẫn màn đăng nhập, bấm để nhận lại phiên (có thể do trình duyệt cache) */
-$('#aRetry').onclick = function () {
-  $('#aErr').textContent = 'Đang nhận lại phiên...';
-  AUTH.getRedirectResult().then(function () {
-    setTimeout(function () {
-      var u = AUTH.currentUser;
-      $('#aErr').textContent = '';
-      updateAuthUI(u);
-      if (u) {
-        $('#uName').textContent = u.displayName || (u.email || 'Bạn').split('@')[0];
-        cloudLoad(u);
-        toast('Đã vào lại app!');
-      } else {
-        $('#aErr').textContent = 'Vẫn chưa nhận được phiên. Hãy bấm Ctrl+F5 tải lại trang (bỏ cache), hoặc thử đăng nhập bằng Email/mật khẩu.';
-      }
-    }, 800);
-  }).catch(function (e) { $('#aErr').textContent = authErr(e); });
-};
+/* Bắt kết quả redirect từ Google — PHẢI gọi sau khi persistence sẵn sàng (lần fire đầu của onAuthStateChanged).
+   Nếu gọi quá sớm (lúc script chạy) sẽ rơi vào lỗi racing: phiên Google về nhưng không ai nhận. */
+var REDIR_CHECKED = false;
+function checkRedirectResult() {
+  if (REDIR_CHECKED) return; REDIR_CHECKED = true;
+  AUTH.getRedirectResult().catch(function (e) { $('#aErr').textContent = authErr(e); });
+}
+/* Một số lần trả về từ Chrome (bfcache/restore) SDK bỏ sót — kiểm tra lại khi trang hiển thị lại */
+window.addEventListener('pageshow', function (ev) { if (ev.persisted) { REDIR_CHECKED = false; setTimeout(checkRedirectResult, 300); } });
 
 $('#uSignout').onclick = function () {
-  AUTH.signOut().then(function () {
-    CLOUD.user = null; setMode('login'); $('#aPass').value = '';
+  window.__manualOut = true; // đăng xuất chủ động — không ghi cảnh báo "mất phiên"
+  var p = cloudPush(); // đẩy nốt thay đổi chưa kịp ghi trước khi đăng xuất
+  Promise.resolve(p).catch(function () {}).then(function () { return AUTH.signOut(); }).then(function () {
+    CLOUD.user = null; CLOUD.ready = false; setMode('login'); $('#aPass').value = '';
+    try { localStorage.removeItem(OUT_KEY); } catch (e) {}
     toast('Đã đăng xuất.');
   });
 };
@@ -509,17 +549,19 @@ document.addEventListener('keydown', function (e) {
 /* Chẩn đoán mất phiên: khi đang đăng nhập mà tự bị đẩy ra, ghi lại thời điểm để báo trên màn hình đăng nhập */
 var OUT_KEY = 'toeic-a1-authout-v1';
 AUTH.onAuthStateChanged(function (u) {
-  if (!u && window.__prevUser) {
+  if (!u && window.__prevUser && !window.__manualOut) {
     try {
       var d = new Date();
       localStorage.setItem(OUT_KEY, 'Phiên mất lúc ' + d.getHours() + ':' + ('0' + d.getMinutes()).slice(-2) + ' ' + d.getDate() + '/' + (d.getMonth() + 1));
     } catch (e) {}
   }
   window.__prevUser = u ? u.uid : null;
+  if (u) window.__manualOut = false;
 });
 
 /* Lắng nghe trạng thái đăng nhập: đổi dữ liệu theo tài khoản, hiện/ẩn màn hình */
 AUTH.onAuthStateChanged(function (u) {
+  checkRedirectResult(); // lần fire đầu = persistence đã sẵn sàng, đọc redirect ngay lúc an toàn
   CLOUD.user = u || null;
   updateAuthUI(u);
   if (u) {
@@ -568,39 +610,39 @@ interview|ˈɪntərvjuː|n|buổi phỏng vấn|I have an interview today.|Hôm 
 team|tiːm|n|đội, nhóm|Our team is small.|Nhóm của chúng tôi nhỏ.
 business|ˈbɪznəs|n|việc kinh doanh|He has his own business.|Anh ấy có việc kinh doanh riêng.
 apply|əˈplaɪ|v|nộp đơn, ứng tuyển|I want to apply for this job.|Tôi muốn ứng tuyển vào công việc này.
-accountant|əˈkaʊnt̬ənt|n|kế toán||
-actor|ˈæktɚ|n|diễn viên (nam; nữ là actress)||
-artist|ˈɑːrt̬ɪst|n|nghệ sỹ||
-astronaut|ˈæstrənɑːt|n|phi hành gia||
-baker|ˈbeɪkɚ|n|thợ nướng bánh||
-bellboy|ˈbelbɔɪ|n|nhân viên hành lý||
-bishop|ˈbɪʃəp|n|giám mục||
-butcher|ˈbʊtʃɚ|n|người mổ thịt||
-cashier|kæʃˈɪr|n|nhân viên thu ngân||
-chef|ʃef|n|đầu bếp||
-customs officer|ˈkʌstəmz ˈɑːfɪsɚ|n|nhân viên hải quan||
-delivery man|dɪˈlɪvɚimæn|n|nhân viên giao hàng||
-entrepreneur|ˌɑːntrəprəˈnɝː|n|nhà kinh doanh||
-factory worker|ˈfæktɚi ˈwɝːkɚ|n|công nhân nhà máy||
-florist|ˈflɔːrɪst|n|người bán hoa||
-hairdresser|ˈherˌdresɚ|n|thợ cắt tóc||
-judge|dʒʌdʒ|n|thẩm phán||
-lawyer|ˈlɑːjɚ|n|luật sư||
-miner|ˈmaɪnɚ|n|thợ mỏ||
-musician|mjuːˈzɪʃən|n|nhạc sĩ, nhà soạn nhạc||
-optician|ɑːpˈtɪʃən|n|chuyên gia nhãn khoa||
-pharmacist|ˈfɑːrməsɪst|n|dược sĩ||
-plumber|ˈplʌmɚ|n|thợ ống nước||
-politician|ˌpɑːləˈtɪʃən|n|chính trị gia||
-programmer|ˈproʊɡræmɚ|n|lập trình viên||
-real estate agent|ˈriːəl ɪsteɪt ˌeɪdʒənt|n|người môi giới bất động sản||
-receptionist|rɪˈsepʃənɪst|n|nhân viên lễ tân, tiếp tân||
-speaker|ˈspiːkɚ|n|diễn giả||
-street vendor|striːt ˈvendɚ|n|người bán hàng trên đường, bán hàng rong||
-tailor|ˈteɪlɚ|n|thợ may||
-taxi driver|ˈtæksi ˌdraɪvɚ|n|tài xế xe taxi||
-veterinarian|ˌvetərɪˈneriən|n|bác sỹ thú y||
-writer|ˈraɪt̬ɚ|n|người viết sách||`},
+accountant|əˈkaʊnt̬ənt|n|kế toán|My aunt is an accountant.|Dì của tôi là kế toán.
+actor|ˈæktɚ|n|diễn viên (nam; nữ là actress)|He is a famous actor.|Anh ấy là một diễn viên nổi tiếng.
+artist|ˈɑːrt̬ɪst|n|nghệ sỹ|The artist paints a picture.|Nghệ sĩ vẽ một bức tranh.
+astronaut|ˈæstrənɑːt|n|phi hành gia|The astronaut flies to space.|Phi hành gia bay vào vũ trụ.
+baker|ˈbeɪkɚ|n|thợ nướng bánh|The baker makes fresh bread.|Thợ làm bánh làm bánh mì tươi.
+bellboy|ˈbelbɔɪ|n|nhân viên hành lý|The bellboy carries my bag.|Nhân viên hành lý xách túi cho tôi.
+bishop|ˈbɪʃəp|n|giám mục|The bishop speaks in church.|Giám mục phát biểu trong nhà thờ.
+butcher|ˈbʊtʃɚ|n|người mổ thịt|The butcher sells meat.|Người bán thịt bán thịt.
+cashier|kæʃˈɪr|n|nhân viên thu ngân|The cashier gives me change.|Nhân viên thu ngân trả tiền thừa cho tôi.
+chef|ʃef|n|đầu bếp|The chef cooks dinner.|Đầu bếp nấu bữa tối.
+customs officer|ˈkʌstəmz ˈɑːfɪsɚ|n|nhân viên hải quan|The customs officer checks my bag.|Nhân viên hải quan kiểm tra túi của tôi.
+delivery man|dɪˈlɪvɚimæn|n|nhân viên giao hàng|The delivery man brings pizza.|Nhân viên giao hàng mang pizza đến.
+entrepreneur|ˌɑːntrəprəˈnɝː|n|nhà kinh doanh|She is a young entrepreneur.|Cô ấy là một nhà kinh doanh trẻ.
+factory worker|ˈfæktɚi ˈwɝːkɚ|n|công nhân nhà máy|My father is a factory worker.|Bố tôi là công nhân nhà máy.
+florist|ˈflɔːrɪst|n|người bán hoa|The florist sells roses.|Người bán hoa bán hoa hồng.
+hairdresser|ˈherˌdresɚ|n|thợ cắt tóc|The hairdresser cuts my hair.|Thợ cắt tóc cắt tóc cho tôi.
+judge|dʒʌdʒ|n|thẩm phán|The judge is very fair.|Thẩm phán rất công bằng.
+lawyer|ˈlɑːjɚ|n|luật sư|My uncle is a lawyer.|Chú tôi là luật sư.
+miner|ˈmaɪnɚ|n|thợ mỏ|The miner works underground.|Thợ mỏ làm việc dưới lòng đất.
+musician|mjuːˈzɪʃən|n|nhạc sĩ, nhà soạn nhạc|The musician plays the guitar.|Nhạc sĩ chơi đàn guitar.
+optician|ɑːpˈtɪʃən|n|chuyên gia nhãn khoa|The optician checks my eyes.|Chuyên gia nhãn khoa kiểm tra mắt cho tôi.
+pharmacist|ˈfɑːrməsɪst|n|dược sĩ|The pharmacist gives me medicine.|Dược sĩ đưa thuốc cho tôi.
+plumber|ˈplʌmɚ|n|thợ ống nước|The plumber fixes the sink.|Thợ ống nước sửa bồn rửa.
+politician|ˌpɑːləˈtɪʃən|n|chính trị gia|The politician makes a speech.|Chính trị gia đọc một bài phát biểu.
+programmer|ˈproʊɡræmɚ|n|lập trình viên|The programmer writes code.|Lập trình viên viết mã.
+real estate agent|ˈriːəl ɪsteɪt ˌeɪdʒənt|n|người môi giới bất động sản|The real estate agent sells houses.|Người môi giới bất động sản bán nhà.
+receptionist|rɪˈsepʃənɪst|n|nhân viên lễ tân, tiếp tân|The receptionist answers the phone.|Nhân viên lễ tân nghe điện thoại.
+speaker|ˈspiːkɚ|n|diễn giả|The speaker talks about health.|Diễn giả nói về sức khỏe.
+street vendor|striːt ˈvendɚ|n|người bán hàng trên đường, bán hàng rong|The street vendor sells fruit.|Người bán hàng rong bán trái cây.
+tailor|ˈteɪlɚ|n|thợ may|The tailor makes my suit.|Thợ may may bộ vest cho tôi.
+taxi driver|ˈtæksi ˌdraɪvɚ|n|tài xế xe taxi|The taxi driver is friendly.|Tài xế taxi rất thân thiện.
+veterinarian|ˌvetərɪˈneriən|n|bác sỹ thú y|The veterinarian helps sick animals.|Bác sĩ thú y giúp các con vật bị bệnh.
+writer|ˈraɪt̬ɚ|n|người viết sách|She is a good writer.|Cô ấy là một nhà văn giỏi.`},
 {id:'shop', name:'Mua sắm', raw:`
 buy|baɪ|v|mua|I want to buy a new bag.|Tôi muốn mua một cái túi mới.
 sell|sel|v|bán|They sell fresh fruit.|Họ bán trái cây tươi.
@@ -635,19 +677,19 @@ luggage|ˈlʌɡɪdʒ|n|hành lý|My luggage is heavy.|Hành lý của tôi nặn
 arrive|əˈraɪv|v|đến nơi|We arrive at six.|Chúng tôi đến nơi lúc sáu giờ.
 leave|liːv|v|rời đi|I leave home at seven.|Tôi rời nhà lúc bảy giờ.
 road|roʊd|n|con đường|This road is busy.|Con đường này đông xe.
-check-in|tʃekɪn|n|đăng ký phòng ở khách sạn||
-cruise|kruːz|n|chuyến đi chơi trên biển||
-depart|dɪˈpɑːrt|v|khởi hành||
-destination|ˌdestəˈneɪʃən|n|điểm đến||
-expedition|ˌekspəˈdɪʃən|n|cuộc thám hiểm||
-journey|ˈdʒɝːni|n|hành trình||
-land|lænd|v|hạ cánh||
-passenger|ˈpæsəndʒɚ|n|hành khách||
-route|ruːt|n|lộ trình, hành trình||
-safari|səˈfɑːri|n|cuộc đi săn||
-tour|tʊr|n|chuyến đi du lịch||
-visit|ˈvɪzɪt|v|thăm viếng||
-voyage|ˈvɔɪɪdʒ|n|chuyến du lịch dài ngày||`},
+check-in|tʃekɪn|n|đăng ký phòng ở khách sạn|Hotel check-in is at two o'clock.|Giờ nhận phòng khách sạn là hai giờ.
+cruise|kruːz|n|chuyến đi chơi trên biển|We go on a cruise.|Chúng tôi đi du thuyền.
+depart|dɪˈpɑːrt|v|khởi hành|The train departs at noon.|Tàu khởi hành lúc trưa.
+destination|ˌdestəˈneɪʃən|n|điểm đến|Paris is our destination.|Paris là điểm đến của chúng tôi.
+expedition|ˌekspəˈdɪʃən|n|cuộc thám hiểm|They go on an expedition.|Họ đi một cuộc thám hiểm.
+journey|ˈdʒɝːni|n|hành trình|The journey is long.|Hành trình rất dài.
+land|lænd|v|hạ cánh|The plane will land soon.|Máy bay sẽ hạ cánh sớm.
+passenger|ˈpæsəndʒɚ|n|hành khách|Every passenger has a ticket.|Mỗi hành khách đều có vé.
+route|ruːt|n|lộ trình, hành trình|This route is very short.|Lộ trình này rất ngắn.
+safari|səˈfɑːri|n|cuộc đi săn|We went on a safari.|Chúng tôi đã đi săn safari.
+tour|tʊr|n|chuyến đi du lịch|We take a tour of the city.|Chúng tôi đi tham quan thành phố.
+visit|ˈvɪzɪt|v|thăm viếng|I visit my grandma on Sundays.|Tôi thăm bà vào Chủ nhật.
+voyage|ˈvɔɪɪdʒ|n|chuyến du lịch dài ngày|The voyage takes two weeks.|Chuyến hải trình kéo dài hai tuần.`},
 {id:'food', name:'Ăn uống', raw:`
 food|fuːd|n|thức ăn|The food is delicious.|Thức ăn rất ngon.
 water|ˈwɔːtər|n|nước|Can I have some water?|Cho tôi xin ít nước được không?
@@ -665,40 +707,40 @@ dinner|ˈdɪnər|n|bữa tối|Dinner is ready.|Bữa tối đã sẵn sàng.
 restaurant|ˈrestrɑːnt|n|nhà hàng|This restaurant is popular.|Nhà hàng này nổi tiếng.
 menu|ˈmenjuː|n|thực đơn|May I see the menu?|Cho tôi xem thực đơn được không?
 order|ˈɔːrdər|v|gọi món, đặt hàng|I would like to order now.|Tôi muốn gọi món bây giờ.
-bacon|ˈbeɪkən|n|thịt xông khói||
-bagel|ˈbeɪɡəl|n|bánh vòng||
-baguette|bæɡˈet|n|bánh mỳ dài||
-breadstick|ˈbredstɪk|n|bánh mỳ que||
-cheese|tʃiːz|n|phó mát||
-chicken nugget|ˈtʃɪkɪn ˈnʌɡɪt|n|gà viên chiên||
-croissant|kwɑːˈsɑ̃ː|n|bánh sừng bò||
-donut|ˈdoʊnʌt|n|bánh rán||
-egg|eɡ|n|trứng||
-fish and chips|ˌfɪʃ en ˈtʃɪps|n|cá tẩm bột chiên dùng với khoai tây chiên||
-French fries|ˈfrentʃ ˈfrɑɪz|n|khoai tây chiên||
-ham|hæm|n|thịt giăm bông muối||
-hamburger|ˈhæmˌbɝːɡɚ|n|lát thịt băm hình tròn (thường kẹp với bánh mỳ)||
-hot chocolate|ˌhɑːt ˈtʃɑːklət|n|sô cô la nóng||
-hot dog|ˈhɑːt ˌdɑːɡ|n|bánh mỳ kẹp xúc xích||
-ice cream|ˈaɪs ˌkriːm|n|kem||
-jelly roll|ˈdʒeli ˌroʊl|n|bánh cuộn (mứt, sô cô la...)||
-marmalade|ˈmɑːrməleɪd|n|mứt cam||
-milk|mɪlk|n|sữa||
-muffin|ˈmʌfɪn|n|bánh nướng xốp||
-onion ring|ˈʌnjən ˌrɪŋ|n|vòng hành||
-orange juice|ˈɔːrɪndʒ ˌdʒuːs|n|nước cam||
-pancake|ˈpænkeɪk|n|bánh kếp||
-pita|ˈpɪt̬ə|n|bánh mỳ ổ tròn dẹt||
-pizza|ˈpiːtsə|n|bánh pizza||
-porridge|ˈpɔːrɪdʒ|n|cháo đặc||
-pretzel|ˈpretsəl|n|bánh xoắn||
-salad|ˈsæləd|n|rau trộn, nộm rau||
-sandwich|ˈsænwɪtʃ|n|bánh mỳ kẹp||
-sausage|ˈsɑːsɪdʒ|n|xúc xích||
-taco|ˈtɑːkoʊ|n|bánh kẹp Mexico||
-toast|toʊst|n|bánh mỳ nướng||
-waffle|ˈwɑːfəl|n|bánh quế||
-yogurt|ˈjoʊɡɚt|n|sữa chua||`},
+bacon|ˈbeɪkən|n|thịt xông khói|I like bacon for breakfast.|Tôi thích thịt xông khói cho bữa sáng.
+bagel|ˈbeɪɡəl|n|bánh vòng|I eat a bagel every morning.|Tôi ăn một chiếc bánh bagel mỗi sáng.
+baguette|bæɡˈet|n|bánh mỳ dài|She buys a baguette.|Cô ấy mua một ổ bánh mì dài.
+breadstick|ˈbredstɪk|n|bánh mỳ que|He eats a breadstick.|Anh ấy ăn một cái bánh mì que.
+cheese|tʃiːz|n|phó mát|I like cheese on pizza.|Tôi thích phô mai trên pizza.
+chicken nugget|ˈtʃɪkɪn ˈnʌɡɪt|n|gà viên chiên|The kids love chicken nuggets.|Bọn trẻ thích gà viên chiên.
+croissant|kwɑːˈsɑ̃ː|n|bánh sừng bò|I have a croissant and coffee.|Tôi ăn bánh sừng bò và uống cà phê.
+donut|ˈdoʊnʌt|n|bánh rán|She eats a sweet donut.|Cô ấy ăn một cái bánh rán ngọt.
+egg|eɡ|n|trứng|I eat an egg every day.|Tôi ăn một quả trứng mỗi ngày.
+fish and chips|ˌfɪʃ en ˈtʃɪps|n|cá tẩm bột chiên dùng với khoai tây chiên|We eat fish and chips.|Chúng tôi ăn cá chiên với khoai tây chiên.
+French fries|ˈfrentʃ ˈfrɑɪz|n|khoai tây chiên|I want some French fries.|Tôi muốn một ít khoai tây chiên.
+ham|hæm|n|thịt giăm bông muối|He puts ham in the sandwich.|Anh ấy cho thịt nguội vào bánh mì.
+hamburger|ˈhæmˌbɝːɡɚ|n|lát thịt băm hình tròn (thường kẹp với bánh mỳ)|I eat a hamburger for lunch.|Tôi ăn một cái hamburger cho bữa trưa.
+hot chocolate|ˌhɑːt ˈtʃɑːklət|n|sô cô la nóng|I drink hot chocolate in winter.|Tôi uống sô cô la nóng vào mùa đông.
+hot dog|ˈhɑːt ˌdɑːɡ|n|bánh mỳ kẹp xúc xích|He buys a hot dog.|Anh ấy mua một cái bánh mì xúc xích.
+ice cream|ˈaɪs ˌkriːm|n|kem|Children love ice cream.|Trẻ em thích kem.
+jelly roll|ˈdʒeli ˌroʊl|n|bánh cuộn (mứt, sô cô la...)|She bakes a jelly roll.|Cô ấy nướng một cái bánh cuộn.
+marmalade|ˈmɑːrməleɪd|n|mứt cam|I put marmalade on my toast.|Tôi phết mứt cam lên bánh mì nướng.
+milk|mɪlk|n|sữa|I drink milk every morning.|Tôi uống sữa mỗi sáng.
+muffin|ˈmʌfɪn|n|bánh nướng xốp|This muffin is very sweet.|Chiếc bánh nướng xốp này rất ngọt.
+onion ring|ˈʌnjən ˌrɪŋ|n|vòng hành|I like onion rings.|Tôi thích hành tây chiên vòng.
+orange juice|ˈɔːrɪndʒ ˌdʒuːs|n|nước cam|She drinks orange juice.|Cô ấy uống nước cam.
+pancake|ˈpænkeɪk|n|bánh kếp|We eat pancakes on Sunday.|Chúng tôi ăn bánh kếp vào Chủ nhật.
+pita|ˈpɪt̬ə|n|bánh mỳ ổ tròn dẹt|He eats pita with hummus.|Anh ấy ăn bánh pita với hummus.
+pizza|ˈpiːtsə|n|bánh pizza|We order a big pizza.|Chúng tôi gọi một cái pizza lớn.
+porridge|ˈpɔːrɪdʒ|n|cháo đặc|Porridge is hot and soft.|Cháo đặc thì nóng và mềm.
+pretzel|ˈpretsəl|n|bánh xoắn|I buy a salty pretzel.|Tôi mua một cái bánh quy xoắn mặn.
+salad|ˈsæləd|n|rau trộn, nộm rau|I eat a salad for lunch.|Tôi ăn salad cho bữa trưa.
+sandwich|ˈsænwɪtʃ|n|bánh mỳ kẹp|She makes a cheese sandwich.|Cô ấy làm một cái bánh mì kẹp phô mai.
+sausage|ˈsɑːsɪdʒ|n|xúc xích|He cooks a sausage.|Anh ấy nấu một cây xúc xích.
+taco|ˈtɑːkoʊ|n|bánh kẹp Mexico|I want a chicken taco.|Tôi muốn một cái taco gà.
+toast|toʊst|n|bánh mỳ nướng|I have toast for breakfast.|Tôi ăn bánh mì nướng cho bữa sáng.
+waffle|ˈwɑːfəl|n|bánh quế|She eats a waffle with honey.|Cô ấy ăn bánh quế với mật ong.
+yogurt|ˈjoʊɡɚt|n|sữa chua|I like strawberry yogurt.|Tôi thích sữa chua dâu.`},
 {id:'people', name:'Gia đình & con người', raw:`
 family|ˈfæməli|n|gia đình|I love my family.|Tôi yêu gia đình mình.
 father|ˈfɑːðər|n|bố, cha|My father is a driver.|Bố tôi là tài xế.
@@ -716,83 +758,83 @@ husband|ˈhʌzbənd|n|chồng|Her husband works here.|Chồng cô ấy làm vi�
 wife|waɪf|n|vợ|His wife is a teacher.|Vợ anh ấy là giáo viên.
 people|ˈpiːpl|n|mọi người|Many people are here.|Nhiều người đang ở đây.
 neighbor|ˈneɪbər|n|hàng xóm|My neighbor is friendly.|Hàng xóm của tôi thân thiện.
-ancestor|ˈænsestɚ|n|tổ tiên||
-aunt|ænt|n|cô, dì||
-bachelor|ˈbætʃəlɚ|n|trai tân, người chưa vợ||
-birth mother|ˈbɝːθ ˌmʌðɚ|n|mẹ đẻ||
-blood relative|ˌblʌd ˈrelətɪv|n|quan hệ máu mủ||
-bride|braɪd|n|cô dâu||
-bridegroom|ˈbraɪdɡruːm|n|chú rể||
-brother-in-law|ˈbrʌðɚɪnlɑː|n|anh (em) rể, anh (em) vợ||
-brotherhood|ˈbrʌðɚhʊd|n|tình anh em, huynh đệ||
-brotherly|ˈbrʌðɚli|adj, adv|thân thiết như anh em||
-care-giver|ˈkerˌɡɪvɚ|n|điều dưỡng viên||
-childhood|ˈtʃaɪldhʊd|n|tuổi thơ||
-children|ˈtʃɪldrən|n|những đứa con||
-clan|klæn|n|thị tộc, gia tộc||
-close-knit|ˌkloʊsˈnɪt|adj|gắn bó khăng khít||
-connection|kəˈnekʃən|n|mối quan hệ||
-cousin|ˈkʌzən|n|anh em họ||
-dad|dæd|n|bố||
-daughter-in-la w|ˈdɑːt̬ɚɪnlɑː|n|con dâu||
-descendant|dɪˈsendənt|n|con cháu, hậu duệ||
-divorce|dɪˈvɔːrs|n, v|li dị||
-eligible|ˈelədʒəbəl|adj|đủ tư cách||
-engaged|ɪnˈɡeɪdʒd|adj|đính ước, hứa hôn||
-engagement|ɪnˈɡeɪdʒmənt|n|sự hẹn ước, hứa hôn||
-estranged|ɪˈstreɪndʒd|adj|ly thân||
-ex-husband|ˌeksˈhʌzbənd|n|chồng cũ||
-ex-wife|ˌeksˈwaɪf|n|vợ cũ||
-extended family|ɪkˌstendɪd ˈfæməli|n|đại gia đình||
-family tree|ˌfæməli ˈtriː|n|cây phả hệ||
-father-in-law|ˈfɑːðɚɪnlɑː|n|bố vợ, bố chồng||
-fiancée|ˌfiːɑːnˈseɪ|n|hôn thê, vợ chưa cưới||
-first born|ˈfɝːstbɔːrn|adj, n|đầu lòng, con đầu lòng||
-first cousin|ˌfɝːst ˈkʌzən|n|anh, chị, em họ ruột||
-flesh and blood|ˈfleʃ ən ˈblʌd|n|người thân, gia đình máu mủ||
-folks|foʊks|n|người thân thuộc||
-foster|ˈfɑːstɚ|v|nuôi dưỡng, nuôi nấng||
-foster child|ˈfɑːstɚ tʃaɪld|n|con nuôi||
-foster father|ˈfɑːstɚ fɑːðɚ|n|cha nuôi||
-foster mother|ˈfɑːstɚˈmʌðɚ|n|mẹ nuôi||
-fraternal|frəˈtɝːnəl|adj|(thuộc) anh em||
-genealogy|ˌdʒiːniˈælədʒi|n|bảng phả hệ||
-grandchild|ˈɡræntʃaɪld|n|cháu||
-grandfather|ˈɡrænfɑːðɚ|n|ông nội (ngoại)||
-grandmother|ˈɡrænmʌðɚ|n|bà nội (ngoại)||
-grandparent|ˈɡrænperənt|n|ông (bà)||
-granny|ˈɡræni|n|bà nội (ngoại)||
-great-aunt|ˌɡreɪtˈænt|n|bà cô, bà bác||
-great-grandda ughter|ˌɡreɪtˈɡrændɑːt̬ ɚ|n|chắt gái||
-great-grandfat her|ˌɡreɪtˈɡrænfɑːð ɚ|n|ông cố, cụ ông||
-great-grandmo ther|ˌɡreɪtˈɡræmmʌð ər|n|bà cố, cụ bà||
-great-grandpar ent|ˌɡreɪtˈɡrænperə nt|n|ông (bà) cố||
-great-grandso n|ˌɡreɪtˈɡrænsʌn|n|chắt trai||
-great-uncle|ˌɡreɪtˈʌŋkəl|n|ông (bà) trẻ||
-groom|ɡruːm|n|chú rể||
-grown-up|ˌɡroʊnˈʌp|n, adj|người lớn, người trưởng thành; đã trưởng thành||
-half-brother|ˈhæfˌbrʌðɚ|n|anh (em) cùng cha khác mẹ, anh (em) cùng mẹ khác cha||
-half-sister|ˈhæfˌsɪstɚ|n|chị (em) cùng cha khác mẹ, chị (em) cùng mẹ khác cha||
-heir|er|n|người thừa kế (nam)||
-heiress|ˈeres|n|người thừa kế (nữ)||
-helpmate|ˈhelpmeɪt|n|bạn đời||
-hereditary|həˈredəteri|adj|di truyền||
-heritage|ˈherɪt̬ɪdʒ|n|tài sản thừa kế, di sản||
-history|ˈhɪst̬ɚi|n|lịch sử gia đình||
-household|ˈhaʊshoʊld|n|hộ gia đình||
-identical twin|aɪˌdent̬əkəl ˈtwɪn|n|sinh đôi giống hệt||
-in-law|ˈɪnlɑː|adj|bố (mẹ) chồng bố (mẹ) vợ||
-infancy|ˈɪnfənsi|n|tuổi bế ẵm, tuổi thơ bé||
-infant|ˈɪnfənt|n, adj|đứa bé sơ sinh||
-inherit|ɪnˈherɪt|v|thừa hưởng, thừa kế||
-inheritance|ɪnˈherɪtəns|n|sự thừa kế, của thừa kế||
-juvenile|ˈdʒuːvənəl|n, adj|người chưa đến tuổi trưởng thành, vị thành niên||
-kin|kɪn|n, adj|dòng họ, gia đình||
-kindred|ˈkɪndrəd|n, adj|họ hàng thân thích||
-kinfolk|ˈkɪnfoʊk|n|người thân, họ hàng||
-kinship|ˈkɪnʃɪp|n|tình thân||
-kith|ˌkɪθənˈkɪn|n|họ hàng gia đình||
-lineage|ˈlɪniɪdʒ|n|nòi giống, dòng dõi||`},
+ancestor|ˈænsestɚ|n|tổ tiên|My ancestor lived here.|Tổ tiên của tôi từng sống ở đây.
+aunt|ænt|n|cô, dì|My aunt lives in London.|Dì của tôi sống ở Luân Đôn.
+bachelor|ˈbætʃəlɚ|n|trai tân, người chưa vợ|He is a happy bachelor.|Anh ấy là một người độc thân vui vẻ.
+birth mother|ˈbɝːθ ˌmʌðɚ|n|mẹ đẻ|She met her birth mother.|Cô ấy đã gặp mẹ đẻ của mình.
+blood relative|ˌblʌd ˈrelətɪv|n|quan hệ máu mủ|He is my blood relative.|Anh ấy là người họ hàng ruột thịt của tôi.
+bride|braɪd|n|cô dâu|The bride wears a white dress.|Cô dâu mặc váy trắng.
+bridegroom|ˈbraɪdɡruːm|n|chú rể|The bridegroom is very nervous.|Chú rể rất hồi hộp.
+brother-in-law|ˈbrʌðɚɪnlɑː|n|anh (em) rể, anh (em) vợ|My brother-in-law is a doctor.|Anh rể tôi là bác sĩ.
+brotherhood|ˈbrʌðɚhʊd|n|tình anh em, huynh đệ|They share a strong brotherhood.|Họ có tình anh em bền chặt.
+brotherly|ˈbrʌðɚli|adj, adv|thân thiết như anh em|He gives me brotherly advice.|Anh ấy cho tôi lời khuyên như anh em.
+care-giver|ˈkerˌɡɪvɚ|n|điều dưỡng viên|The care-giver helps old people.|Điều dưỡng viên giúp đỡ người già.
+childhood|ˈtʃaɪldhʊd|n|tuổi thơ|I had a happy childhood.|Tôi có một tuổi thơ hạnh phúc.
+children|ˈtʃɪldrən|n|những đứa con|They have two children.|Họ có hai đứa con.
+clan|klæn|n|thị tộc, gia tộc|His clan is very large.|Gia tộc của anh ấy rất lớn.
+close-knit|ˌkloʊsˈnɪt|adj|gắn bó khăng khít|We are a close-knit family.|Chúng tôi là một gia đình gắn bó.
+connection|kəˈnekʃən|n|mối quan hệ|I have a close connection with her.|Tôi có mối quan hệ thân thiết với cô ấy.
+cousin|ˈkʌzən|n|anh em họ|My cousin is ten years old.|Anh em họ của tôi mười tuổi.
+dad|dæd|n|bố|My dad cooks dinner.|Bố tôi nấu bữa tối.
+daughter-in-la w|ˈdɑːt̬ɚɪnlɑː|n|con dâu|Her daughter-in-law is kind.|Con dâu của bà ấy rất tốt bụng.
+descendant|dɪˈsendənt|n|con cháu, hậu duệ|He is a descendant of a king.|Ông ấy là hậu duệ của một vị vua.
+divorce|dɪˈvɔːrs|n, v|li dị|They get a divorce.|Họ ly dị.
+eligible|ˈelədʒəbəl|adj|đủ tư cách|You are eligible to vote.|Bạn đủ tư cách để bỏ phiếu.
+engaged|ɪnˈɡeɪdʒd|adj|đính ước, hứa hôn|They are engaged now.|Bây giờ họ đã đính hôn.
+engagement|ɪnˈɡeɪdʒmənt|n|sự hẹn ước, hứa hôn|Their engagement party is today.|Tiệc đính hôn của họ là hôm nay.
+estranged|ɪˈstreɪndʒd|adj|ly thân|He is estranged from his wife.|Anh ấy ly thân với vợ.
+ex-husband|ˌeksˈhʌzbənd|n|chồng cũ|Her ex-husband lives nearby.|Chồng cũ của cô ấy sống gần đây.
+ex-wife|ˌeksˈwaɪf|n|vợ cũ|His ex-wife is a teacher.|Vợ cũ của anh ấy là giáo viên.
+extended family|ɪkˌstendɪd ˈfæməli|n|đại gia đình|My extended family is big.|Đại gia đình của tôi rất đông.
+family tree|ˌfæməli ˈtriː|n|cây phả hệ|I draw my family tree.|Tôi vẽ cây gia phả của mình.
+father-in-law|ˈfɑːðɚɪnlɑː|n|bố vợ, bố chồng|My father-in-law is kind.|Bố chồng tôi rất tốt bụng.
+fiancée|ˌfiːɑːnˈseɪ|n|hôn thê, vợ chưa cưới|His fiancée is beautiful.|Hôn thê của anh ấy rất xinh đẹp.
+first born|ˈfɝːstbɔːrn|adj, n|đầu lòng, con đầu lòng|She is the first born.|Cô ấy là con đầu lòng.
+first cousin|ˌfɝːst ˈkʌzən|n|anh, chị, em họ ruột|He is my first cousin.|Anh ấy là anh họ ruột của tôi.
+flesh and blood|ˈfleʃ ən ˈblʌd|n|người thân, gia đình máu mủ|He is my own flesh and blood.|Anh ấy là máu mủ ruột thịt của tôi.
+folks|foʊks|n|người thân thuộc|My folks live in Hue.|Gia đình tôi sống ở Huế.
+foster|ˈfɑːstɚ|v|nuôi dưỡng, nuôi nấng|They foster a little boy.|Họ nuôi dưỡng một cậu bé.
+foster child|ˈfɑːstɚ tʃaɪld|n|con nuôi|The foster child is happy.|Đứa con nuôi rất hạnh phúc.
+foster father|ˈfɑːstɚ fɑːðɚ|n|cha nuôi|My foster father is kind.|Cha nuôi của tôi rất tốt bụng.
+foster mother|ˈfɑːstɚˈmʌðɚ|n|mẹ nuôi|Her foster mother loves her.|Mẹ nuôi của cô ấy yêu thương cô ấy.
+fraternal|frəˈtɝːnəl|adj|(thuộc) anh em|They share a fraternal bond.|Họ có mối gắn kết anh em.
+genealogy|ˌdʒiːniˈælədʒi|n|bảng phả hệ|He studies his family genealogy.|Anh ấy nghiên cứu phả hệ gia đình mình.
+grandchild|ˈɡræntʃaɪld|n|cháu|She has one grandchild.|Bà ấy có một đứa cháu.
+grandfather|ˈɡrænfɑːðɚ|n|ông nội (ngoại)|My grandfather tells stories.|Ông của tôi kể chuyện.
+grandmother|ˈɡrænmʌðɚ|n|bà nội (ngoại)|My grandmother bakes cakes.|Bà của tôi nướng bánh.
+grandparent|ˈɡrænperənt|n|ông (bà)|I visit my grandparents often.|Tôi thường thăm ông bà.
+granny|ˈɡræni|n|bà nội (ngoại)|My granny is eighty years old.|Bà của tôi tám mươi tuổi.
+great-aunt|ˌɡreɪtˈænt|n|bà cô, bà bác|My great-aunt lives alone.|Bà bác của tôi sống một mình.
+great-grandda ughter|ˌɡreɪtˈɡrændɑːt̬ ɚ|n|chắt gái|She is my great-granddaughter.|Cô bé là chắt gái của tôi.
+great-grandfat her|ˌɡreɪtˈɡrænfɑːð ɚ|n|ông cố, cụ ông|My great-grandfather was a farmer.|Ông cố của tôi từng là nông dân.
+great-grandmo ther|ˌɡreɪtˈɡræmmʌð ər|n|bà cố, cụ bà|My great-grandmother is ninety.|Bà cố của tôi chín mươi tuổi.
+great-grandpar ent|ˌɡreɪtˈɡrænperə nt|n|ông (bà) cố|I met my great-grandparent today.|Hôm nay tôi gặp ông bà cố của mình.
+great-grandso n|ˌɡreɪtˈɡrænsʌn|n|chắt trai|He is my great-grandson.|Cậu bé là chắt trai của tôi.
+great-uncle|ˌɡreɪtˈʌŋkəl|n|ông (bà) trẻ|My great-uncle plays chess.|Ông trẻ của tôi chơi cờ vua.
+groom|ɡruːm|n|chú rể|The groom wears a black suit.|Chú rể mặc bộ vest đen.
+grown-up|ˌɡroʊnˈʌp|n, adj|người lớn, người trưởng thành; đã trưởng thành|My brother is a grown-up now.|Bây giờ anh tôi đã là người lớn.
+half-brother|ˈhæfˌbrʌðɚ|n|anh (em) cùng cha khác mẹ, anh (em) cùng mẹ khác cha|I have a half-brother.|Tôi có một người anh cùng cha khác mẹ.
+half-sister|ˈhæfˌsɪstɚ|n|chị (em) cùng cha khác mẹ, chị (em) cùng mẹ khác cha|My half-sister lives in Hanoi.|Chị cùng cha khác mẹ của tôi sống ở Hà Nội.
+heir|er|n|người thừa kế (nam)|He is the heir to the house.|Anh ấy là người thừa kế ngôi nhà.
+heiress|ˈeres|n|người thừa kế (nữ)|She is a rich heiress.|Cô ấy là một nữ thừa kế giàu có.
+helpmate|ˈhelpmeɪt|n|bạn đời|She is my best helpmate.|Cô ấy là người bạn đời tốt nhất của tôi.
+hereditary|həˈredəteri|adj|di truyền|This disease is hereditary.|Căn bệnh này mang tính di truyền.
+heritage|ˈherɪt̬ɪdʒ|n|tài sản thừa kế, di sản|We love our cultural heritage.|Chúng tôi yêu di sản văn hóa của mình.
+history|ˈhɪst̬ɚi|n|lịch sử gia đình|Our family history is long.|Lịch sử gia đình chúng tôi rất dài.
+household|ˈhaʊshoʊld|n|hộ gia đình|Our household has five people.|Hộ gia đình chúng tôi có năm người.
+identical twin|aɪˌdent̬əkəl ˈtwɪn|n|sinh đôi giống hệt|She has an identical twin.|Cô ấy có một người song sinh giống hệt.
+in-law|ˈɪnlɑː|adj|bố (mẹ) chồng bố (mẹ) vợ|I meet my in-law parents.|Tôi gặp bố mẹ chồng của mình.
+infancy|ˈɪnfənsi|n|tuổi bế ẵm, tuổi thơ bé|He was sick in infancy.|Anh ấy bị bệnh khi còn bé xíu.
+infant|ˈɪnfənt|n, adj|đứa bé sơ sinh|The infant is sleeping.|Em bé sơ sinh đang ngủ.
+inherit|ɪnˈherɪt|v|thừa hưởng, thừa kế|She will inherit the house.|Cô ấy sẽ thừa kế ngôi nhà.
+inheritance|ɪnˈherɪtəns|n|sự thừa kế, của thừa kế|He received a big inheritance.|Anh ấy nhận được một khoản thừa kế lớn.
+juvenile|ˈdʒuːvənəl|n, adj|người chưa đến tuổi trưởng thành, vị thành niên|The juvenile is fifteen years old.|Cậu vị thành niên này mười lăm tuổi.
+kin|kɪn|n, adj|dòng họ, gia đình|He is my next of kin.|Anh ấy là người thân nhất của tôi.
+kindred|ˈkɪndrəd|n, adj|họ hàng thân thích|They are kindred spirits.|Họ là những người đồng điệu tâm hồn.
+kinfolk|ˈkɪnfoʊk|n|người thân, họ hàng|All my kinfolk come to dinner.|Tất cả họ hàng của tôi đến ăn tối.
+kinship|ˈkɪnʃɪp|n|tình thân|We feel a strong kinship.|Chúng tôi cảm thấy tình thân mạnh mẽ.
+kith|ˌkɪθənˈkɪn|n|họ hàng gia đình|He came with kith and kin.|Anh ấy đến cùng họ hàng và người thân.
+lineage|ˈlɪniɪdʒ|n|nòi giống, dòng dõi|Her lineage is very old.|Dòng dõi của cô ấy rất xưa.`},
 {id:'time', name:'Thời gian', raw:`
 time|taɪm|n|thời gian, giờ|What time is it?|Bây giờ là mấy giờ?
 day|deɪ|n|ngày|Have a nice day.|Chúc một ngày tốt lành.
@@ -886,828 +928,828 @@ welcome|ˈwelkəm|exc|chào mừng|Welcome to our company.|Chào mừng đến v
 yes|jes|exc|vâng, có|Yes, I can.|Vâng, tôi làm được.
 no|noʊ|exc|không|No, thank you.|Không, cảm ơn.`},
 {id:'edu', name:'Giáo dục', raw:`
-assignment|əˈsaɪnmənt|n|bài tập tiểu luận||
-boarding school|ˈbɔːrdɪŋ ˌskuːl|n|trường nội trú||
-campus|ˈkæmpəs|n|khu trường học, địa điểm trường học||
-co-education|ˌkoʊedʒəˈkeɪʃən|n|nam nữ đồng giáo||
-concentrate|ˈkɑːnsəntreɪt|v|tập trung||
-coursework|ˈkɔːrswɝːk|n|đồ án môn học||
-curriculum|kəˈrɪkjələm|n|chương trình giảng dạy||
-distance learning|ˈdɪstəns ˌlɝːnɪŋ|n|việc học từ xa, học trực tuyến||
-eager beaver|ˌiːɡɚ ˈbiːvɚ|n|người chăm chỉ, tham việc||
-enroll|ɪnˈrəʊl|v|đăng ký||
-evaluation|ɪˌvæljuˈeɪʃən|n|sự đánh giá||
-fellowship|ˈfeloʊʃɪp|n|đội nhóm; học bổng nghiên cứu sinh||
-final (exam)|ˈfaɪnəl ɪɡˈzæm|n|bài thi cuối kỳ||
-graduate|ˈɡrædʒuət|v|tốt nghiệp, ra trường||
-higher education|ˌhaɪɚ edjʊˈkeɪʃən|n|giáo dục cấp đại học||
-illiterate|ɪˈlɪt̬ɚət|n|mù chữ, thất học||
-institution|ˌɪnstəˈtuːʃən|n|viện, cơ quan||
-internship|ˈɪntɝːnʃɪp|n|kỳ thực tập||
-kindergarten|ˈkɪndɚˌɡɑːrtən|n|lớp mẫu giáo, nhà trẻ||
-lecture|ˈlektʃɚ|n|bài giảng, bài diễn thuyết||
-literacy|ˈlɪt̬ɚəsi|n|khả năng biết đọc và viết||
-material|məˈtɪriəl|n|học liệu||
-physical education|ˌfɪzɪkəl edjʊˈkeɪ ʃən|n|giáo dục thể chất||
-plagiarize|ˈpleɪdʒəraɪz|v|đạo văn, sao chép||
-practice|ˈpræktɪs|n|bài luyện tập||
-premise|ˈpremɪs|n|giả thuyết, tiền đề||
-preschool|ˈpriːskuːl|n, adj|trường mầm non||
-primary school|ˈpraɪmɚi ˌskuːl|n|trường tiểu học, trường cấp 1||
-private school|ˌpraɪvət ˈskuːl|n|trường tư||
-qualification|ˌkwɑːləfəˈkeɪʃən|n|năng lực, trình độ chuyên môn||
-secondary school|ˈsekənderi ˌskuːl|n|trường trung học, trường cấp 2||
-syllabus|ˈsɪləbəs|n|giáo trình||
-teacher's pet|ˌtiːtʃɚz ˈpet|n|học sinh cưng của giáo viên||
-thesis|ˈθiːsɪs|n|luận văn, luận án||
-tuition|tuːˈɪʃən|n|hoạt động giảng dạy, hướng dẫn||
-undergraduate|ˌʌndɚˈɡrædʒuət|n|sinh viên chưa tốt nghiệp||
-vocational school|voʊˈkeɪʃənəl ˌskuːl|n|trường dạy nghề||`},
+assignment|əˈsaɪnmənt|n|bài tập tiểu luận|I finish my assignment tonight.|Tối nay tôi hoàn thành bài tập.
+boarding school|ˈbɔːrdɪŋ ˌskuːl|n|trường nội trú|He goes to a boarding school.|Cậu ấy học ở trường nội trú.
+campus|ˈkæmpəs|n|khu trường học, địa điểm trường học|The campus is very big.|Khuôn viên trường rất rộng.
+co-education|ˌkoʊedʒəˈkeɪʃən|n|nam nữ đồng giáo|My school has co-education.|Trường tôi có nam nữ học chung.
+concentrate|ˈkɑːnsəntreɪt|v|tập trung|I cannot concentrate here.|Tôi không thể tập trung ở đây.
+coursework|ˈkɔːrswɝːk|n|đồ án môn học|I do my coursework at home.|Tôi làm bài tập môn học ở nhà.
+curriculum|kəˈrɪkjələm|n|chương trình giảng dạy|The curriculum includes math.|Chương trình giảng dạy có môn toán.
+distance learning|ˈdɪstəns ˌlɝːnɪŋ|n|việc học từ xa, học trực tuyến|I like distance learning.|Tôi thích học từ xa.
+eager beaver|ˌiːɡɚ ˈbiːvɚ|n|người chăm chỉ, tham việc|Tom is an eager beaver.|Tom là một người rất chăm chỉ.
+enroll|ɪnˈrəʊl|v|đăng ký|I enroll in a English class.|Tôi đăng ký một lớp tiếng Anh.
+evaluation|ɪˌvæljuˈeɪʃən|n|sự đánh giá|The teacher gives an evaluation.|Giáo viên đưa ra một bản đánh giá.
+fellowship|ˈfeloʊʃɪp|n|đội nhóm; học bổng nghiên cứu sinh|She wins a research fellowship.|Cô ấy giành được học bổng nghiên cứu.
+final (exam)|ˈfaɪnəl ɪɡˈzæm|n|bài thi cuối kỳ|The final exam is tomorrow.|Bài thi cuối kỳ là ngày mai.
+graduate|ˈɡrædʒuət|v|tốt nghiệp, ra trường|I graduate next year.|Năm sau tôi tốt nghiệp.
+higher education|ˌhaɪɚ edjʊˈkeɪʃən|n|giáo dục cấp đại học|She wants higher education.|Cô ấy muốn học lên đại học.
+illiterate|ɪˈlɪt̬ɚət|n|mù chữ, thất học|The old man is illiterate.|Ông lão mù chữ.
+institution|ˌɪnstəˈtuːʃən|n|viện, cơ quan|This institution teaches art.|Cơ sở này dạy nghệ thuật.
+internship|ˈɪntɝːnʃɪp|n|kỳ thực tập|He has an internship this summer.|Mùa hè này anh ấy có kỳ thực tập.
+kindergarten|ˈkɪndɚˌɡɑːrtən|n|lớp mẫu giáo, nhà trẻ|My son goes to kindergarten.|Con trai tôi đi học mẫu giáo.
+lecture|ˈlektʃɚ|n|bài giảng, bài diễn thuyết|The lecture starts at nine.|Bài giảng bắt đầu lúc chín giờ.
+literacy|ˈlɪt̬ɚəsi|n|khả năng biết đọc và viết|Literacy is very important.|Biết đọc biết viết rất quan trọng.
+material|məˈtɪriəl|n|học liệu|I need more study material.|Tôi cần thêm tài liệu học tập.
+physical education|ˌfɪzɪkəl edjʊˈkeɪ ʃən|n|giáo dục thể chất|I like physical education.|Tôi thích môn thể dục.
+plagiarize|ˈpleɪdʒəraɪz|v|đạo văn, sao chép|Do not plagiarize your homework.|Đừng đạo văn bài tập của bạn.
+practice|ˈpræktɪs|n|bài luyện tập|This practice is easy.|Bài luyện tập này dễ.
+premise|ˈpremɪs|n|giả thuyết, tiền đề|The premise of the story is simple.|Tiền đề của câu chuyện rất đơn giản.
+preschool|ˈpriːskuːl|n, adj|trường mầm non|My daughter goes to preschool.|Con gái tôi đi học mầm non.
+primary school|ˈpraɪmɚi ˌskuːl|n|trường tiểu học, trường cấp 1|I go to primary school.|Tôi đi học tiểu học.
+private school|ˌpraɪvət ˈskuːl|n|trường tư|He studies at a private school.|Cậu ấy học ở một trường tư.
+qualification|ˌkwɑːləfəˈkeɪʃən|n|năng lực, trình độ chuyên môn|She has a good qualification.|Cô ấy có trình độ chuyên môn tốt.
+secondary school|ˈsekənderi ˌskuːl|n|trường trung học, trường cấp 2|My sister is in secondary school.|Chị tôi đang học trung học.
+syllabus|ˈsɪləbəs|n|giáo trình|The teacher gives us the syllabus.|Giáo viên đưa cho chúng tôi giáo trình.
+teacher's pet|ˌtiːtʃɚz ˈpet|n|học sinh cưng của giáo viên|Anna is the teacher's pet.|Anna là học sinh cưng của cô giáo.
+thesis|ˈθiːsɪs|n|luận văn, luận án|He writes his thesis.|Anh ấy viết luận văn của mình.
+tuition|tuːˈɪʃən|n|hoạt động giảng dạy, hướng dẫn|Tuition is expensive here.|Học phí ở đây đắt.
+undergraduate|ˌʌndɚˈɡrædʒuət|n|sinh viên chưa tốt nghiệp|She is an undergraduate student.|Cô ấy là sinh viên đại học.
+vocational school|voʊˈkeɪʃənəl ˌskuːl|n|trường dạy nghề|He studies at a vocational school.|Anh ấy học ở trường dạy nghề.`},
 {id:'schoolobj', name:'Đồ dùng học tập', raw:`
-backpack|ˈbækpæk|n|ba lô, cặp đeo sau lưng||
-ballpoint pen|ˌbɑːlpɔɪnt ˈpen|n|bút bi||
-beaker|ˈbiːkɚ|n|cốc đong trong phòng thí nghiệm||
-binder|ˈbaɪndɚ|n|bìa rời||
-blackboard|ˈblækbɔːrd|n|bảng đen||
-book|bʊk|n|quyển sách||
-calculator|ˈkælkjəleɪt̬ɚ|n|máy tính bỏ túi||
-chair|tʃer|n|ghế||
-clip|klɪp|n|kẹp ghim||
-clock|klɑːk|n|đồng hồ||
-compass|ˈkʌmpəs|n|la bàn||
-eraser|ɪˈreɪsɚ|n|tẩy, gôm||
-funnel|ˈfʌnəl|n|phễu||
-globe|ɡloʊb|n|quả địa cầu||
-glue|ɡluː|n|keo hồ||
-highlighter|ˈhaɪˌlaɪt̬ɚ|n|bút nhớ||
-magnifying glass|ˈmæɡnəfaɪɪŋ ˌɡlæs|n|kính lúp||
-paint brush|ˌbrɑːd ˈbrʌʃ|n|cọ tô màu||
-pin|pɪn|n|đinh ghim||
-protractor|prəˈtræktɚ|n|thước đo góc||
-scissors|ˈsɪzɚz|n|kéo||
-scotch tape|ˌskɑːtʃ ˈteɪp|n|băng keo||
-set square|ˈset ˌskwer|n|thước vuông, ê-ke||
-stapler|ˈsteɪplɚ|n|cái dập ghim||
-test tube|ˈtest ˌtuːb|n|ống thí nghiệm||`},
+backpack|ˈbækpæk|n|ba lô, cặp đeo sau lưng|My backpack is heavy.|Ba lô của tôi nặng.
+ballpoint pen|ˌbɑːlpɔɪnt ˈpen|n|bút bi|I write with a ballpoint pen.|Tôi viết bằng bút bi.
+beaker|ˈbiːkɚ|n|cốc đong trong phòng thí nghiệm|The beaker is full of water.|Cốc đong đầy nước.
+binder|ˈbaɪndɚ|n|bìa rời|I keep papers in a binder.|Tôi để giấy trong bìa rời.
+blackboard|ˈblækbɔːrd|n|bảng đen|The teacher writes on the blackboard.|Cô giáo viết lên bảng đen.
+book|bʊk|n|quyển sách|I read a book every week.|Tôi đọc một quyển sách mỗi tuần.
+calculator|ˈkælkjəleɪt̬ɚ|n|máy tính bỏ túi|I use a calculator in math.|Tôi dùng máy tính bỏ túi trong môn toán.
+chair|tʃer|n|ghế|Please sit on the chair.|Làm ơn ngồi lên ghế.
+clip|klɪp|n|kẹp ghim|I need a paper clip.|Tôi cần một cái kẹp giấy.
+clock|klɑːk|n|đồng hồ|The clock is on the wall.|Đồng hồ ở trên tường.
+compass|ˈkʌmpəs|n|la bàn|The compass shows north.|La bàn chỉ hướng bắc.
+eraser|ɪˈreɪsɚ|n|tẩy, gôm|I need an eraser.|Tôi cần một cục tẩy.
+funnel|ˈfʌnəl|n|phễu|Use a funnel to pour water.|Dùng phễu để rót nước.
+globe|ɡloʊb|n|quả địa cầu|The globe is on the desk.|Quả địa cầu ở trên bàn.
+glue|ɡluː|n|keo hồ|I need glue for my project.|Tôi cần keo cho dự án của mình.
+highlighter|ˈhaɪˌlaɪt̬ɚ|n|bút nhớ|I use a yellow highlighter.|Tôi dùng bút nhớ màu vàng.
+magnifying glass|ˈmæɡnəfaɪɪŋ ˌɡlæs|n|kính lúp|He looks through a magnifying glass.|Anh ấy nhìn qua kính lúp.
+paint brush|ˌbrɑːd ˈbrʌʃ|n|cọ tô màu|She cleans her paint brush.|Cô ấy rửa cọ vẽ của mình.
+pin|pɪn|n|đinh ghim|I need a pin.|Tôi cần một cái đinh ghim.
+protractor|prəˈtræktɚ|n|thước đo góc|Use a protractor to measure angles.|Dùng thước đo góc để đo góc.
+scissors|ˈsɪzɚz|n|kéo|I cut paper with scissors.|Tôi cắt giấy bằng kéo.
+scotch tape|ˌskɑːtʃ ˈteɪp|n|băng keo|I need some scotch tape.|Tôi cần một ít băng keo.
+set square|ˈset ˌskwer|n|thước vuông, ê-ke|He draws with a set square.|Anh ấy vẽ bằng ê-ke.
+stapler|ˈsteɪplɚ|n|cái dập ghim|The stapler is on my desk.|Cái dập ghim ở trên bàn tôi.
+test tube|ˈtest ˌtuːb|n|ống thí nghiệm|The test tube is empty.|Ống nghiệm trống rỗng.`},
 {id:'house', name:'Nhà cửa', raw:`
-accommodati on|əˌkɑːməˈdeɪʃən|n|chỗ ở||
-armchair|ˈɑːrmtʃer|n|ghế bành, ghế có tựa tay||
-attic|ˈæt̬ɪk|n|tum, gác mái||
-balcony|ˈbælkəni|n|ban công||
-basement|ˈbeɪsmənt|n|tầng hầm, nền móng||
-bathtub|ˈbæθtʌb|n|bồn tắm||
-bedroom|ˈbedruːm|n|phòng ngủ||
-bleach|bliːtʃ|n|chất tẩy trắng||
-broom|bruːm|n|cái chổi||
-bucket|ˈbʌkɪt|n|xô||
-chimney|ˈtʃɪmni|n|ống khói||
-closet|ˈklɑːzət|n|phòng để đồ, phòng kho||
-cloth|klɑːθ|n|miếng vải, mảnh vải||
-cottage|ˈkɑːt̬ɪdʒ|n|nhà tranh||
-couch|kaʊtʃ|n|ghế dài, trường kỷ, đi văng||
-counter|ˈkaʊnt̬ɚ|n|kệ bếp||
-doorstep|ˈdɔːrstep|n|ngưỡng cửa, bậc cửa ra vào||
-doorway|ˈdɔːrweɪ|n|lối ra vào sát cửa||
-dustpan|ˈdʌstpæn|n|xẻng hốt rác||
-entrance|ˈentrəns|n|lối vào, cổng vào||
-garage|ɡəˈrɑːʒ|n|ga ra, hầm để xe||
-hose|hoʊz|n|ống cao su dài||
-iron|aɪrn|n|bàn là, máy ủi||
-ironing board|ˈaɪrnɪŋ ˌbɔːrd|n|bàn để là quần áo||
-kettle|ˈket̬əl|n|ấm đun nước||
-laundry basket|ˈlɑːndri ˌbæskɪt|n|giỏ đựng quần áo||
-laundry detergent|ˈlɑːndri dɪˌtɝːdʒənt|n|dung dịch tẩy quần áo||
-mop|mɑːp|n|chổi lau nhà||
-napkin|ˈnæpkɪn|n|khăn ăn||
-oven|ˈʌvən|n|lò nướng||
-pantry|ˈpæntri|n|phòng để thức ăn, phòng ăn||
-patio|ˈpæt̬ioʊ|n|hiên, sân hè||
-pillow|ˈpɪloʊ|n|gối||
-roof|ruːf|n|mái nhà||
-rubber gloves|ˈrʌbɚ ˌɡlʌv|n|găng tay cao su||
-rug|rʌɡ|n|thảm trải sàn||
-scrub brush|ˈskrʌbɪŋ ˌbrʌʃ|n|bàn chải cọ||
-shower|ˈʃaʊɚ|n|vòi hoa sen||
-sink|sɪŋk|n|bồn rửa, chậu rửa mặt||
-sponge|spʌndʒ|n|miếng bọt biển||
-squeegee mop|ˈskwiːdʒiː ˌmɑːp|n|chổi lau nhà dẹt||
-stove|stoʊv|n|bếp lò||
-toaster|ˈtoʊstɚ|n|máy nướng bánh mỳ||
-toilet|ˈtɔɪlət|n|bồn cầu||
-towel|taʊəl|n|khăn vải||
-trash can|ˈtræʃ ˌkæn|n|thùng rác||
-wardrobe|ˈwɔːrdroʊb|n|tủ quần áo||
-washing machine|ˈwɑːʃɪŋ məˌʃiːn|n|máy giặt||`},
+accommodati on|əˌkɑːməˈdeɪʃən|n|chỗ ở|We need accommodation in Hanoi.|Chúng tôi cần chỗ ở ở Hà Nội.
+armchair|ˈɑːrmtʃer|n|ghế bành, ghế có tựa tay|Grandpa sits in the armchair.|Ông ngồi trên ghế bành.
+attic|ˈæt̬ɪk|n|tum, gác mái|Old boxes are in the attic.|Những cái hộp cũ ở trên gác mái.
+balcony|ˈbælkəni|n|ban công|We eat breakfast on the balcony.|Chúng tôi ăn sáng ngoài ban công.
+basement|ˈbeɪsmənt|n|tầng hầm, nền móng|The basement is cold.|Tầng hầm rất lạnh.
+bathtub|ˈbæθtʌb|n|bồn tắm|The bathtub is full of water.|Bồn tắm đầy nước.
+bedroom|ˈbedruːm|n|phòng ngủ|My bedroom is small.|Phòng ngủ của tôi nhỏ.
+bleach|bliːtʃ|n|chất tẩy trắng|Do not drink bleach.|Đừng uống chất tẩy trắng.
+broom|bruːm|n|cái chổi|I sweep the floor with a broom.|Tôi quét sàn bằng chổi.
+bucket|ˈbʌkɪt|n|xô|The bucket is full of water.|Cái xô đầy nước.
+chimney|ˈtʃɪmni|n|ống khói|Smoke comes from the chimney.|Khói bay ra từ ống khói.
+closet|ˈklɑːzət|n|phòng để đồ, phòng kho|My shoes are in the closet.|Giày của tôi ở trong tủ.
+cloth|klɑːθ|n|miếng vải, mảnh vải|I wipe the table with a cloth.|Tôi lau bàn bằng một miếng vải.
+cottage|ˈkɑːt̬ɪdʒ|n|nhà tranh|They live in a small cottage.|Họ sống trong một ngôi nhà nhỏ.
+couch|kaʊtʃ|n|ghế dài, trường kỷ, đi văng|The cat sleeps on the couch.|Con mèo ngủ trên ghế dài.
+counter|ˈkaʊnt̬ɚ|n|kệ bếp|The milk is on the counter.|Sữa ở trên kệ bếp.
+doorstep|ˈdɔːrstep|n|ngưỡng cửa, bậc cửa ra vào|A box is on the doorstep.|Một cái hộp ở trước bậc cửa.
+doorway|ˈdɔːrweɪ|n|lối ra vào sát cửa|He stands in the doorway.|Anh ấy đứng ở lối cửa.
+dustpan|ˈdʌstpæn|n|xẻng hốt rác|I need a dustpan and a broom.|Tôi cần một cái hốt rác và cái chổi.
+entrance|ˈentrəns|n|lối vào, cổng vào|The entrance is on the left.|Lối vào ở bên trái.
+garage|ɡəˈrɑːʒ|n|ga ra, hầm để xe|The car is in the garage.|Xe hơi ở trong ga ra.
+hose|hoʊz|n|ống cao su dài|He waters the garden with a hose.|Anh ấy tưới vườn bằng vòi.
+iron|aɪrn|n|bàn là, máy ủi|I use an iron on my shirt.|Tôi dùng bàn là để ủi áo sơ mi.
+ironing board|ˈaɪrnɪŋ ˌbɔːrd|n|bàn để là quần áo|I put the ironing board in the bedroom.|Tôi để bàn là quần áo trong phòng ngủ.
+kettle|ˈket̬əl|n|ấm đun nước|The kettle is on the stove.|Ấm đun nước ở trên bếp.
+laundry basket|ˈlɑːndri ˌbæskɪt|n|giỏ đựng quần áo|The laundry basket is full.|Giỏ đựng quần áo đã đầy.
+laundry detergent|ˈlɑːndri dɪˌtɝːdʒənt|n|dung dịch tẩy quần áo|We need more laundry detergent.|Chúng ta cần thêm dung dịch tẩy quần áo.
+mop|mɑːp|n|chổi lau nhà|She uses a mop to clean the floor.|Cô ấy dùng chổi lau nhà để lau sàn.
+napkin|ˈnæpkɪn|n|khăn ăn|Please give me a napkin.|Làm ơn đưa tôi một cái khăn ăn.
+oven|ˈʌvən|n|lò nướng|The oven is very hot.|Lò nướng rất nóng.
+pantry|ˈpæntri|n|phòng để thức ăn, phòng ăn|The rice is in the pantry.|Gạo ở trong phòng để thức ăn.
+patio|ˈpæt̬ioʊ|n|hiên, sân hè|We eat dinner on the patio.|Chúng tôi ăn tối ngoài hiên.
+pillow|ˈpɪloʊ|n|gối|My pillow is soft.|Gối của tôi rất mềm.
+roof|ruːf|n|mái nhà|The cat is on the roof.|Con mèo ở trên mái nhà.
+rubber gloves|ˈrʌbɚ ˌɡlʌv|n|găng tay cao su|I wear rubber gloves to wash dishes.|Tôi đeo găng tay cao su để rửa bát.
+rug|rʌɡ|n|thảm trải sàn|The rug is in the living room.|Tấm thảm ở trong phòng khách.
+scrub brush|ˈskrʌbɪŋ ˌbrʌʃ|n|bàn chải cọ|Use a scrub brush on the floor.|Hãy dùng bàn chải cọ để cọ sàn.
+shower|ˈʃaʊɚ|n|vòi hoa sen|I take a shower every morning.|Tôi tắm vòi sen mỗi sáng.
+sink|sɪŋk|n|bồn rửa, chậu rửa mặt|The dishes are in the sink.|Bát đĩa ở trong bồn rửa.
+sponge|spʌndʒ|n|miếng bọt biển|I wash the cup with a sponge.|Tôi rửa cái cốc bằng miếng bọt biển.
+squeegee mop|ˈskwiːdʒiː ˌmɑːp|n|chổi lau nhà dẹt|The squeegee mop is by the door.|Chổi lau nhà dẹt ở cạnh cửa.
+stove|stoʊv|n|bếp lò|She cooks soup on the stove.|Cô ấy nấu súp trên bếp.
+toaster|ˈtoʊstɚ|n|máy nướng bánh mỳ|The toaster is new.|Máy nướng bánh mỳ còn mới.
+toilet|ˈtɔɪlət|n|bồn cầu|The toilet is clean.|Bồn cầu sạch sẽ.
+towel|taʊəl|n|khăn vải|I need a clean towel.|Tôi cần một cái khăn sạch.
+trash can|ˈtræʃ ˌkæn|n|thùng rác|Put it in the trash can.|Hãy bỏ nó vào thùng rác.
+wardrobe|ˈwɔːrdroʊb|n|tủ quần áo|My clothes are in the wardrobe.|Quần áo của tôi ở trong tủ quần áo.
+washing machine|ˈwɑːʃɪŋ məˌʃiːn|n|máy giặt|The washing machine is broken.|Máy giặt bị hỏng rồi.`},
 {id:'body', name:'Bộ phận cơ thể', raw:`
-ankle|ˈæŋkəl|n|mắt cá chân||
-arm|ɑːrm|n|cánh tay||
-armpit|ˈɑːrmpɪt|n|nách||
-beard|bɪrd|n|râu||
-breast|brest|n|ngực, vú (phụ nữ)||
-calf|kæf|n|bắp chân||
-cheek|tʃiːk|n|má||
-chest|tʃest|n|ngực (chung)||
-chin|tʃɪn|n|cằm||
-earlobe|ˈɪrloʊb|n|dái tai||
-elbow|ˈelboʊ|n|khuỷu tay||
-eyebrow|ˈaɪbraʊ|n|lông mày||
-eyelash|ˈaɪlæʃ|n|lông mi||
-eyelid|ˈaɪlɪd|n|mí mắt||
-face|feɪs|n|gương mặt||
-finger|ˈfɪŋɡɚ|n|ngón tay||
-forearm|ˈfɔːrɑːrm|n|cẳng tay||
-forehead|ˈfɑːrɪd|n|trán||
-gum|ɡʌm|n|nướu, lợi||
-heel|hiːl|n|gót chân||
-hip|hɪp|n|hông||
-index finger|ˈɪndeks ˌfɪŋɡɚ|n|ngón tay trỏ||
-jaw|dʒɑː|n|hàm, quai hàm||
-knee|niː|n|đầu gối||
-knuckle|ˈnʌkəl|n|khớp đốt ngón tay (đặc biệt là đoạn nối giữa ngón tay và bàn tay)||
-leg|leɡ|n|chân||
-lip|lɪp|n|môi||
-mouth|maʊθ|n|miệng||
-mustache|ˈmʌstæʃ|n|râu mép, ria||`},
+ankle|ˈæŋkəl|n|mắt cá chân|I hurt my ankle.|Tôi bị đau mắt cá chân.
+arm|ɑːrm|n|cánh tay|He has a strong arm.|Anh ấy có cánh tay khỏe.
+armpit|ˈɑːrmpɪt|n|nách|My armpit is wet.|Nách của tôi bị ướt.
+beard|bɪrd|n|râu|My father has a beard.|Bố tôi có bộ râu.
+breast|brest|n|ngực, vú (phụ nữ)|She has a pain in her breast.|Cô ấy bị đau ở ngực.
+calf|kæf|n|bắp chân|My calf hurts after running.|Bắp chân tôi đau sau khi chạy.
+cheek|tʃiːk|n|má|She kissed me on the cheek.|Cô ấy hôn lên má tôi.
+chest|tʃest|n|ngực (chung)|He has a big chest.|Anh ấy có bộ ngực to.
+chin|tʃɪn|n|cằm|He touched his chin.|Anh ấy chạm vào cằm.
+earlobe|ˈɪrloʊb|n|dái tai|She has a small earlobe.|Cô ấy có dái tai nhỏ.
+elbow|ˈelboʊ|n|khuỷu tay|My elbow hurts.|Khuỷu tay của tôi đau.
+eyebrow|ˈaɪbraʊ|n|lông mày|She has thick eyebrows.|Cô ấy có lông mày dày.
+eyelash|ˈaɪlæʃ|n|lông mi|She has long eyelashes.|Cô ấy có lông mi dài.
+eyelid|ˈaɪlɪd|n|mí mắt|My eyelid is red.|Mí mắt của tôi bị đỏ.
+face|feɪs|n|gương mặt|Wash your face.|Hãy rửa mặt đi.
+finger|ˈfɪŋɡɚ|n|ngón tay|I cut my finger.|Tôi bị đứt ngón tay.
+forearm|ˈfɔːrɑːrm|n|cẳng tay|He has a tattoo on his forearm.|Anh ấy có hình xăm trên cẳng tay.
+forehead|ˈfɑːrɪd|n|trán|She has a small forehead.|Cô ấy có cái trán nhỏ.
+gum|ɡʌm|n|nướu, lợi|My gum is sore.|Nướu của tôi bị đau.
+heel|hiːl|n|gót chân|My heel hurts.|Gót chân của tôi đau.
+hip|hɪp|n|hông|She hurt her hip.|Cô ấy bị đau hông.
+index finger|ˈɪndeks ˌfɪŋɡɚ|n|ngón tay trỏ|Point with your index finger.|Hãy chỉ bằng ngón tay trỏ.
+jaw|dʒɑː|n|hàm, quai hàm|His jaw hurts.|Hàm của anh ấy đau.
+knee|niː|n|đầu gối|I hurt my knee.|Tôi bị đau đầu gối.
+knuckle|ˈnʌkəl|n|khớp đốt ngón tay (đặc biệt là đoạn nối giữa ngón tay và bàn tay)|He hit his knuckle on the door.|Anh ấy đập khớp ngón tay vào cửa.
+leg|leɡ|n|chân|My leg is tired.|Chân tôi mệt.
+lip|lɪp|n|môi|She has red lips.|Cô ấy có đôi môi đỏ.
+mouth|maʊθ|n|miệng|Open your mouth.|Hãy há miệng ra.
+mustache|ˈmʌstæʃ|n|râu mép, ria|He has a black mustache.|Anh ấy có bộ ria đen.`},
 {id:'move', name:'Động tác cơ thể', raw:`
-bend|bend|v|cúi, uốn cong||
-break|breɪk|v|làm vỡ, bẻ gãy||
-carry|ˈkeri|v|mang, vác||
-cartwheel|ˈkɑːrtwiːl|v|nhào lộn||
-catch|kætʃ|v|bắt, đỡ||
-clap|klæp|v|vỗ tay||
-crawl|krɑːl|v|bò, trườn||
-cry|kraɪ|v|khóc lóc||
-dance|dæns|v|nhảy múa, khiêu vũ||
-dive|daɪv|v|nhảy lao xuống nước, lặn||
-drag|dræɡ|v|lôi, kéo||
-drop|drɑːp|v|làm rơi||
-hit|hɪt|v|đánh, va phải||
-hold|hoʊld|v|nắm, giữ||
-jog|dʒɑːɡ|v|chạy bộ||
-jump|dʒʌmp|v|nhảy, giật mình||
-kick|kɪk|v|đá||
-kiss|kɪs|v|hôn||
-kneel|niːl|v|quỳ gối||
-laugh|læf|v|cười lớn||
-lean|liːn|v|dựa, tựa||
-leap|liːp|v|nhảy vọt||
-lie down|laɪ daʊn|v|nằm xuống, ngả lưng||
-lift|lɪft|v|nâng lên||
-look|lʊk|v|nhìn, ngắm||
-march|mɑːrtʃ|v|diễu hành, hành quân||
-point|pɔɪnt|v|chỉ, trỏ||
-pour|pɔːr|v|đổ, rót||
-pull|pʊl|v|kéo||
-punch|pʌntʃ|v|đấm, thọi||
-push|pʊʃ|v|xô đẩy||
-put down|pʊt daʊn|v|đặt xuống||
-run|rʌn|v|chạy||
-sit|sɪt|v|ngồi||
-slip|slɪp|v|trượt, tuột||
-squat|skwɑːt|v|ngồi xổm||
-stand|stænd|v|đứng yên||
-stretch|stretʃ|v|vươn (vai..), ưỡn lưng||
-talk|tɑːk|v|nói chuyện, trò chuyện||
-throw|θroʊ|v|ném, quăng, vứt||
-tiptoe|ˈtɪptoʊ|v|đi nhón chân||
-walk|wɑːk|v|đi bộ||
-wave|weɪv|v|vẫy tay||`},
+bend|bend|v|cúi, uốn cong|Bend your knees.|Hãy cong đầu gối của bạn.
+break|breɪk|v|làm vỡ, bẻ gãy|Don't break the glass.|Đừng làm vỡ cái ly.
+carry|ˈkeri|v|mang, vác|I carry my bag to school.|Tôi mang cặp đến trường.
+cartwheel|ˈkɑːrtwiːl|v|nhào lộn|She can cartwheel on the grass.|Cô ấy có thể nhào lộn trên cỏ.
+catch|kætʃ|v|bắt, đỡ|Catch the ball!|Hãy bắt quả bóng!
+clap|klæp|v|vỗ tay|We clap our hands.|Chúng tôi vỗ tay.
+crawl|krɑːl|v|bò, trườn|The baby can crawl.|Em bé biết bò.
+cry|kraɪ|v|khóc lóc|The baby will cry.|Em bé sẽ khóc.
+dance|dæns|v|nhảy múa, khiêu vũ|They dance at the party.|Họ nhảy múa ở bữa tiệc.
+dive|daɪv|v|nhảy lao xuống nước, lặn|He likes to dive into the pool.|Anh ấy thích lao xuống hồ bơi.
+drag|dræɡ|v|lôi, kéo|He drags the box across the floor.|Anh ấy lôi cái hộp qua sàn nhà.
+drop|drɑːp|v|làm rơi|Don't drop your phone.|Đừng làm rơi điện thoại.
+hit|hɪt|v|đánh, va phải|He hit the ball.|Anh ấy đánh quả bóng.
+hold|hoʊld|v|nắm, giữ|Hold my hand.|Hãy nắm tay tôi.
+jog|dʒɑːɡ|v|chạy bộ|I jog in the park.|Tôi chạy bộ trong công viên.
+jump|dʒʌmp|v|nhảy, giật mình|The dog can jump high.|Con chó có thể nhảy cao.
+kick|kɪk|v|đá|He kicks the ball.|Anh ấy đá quả bóng.
+kiss|kɪs|v|hôn|She kisses her baby.|Cô ấy hôn em bé của mình.
+kneel|niːl|v|quỳ gối|They kneel on the floor.|Họ quỳ gối trên sàn.
+laugh|læf|v|cười lớn|We laugh at the joke.|Chúng tôi cười trước câu chuyện đùa.
+lean|liːn|v|dựa, tựa|Lean on the wall.|Hãy dựa vào tường.
+leap|liːp|v|nhảy vọt|The cat can leap over the fence.|Con mèo có thể nhảy vọt qua hàng rào.
+lie down|laɪ daʊn|v|nằm xuống, ngả lưng|I lie down on the bed.|Tôi nằm xuống giường.
+lift|lɪft|v|nâng lên|Lift the box, please.|Làm ơn nâng cái hộp lên.
+look|lʊk|v|nhìn, ngắm|Look at the sky.|Hãy nhìn lên bầu trời.
+march|mɑːrtʃ|v|diễu hành, hành quân|The soldiers march down the street.|Những người lính diễu hành xuống phố.
+point|pɔɪnt|v|chỉ, trỏ|Point at the picture.|Hãy chỉ vào bức tranh.
+pour|pɔːr|v|đổ, rót|Pour some water into the glass.|Hãy rót ít nước vào ly.
+pull|pʊl|v|kéo|Pull the door.|Hãy kéo cửa.
+punch|pʌntʃ|v|đấm, thọi|He punches the bag.|Anh ấy đấm vào bao cát.
+push|pʊʃ|v|xô đẩy|Push the door.|Hãy đẩy cửa.
+put down|pʊt daʊn|v|đặt xuống|Put down your bag.|Hãy đặt cặp của bạn xuống.
+run|rʌn|v|chạy|I run every morning.|Tôi chạy mỗi buổi sáng.
+sit|sɪt|v|ngồi|Please sit here.|Làm ơn ngồi ở đây.
+slip|slɪp|v|trượt, tuột|Be careful, you might slip.|Cẩn thận, bạn có thể bị trượt.
+squat|skwɑːt|v|ngồi xổm|She can squat for a long time.|Cô ấy có thể ngồi xổm rất lâu.
+stand|stænd|v|đứng yên|Please stand here.|Làm ơn đứng ở đây.
+stretch|stretʃ|v|vươn (vai..), ưỡn lưng|I stretch my arms in the morning.|Tôi vươn vai vào buổi sáng.
+talk|tɑːk|v|nói chuyện, trò chuyện|We talk every day.|Chúng tôi trò chuyện mỗi ngày.
+throw|θroʊ|v|ném, quăng, vứt|Throw me the ball.|Hãy ném quả bóng cho tôi.
+tiptoe|ˈtɪptoʊ|v|đi nhón chân|The boy tiptoes into the room.|Cậu bé đi nhón chân vào phòng.
+walk|wɑːk|v|đi bộ|I walk to school.|Tôi đi bộ đến trường.
+wave|weɪv|v|vẫy tay|She waves at me.|Cô ấy vẫy tay với tôi.`},
 {id:'clothes', name:'Quần áo & phụ kiện', raw:`
-bathrobe|ˈbæθroʊb|n|áo choàng tắm||
-belt|belt|n|thắt lưng||
-blazer|ˈbleɪzɚ|n|áo khoác dáng dài||
-boot|buːt|n|ủng, giày cao cổ||
-bow tie|ˌboʊ ˈtaɪ|n|nơ con bướm||
-cap|kæp|n|mũ lưỡi trai||
-cardigan|ˈkɑːrdɪɡən|n|áo đan len||
-cargo pants|ˈkɑːrɡoʊ ˌpænts|n|quần túi hộp||
-flip-flop|ˈflɪpflɑːp|n|dép tông, dép xỏ ngón||
-glasses|ˈɡlæsəz|n|kính mắt||
-gloves|ɡlʌv|n|găng tay, bao tay||
-handbag|ˈhændbæɡ|n|túi xách||
-Hawaiian shirt|həˌwaɪən ˈʃɝːt|n|áo sơ mi Hawaii||
-jacket|ˈdʒækɪt|n|áo vét||
-jeans|dʒiːnz|n|quần bò jeans||
-jumper|ˈdʒʌmpɚ|n|áo len chui đầu||
-polo shirt|ˈpoʊloʊ ˌʃɝːt|n|áo polo có cổ||
-pullover|ˈpʊlˌoʊvɚ|n|áo len chui đầu||
-scarf|skɑːrf|n|khăn choàng||
-shirt|ʃɝːt|n|áo sơ mi||
-shorts|ʃɔːrts|n|quần sóoc, quần đùi||
-singlet|ˈsɪŋɡlət|n|áo lót, áo may ô||
-socks|sɑːk|n|tất, vớ||
-suit|suːt|n|bộ com lê, Âu phục||
-sunglasses|ˈsʌnˌɡlæsɪz|n|kính râm, kính mát||
-sweater|ˈswet̬ɚ|n|áo len dài tay||
-swimsuit|ˈswɪmsuːt|n|đồ tắm, đồ bơi||
-t-shirt|ˈtiːʃɝːt|n|áo phông||
-tie|taɪ|n|cà vạt, nơ||
-trench coat|ˈtrentʃ ˌkoʊt|n|áo choàng||
-umbrella|ʌmˈbrelə|n|ô||
-underpants|ˈʌndɚpænts|n|đồ lót nam||
-vest|vest|n|áo gi-lê, áo vét||
-waistcoat|ˈweskət|n|áo gi-lê (áo chẽn)||
-wallet|ˈwɑːlɪt|n|ví, bóp||
-watch|wɑːtʃ|n|đồng hồ||`},
+bathrobe|ˈbæθroʊb|n|áo choàng tắm|He wears a bathrobe after the shower.|Anh ấy mặc áo choàng tắm sau khi tắm.
+belt|belt|n|thắt lưng|I need a new belt.|Tôi cần một cái thắt lưng mới.
+blazer|ˈbleɪzɚ|n|áo khoác dáng dài|He wears a blue blazer.|Anh ấy mặc áo khoác dáng dài màu xanh.
+boot|buːt|n|ủng, giày cao cổ|My boot is wet.|Chiếc ủng của tôi bị ướt.
+bow tie|ˌboʊ ˈtaɪ|n|nơ con bướm|He wears a red bow tie.|Anh ấy đeo nơ con bướm màu đỏ.
+cap|kæp|n|mũ lưỡi trai|He wears a cap.|Anh ấy đội mũ lưỡi trai.
+cardigan|ˈkɑːrdɪɡən|n|áo đan len|She wears a warm cardigan.|Cô ấy mặc áo đan len ấm.
+cargo pants|ˈkɑːrɡoʊ ˌpænts|n|quần túi hộp|I like my cargo pants.|Tôi thích quần túi hộp của mình.
+flip-flop|ˈflɪpflɑːp|n|dép tông, dép xỏ ngón|I wear flip-flops at the beach.|Tôi đi dép tông ở bãi biển.
+glasses|ˈɡlæsəz|n|kính mắt|She wears glasses.|Cô ấy đeo kính mắt.
+gloves|ɡlʌv|n|găng tay, bao tay|I wear gloves in winter.|Tôi đeo găng tay vào mùa đông.
+handbag|ˈhændbæɡ|n|túi xách|Her handbag is red.|Túi xách của cô ấy màu đỏ.
+Hawaiian shirt|həˌwaɪən ˈʃɝːt|n|áo sơ mi Hawaii|He wears a Hawaiian shirt.|Anh ấy mặc áo sơ mi Hawaii.
+jacket|ˈdʒækɪt|n|áo vét|Put on your jacket.|Hãy mặc áo vét vào.
+jeans|dʒiːnz|n|quần bò jeans|I wear jeans to school.|Tôi mặc quần bò đến trường.
+jumper|ˈdʒʌmpɚ|n|áo len chui đầu|This jumper is warm.|Chiếc áo len này ấm.
+polo shirt|ˈpoʊloʊ ˌʃɝːt|n|áo polo có cổ|He wears a white polo shirt.|Anh ấy mặc áo polo trắng.
+pullover|ˈpʊlˌoʊvɚ|n|áo len chui đầu|I wear a pullover in winter.|Tôi mặc áo len chui đầu vào mùa đông.
+scarf|skɑːrf|n|khăn choàng|She wears a scarf.|Cô ấy quàng khăn choàng.
+shirt|ʃɝːt|n|áo sơ mi|This shirt is new.|Cái áo sơ mi này mới.
+shorts|ʃɔːrts|n|quần sóoc, quần đùi|I wear shorts in summer.|Tôi mặc quần đùi vào mùa hè.
+singlet|ˈsɪŋɡlət|n|áo lót, áo may ô|He wears a singlet under his shirt.|Anh ấy mặc áo may ô bên trong áo sơ mi.
+socks|sɑːk|n|tất, vớ|My socks are wet.|Tất của tôi bị ướt.
+suit|suːt|n|bộ com lê, Âu phục|He wears a suit to work.|Anh ấy mặc com lê đi làm.
+sunglasses|ˈsʌnˌɡlæsɪz|n|kính râm, kính mát|I wear sunglasses in the sun.|Tôi đeo kính râm khi trời nắng.
+sweater|ˈswet̬ɚ|n|áo len dài tay|This sweater is warm.|Chiếc áo len này ấm.
+swimsuit|ˈswɪmsuːt|n|đồ tắm, đồ bơi|She wears a swimsuit at the pool.|Cô ấy mặc đồ bơi ở hồ bơi.
+t-shirt|ˈtiːʃɝːt|n|áo phông|I like this t-shirt.|Tôi thích chiếc áo phông này.
+tie|taɪ|n|cà vạt, nơ|He wears a blue tie.|Anh ấy đeo cà vạt xanh.
+trench coat|ˈtrentʃ ˌkoʊt|n|áo choàng|She wears a long trench coat.|Cô ấy mặc áo choàng dài.
+umbrella|ʌmˈbrelə|n|ô|Take your umbrella.|Hãy mang theo ô của bạn.
+underpants|ˈʌndɚpænts|n|đồ lót nam|He buys new underpants.|Anh ấy mua đồ lót mới.
+vest|vest|n|áo gi-lê, áo vét|He wears a vest.|Anh ấy mặc áo gi-lê.
+waistcoat|ˈweskət|n|áo gi-lê (áo chẽn)|He wears a waistcoat.|Anh ấy mặc áo gi-lê.
+wallet|ˈwɑːlɪt|n|ví, bóp|My wallet is in my bag.|Ví của tôi ở trong cặp.
+watch|wɑːtʃ|n|đồng hồ|I have a new watch.|Tôi có một chiếc đồng hồ mới.`},
 {id:'color', name:'Màu sắc & hình dạng', raw:`
-yellow|ˈjeloʊ|n, adj|màu vàng||
-white|waɪt|n, adj|màu trắng||
-wheat|wiːt|n, adj|màu vàng đất||
-teal|tiːl|n, adj|màu xanh mòng két (xanh lam pha xanh lục đậm)||
-silver|ˈsɪlvɚ|n, adj|màu bạc||
-sanguine|ˈsæŋɡwɪn|n, adj|đỏ thẫm (như máu)||
-red|red|n, adj|màu đỏ||
-purple|ˈpɝːpəl|n, adj|màu tím||
-navy (blue)|ˈneɪvi ˈbluː|n, adj|màu xanh tím than||
-maroon|məˈruːn|n, adj|màu nâu sẫm, màu hạt dẻ||
-magenta|məˈdʒentə|n, adj|màu hồng sẫm||
-ivory|ˈaɪvɚi|n, adj|màu trắng ngà||
-indigo|ˈɪndɪɡoʊ|n, adj|màu chàm||
-green|ɡriːn|n, adj|xanh dương, xanh lá cây||
-gray|ɡreɪ|n, adj|màu xám||
-fuchsia|ˈfjuːʃə|n, adj|màu hồng hoa Vân Anh||
-cyan|ˈsaɪən|n, adj|màu xanh lơ||
-crimson|ˈkrɪmzən|n, adj|màu đỏ thẫm||
-coral|ˈkɔːrəl|n, adj|màu hồng san hô||
-charcoal|ˈtʃɑːrkoʊl|n, adj|màu than chì||
-burgundy|ˈbɝːɡəndi|n, adj|màu đỏ rượu, đỏ tía||
-brown|braʊn|n, adj|màu nâu||
-blue|bluː|n, adj|màu xanh lam, xanh nước biển||
-blond|blɑnd|n, adj|vàng hoe||
-black|blæk|n, adj|màu đen||
-beige|beɪʒ|n, adj|màu be||
-azure|ˈæʒɚ|n, adj|màu xanh da trời, xanh ngắt||
-aquamarine|ˌækwəməˈriːn|n, adj|màu xanh ngọc||
-arrow|ˈeroʊ|n|hình mũi tên||
-circle|ˈsɝːkəl|n|đường tròn||
-cone|koʊn|n|hình nón||
-crescent|ˈkresənt|n|hình lưỡi liềm||
-cross|krɑːs|n|hình chữ thập||
-cube|kjuːb|n|hình lập phương, hình khối||
-curve|wedʒ|n|đường cong||
-cylinder|ˈsɪlɪndɚ|n|hình trụ||
-decagon|ˈdekəɡɑːn|n|hình mười cạnh||
-diamond|ˈdaɪəmənd|n|hình kim cương||
-ellipse|iˈlɪps|n|hình Elip||
-equilateral triangle|ˌikwəˈlæt̬ərəl ˈtrɑɪˌæŋɡəl|n|tam giác đều||
-heart|hɑːrt|n|hình trái tim||
-heptagon|ˈheptəɡɑːn|n|hình bảy cạnh||
-hexagon|ˈheksəɡɑːn|n|hình lục giác (sáu cạnh)||
-isosceles triangle|aɪˌsɑːsəliːz ˈtraɪæŋ ɡəl|n|tam giác cân||
-nonagon|ˈɑːktəɡɑːn|n|hình cửu giác (chín cạnh)||
-octagon|ˈɑːktəɡɑːn|n|hình bát giác||
-orb|ɔːrb|n|hình cầu, quả cầu||
-oval|ˈoʊvəl|n|hình trái xoan, hình bầu dục||
-parallelogram|ˌperəˈleləɡræm|n|hình bình hành||
-pentagon|ˈpentəɡən|n|hình ngũ giác (năm cạnh)||
-pyramid|ˈpɪrəmɪd|n|hình chóp||
-rectangle|ˈrektæŋɡəl|n|hình chữ nhật||
-rhombus|ˈrɑːmbaɪ|n|hình thoi||
-right-angled triangle|ˌraɪtæŋɡəld ˈtraɪæŋ ɡəl|n|tam giác vuông||
-scalene triangle|ˌskeɪliːn ˈtraɪæŋɡəl|n|tam giác thường||
-semicircle|ˈsemiˌsɝːkəl|n|hình bán cầu||
-sphere|sfɪr|n|hình cầu, khối cầu||
-square|skwer|n|hình vuông||
-star|stɑːr|n|hình ngôi sao||
-trapezoid|ˈtræpɪzɔɪd|n|hình thang||
-triangle|ˈtraɪæŋɡəl|n|hình tam giác||
-wedge|wedʒ|n|hình chữ V||`},
+yellow|ˈjeloʊ|n, adj|màu vàng|The sun is yellow.|Mặt trời màu vàng.
+white|waɪt|n, adj|màu trắng|The snow is white.|Tuyết màu trắng.
+wheat|wiːt|n, adj|màu vàng đất|The field is wheat in autumn.|Cánh đồng có màu vàng đất vào mùa thu.
+teal|tiːl|n, adj|màu xanh mòng két (xanh lam pha xanh lục đậm)|The sea looks teal today.|Hôm nay biển có màu xanh mòng két.
+silver|ˈsɪlvɚ|n, adj|màu bạc|She has a silver ring.|Cô ấy có chiếc nhẫn màu bạc.
+sanguine|ˈsæŋɡwɪn|n, adj|đỏ thẫm (như máu)|The sky was sanguine at sunset.|Bầu trời đỏ thẫm lúc hoàng hôn.
+red|red|n, adj|màu đỏ|I like the red car.|Tôi thích chiếc xe màu đỏ.
+purple|ˈpɝːpəl|n, adj|màu tím|She wears a purple dress.|Cô ấy mặc váy màu tím.
+navy (blue)|ˈneɪvi ˈbluː|n, adj|màu xanh tím than|He wears a navy blue shirt.|Anh ấy mặc áo sơ mi xanh tím than.
+maroon|məˈruːn|n, adj|màu nâu sẫm, màu hạt dẻ|My bag is maroon.|Cặp của tôi màu nâu sẫm.
+magenta|məˈdʒentə|n, adj|màu hồng sẫm|The flower is magenta.|Bông hoa màu hồng sẫm.
+ivory|ˈaɪvɚi|n, adj|màu trắng ngà|The cat is ivory.|Con mèo màu trắng ngà.
+indigo|ˈɪndɪɡoʊ|n, adj|màu chàm|The sky is indigo at night.|Bầu trời màu chàm vào ban đêm.
+green|ɡriːn|n, adj|xanh dương, xanh lá cây|The grass is green.|Cỏ màu xanh lá.
+gray|ɡreɪ|n, adj|màu xám|The sky is gray today.|Hôm nay bầu trời màu xám.
+fuchsia|ˈfjuːʃə|n, adj|màu hồng hoa Vân Anh|She has a fuchsia scarf.|Cô ấy có chiếc khăn màu hồng Vân Anh.
+cyan|ˈsaɪən|n, adj|màu xanh lơ|The water is cyan.|Nước có màu xanh lơ.
+crimson|ˈkrɪmzən|n, adj|màu đỏ thẫm|The rose is crimson.|Bông hồng màu đỏ thẫm.
+coral|ˈkɔːrəl|n, adj|màu hồng san hô|Her dress is coral.|Váy của cô ấy màu hồng san hô.
+charcoal|ˈtʃɑːrkoʊl|n, adj|màu than chì|He has a charcoal coat.|Anh ấy có chiếc áo khoác màu than chì.
+burgundy|ˈbɝːɡəndi|n, adj|màu đỏ rượu, đỏ tía|I like her burgundy bag.|Tôi thích túi màu đỏ rượu của cô ấy.
+brown|braʊn|n, adj|màu nâu|My dog is brown.|Con chó của tôi màu nâu.
+blue|bluː|n, adj|màu xanh lam, xanh nước biển|The sea is blue.|Biển màu xanh.
+blond|blɑnd|n, adj|vàng hoe|She has blond hair.|Cô ấy có mái tóc vàng hoe.
+black|blæk|n, adj|màu đen|I have a black cat.|Tôi có một con mèo đen.
+beige|beɪʒ|n, adj|màu be|The wall is beige.|Bức tường màu be.
+azure|ˈæʒɚ|n, adj|màu xanh da trời, xanh ngắt|The sky is azure.|Bầu trời màu xanh da trời.
+aquamarine|ˌækwəməˈriːn|n, adj|màu xanh ngọc|The water is aquamarine.|Nước có màu xanh ngọc.
+arrow|ˈeroʊ|n|hình mũi tên|Follow the arrow.|Hãy đi theo mũi tên.
+circle|ˈsɝːkəl|n|đường tròn|Draw a circle.|Hãy vẽ một hình tròn.
+cone|koʊn|n|hình nón|The hat is a cone.|Cái mũ có hình nón.
+crescent|ˈkresənt|n|hình lưỡi liềm|The moon is a crescent.|Mặt trăng có hình lưỡi liềm.
+cross|krɑːs|n|hình chữ thập|Draw a cross here.|Hãy vẽ một hình chữ thập ở đây.
+cube|kjuːb|n|hình lập phương, hình khối|The box is a cube.|Cái hộp có hình lập phương.
+curve|wedʒ|n|đường cong|The road has a curve.|Con đường có một khúc cong.
+cylinder|ˈsɪlɪndɚ|n|hình trụ|The can is a cylinder.|Cái lon có hình trụ.
+decagon|ˈdekəɡɑːn|n|hình mười cạnh|A decagon has ten sides.|Hình mười cạnh có mười cạnh.
+diamond|ˈdaɪəmənd|n|hình kim cương|Draw a diamond on the paper.|Hãy vẽ hình kim cương lên giấy.
+ellipse|iˈlɪps|n|hình Elip|Draw an ellipse.|Hãy vẽ một hình elip.
+equilateral triangle|ˌikwəˈlæt̬ərəl ˈtrɑɪˌæŋɡəl|n|tam giác đều|This is an equilateral triangle.|Đây là một tam giác đều.
+heart|hɑːrt|n|hình trái tim|She draws a heart.|Cô ấy vẽ một hình trái tim.
+heptagon|ˈheptəɡɑːn|n|hình bảy cạnh|A heptagon has seven sides.|Hình bảy cạnh có bảy cạnh.
+hexagon|ˈheksəɡɑːn|n|hình lục giác (sáu cạnh)|A hexagon has six sides.|Hình lục giác có sáu cạnh.
+isosceles triangle|aɪˌsɑːsəliːz ˈtraɪæŋ ɡəl|n|tam giác cân|This is an isosceles triangle.|Đây là một tam giác cân.
+nonagon|ˈɑːktəɡɑːn|n|hình cửu giác (chín cạnh)|A nonagon has nine sides.|Hình cửu giác có chín cạnh.
+octagon|ˈɑːktəɡɑːn|n|hình bát giác|A stop sign is an octagon.|Biển báo dừng là hình bát giác.
+orb|ɔːrb|n|hình cầu, quả cầu|The orb is bright.|Quả cầu rất sáng.
+oval|ˈoʊvəl|n|hình trái xoan, hình bầu dục|The mirror is an oval.|Cái gương có hình bầu dục.
+parallelogram|ˌperəˈleləɡræm|n|hình bình hành|Draw a parallelogram.|Hãy vẽ một hình bình hành.
+pentagon|ˈpentəɡən|n|hình ngũ giác (năm cạnh)|A pentagon has five sides.|Hình ngũ giác có năm cạnh.
+pyramid|ˈpɪrəmɪd|n|hình chóp|The pyramid is very old.|Kim tự tháp rất cổ.
+rectangle|ˈrektæŋɡəl|n|hình chữ nhật|The door is a rectangle.|Cánh cửa có hình chữ nhật.
+rhombus|ˈrɑːmbaɪ|n|hình thoi|Draw a rhombus.|Hãy vẽ một hình thoi.
+right-angled triangle|ˌraɪtæŋɡəld ˈtraɪæŋ ɡəl|n|tam giác vuông|This is a right-angled triangle.|Đây là một tam giác vuông.
+scalene triangle|ˌskeɪliːn ˈtraɪæŋɡəl|n|tam giác thường|This is a scalene triangle.|Đây là một tam giác thường.
+semicircle|ˈsemiˌsɝːkəl|n|hình bán cầu|Draw a semicircle.|Hãy vẽ một hình bán nguyệt.
+sphere|sfɪr|n|hình cầu, khối cầu|The ball is a sphere.|Quả bóng có hình cầu.
+square|skwer|n|hình vuông|The window is a square.|Cửa sổ có hình vuông.
+star|stɑːr|n|hình ngôi sao|Draw a star.|Hãy vẽ một ngôi sao.
+trapezoid|ˈtræpɪzɔɪd|n|hình thang|Draw a trapezoid.|Hãy vẽ một hình thang.
+triangle|ˈtraɪæŋɡəl|n|hình tam giác|A triangle has three sides.|Hình tam giác có ba cạnh.
+wedge|wedʒ|n|hình chữ V|The cheese is a wedge.|Miếng phô mai có hình chữ V.`},
 {id:'fruit', name:'Rau quả', raw:`
-apple|ˈæpəl|n|quả táo||
-apricot|ˈeɪprɪkɑːt|n|quả mơ||
-artichoke|ˈɑːrt̬ətʃoʊk|n|Atiso||
-asparagus|əˈsperəɡəs|n|măng tây||
-avocado|ˌɑːvəˈkɑːdoʊ|n|quả bơ||
-banana|bəˈnænə|n|quả chuối||
-bean|biːn|n|hạt đậu||
-beetroot|ˈbiːtruːt|n|củ cải đường, củ dền||
-blueberry|ˈbluːˌbəri|n|việt quất||
-broccoli|ˈbrɑːkəli|n|bông cải xanh||
-Brussels sprout|ˌbrʌsəlz ˈspraʊt|n|cải Brussel||
-cabbage|ˈkæbɪdʒ|n|bắp cải||
-carrot|ˈkerət|n|củ cà rốt||
-cauliflower|ˈkɑːləˌflaʊɚ|n|súp lơ||
-celery|ˈselɚi|n|cần tây||
-cherry|ˈtʃeri|n|quả anh đào||
-chili pepper|ˈtʃɪli ˌpepər|n|ớt đỏ||
-coconut|ˈkoʊkənʌt|n|quả dừa||
-corn|kɔːrn|n|ngô, bắp||
-courgette|kʊrˈʒet|n|bí ngòi (còn gọi là zucchini)||
-cucumber|ˈkjuːkʌmbɚ|n|dưa chuột||
-eggplant|ˈeɡplænt|n|cà tím, cà bung||
-garlic|ˈɡɑːrlɪk|n|tỏi||
-ginger|ˈdʒɪndʒɚ|n|gừng||
-grape|ɡreɪp|n|nho||
-grapefruit|ˈɡreɪpfruːt|n|bưởi chùm (lai giữa cam và bưởi)||
-jackfruit|ˈdʒækfruːt|n|quả mít||
-kiwi|ˈkiːwiː|n|quả kiwi (dương đào)||
-leek|liːk|n|tỏi tây||
-lemon|ˈlemən|n|chanh vàng||
-lettuce|ˈlet̬ɪs|n|ra diếp||
-lime|laɪm|n|chanh xanh||
-mandarin|ˈmændɚɪn|n|quả quýt||
-mango|ˈmæŋɡoʊ|n|quả xoài||
-melon|ˈmelən|n|quả dưa||
-mushroom|ˈmʌʃruːm|n|nấm||
-nectarine|ˌnektəˈriːn|n|quả xuân đào||
-onion|ˈʌnjən|n|củ hành||
-orange|ˈɔːrɪndʒ|n, adj|quả cam; màu cam||
-papaya|pəˈpaɪə|n|quả đu đủ||
-pea|piː|n|đậu Hà Lan||
-peach|piːtʃ|n|quả đào||
-pear|per|n|quả lê||
-pineapple|ˈpaɪnˌæpəl|n|quả dứa||
-plum|plʌm|n|quả mận||
-pomegranate|ˈpɑːməˌɡrænɪt|n|quả lưu||
-potato|pəˈteɪt̬oʊ|n|củ khoai tây||
-pumpkin|ˈpʌmpkɪn|n|bí ngô, bí đỏ||
-radish|ˈrædɪʃ|n|củ cải đỏ||
-raspberry|ˈræzberi|n|quả mâm xôi||
-spinach|ˈspɪnɪtʃ|n|rau bina||
-spring Onion|ˌsprɪŋ ˈʌnjən|n|hành lá xanh||
-squash|skwɑːʃ|n|cây bí, quả bí||
-starfruit|ˈstɑːrfruːt|n|quả khế||
-strawberry|ˈstrɑːˌberi|n|quả dâu tây||
-sweet potato|ˌswiːt pəˈteɪt̬oʊ|n|khoai lang||
-tomato|təˈmeɪt̬oʊ|n|quả cà chua||
-turnip|ˈtɝːnɪp|n|củ cải trắng||
-watermelon|ˈwɑːt̬ɚˌmelən|n|dưa hấu||`},
+apple|ˈæpəl|n|quả táo|I eat an apple every day.|Tôi ăn một quả táo mỗi ngày.
+apricot|ˈeɪprɪkɑːt|n|quả mơ|The apricot is sweet.|Quả mơ rất ngọt.
+artichoke|ˈɑːrt̬ətʃoʊk|n|Atiso|I like artichoke soup.|Tôi thích súp atiso.
+asparagus|əˈsperəɡəs|n|măng tây|We have asparagus for dinner.|Chúng tôi ăn măng tây vào bữa tối.
+avocado|ˌɑːvəˈkɑːdoʊ|n|quả bơ|I like avocado.|Tôi thích quả bơ.
+banana|bəˈnænə|n|quả chuối|The monkey eats a banana.|Con khỉ ăn một quả chuối.
+bean|biːn|n|hạt đậu|I eat a bean.|Tôi ăn một hạt đậu.
+beetroot|ˈbiːtruːt|n|củ cải đường, củ dền|She cooks beetroot.|Cô ấy nấu củ dền.
+blueberry|ˈbluːˌbəri|n|việt quất|I like blueberry jam.|Tôi thích mứt việt quất.
+broccoli|ˈbrɑːkəli|n|bông cải xanh|Children don't like broccoli.|Trẻ con không thích bông cải xanh.
+Brussels sprout|ˌbrʌsəlz ˈspraʊt|n|cải Brussel|He doesn't eat Brussels sprouts.|Anh ấy không ăn cải Brussel.
+cabbage|ˈkæbɪdʒ|n|bắp cải|The cabbage is green.|Bắp cải màu xanh.
+carrot|ˈkerət|n|củ cà rốt|The rabbit eats a carrot.|Con thỏ ăn một củ cà rốt.
+cauliflower|ˈkɑːləˌflaʊɚ|n|súp lơ|I cook cauliflower.|Tôi nấu súp lơ.
+celery|ˈselɚi|n|cần tây|I put celery in the soup.|Tôi cho cần tây vào súp.
+cherry|ˈtʃeri|n|quả anh đào|The cherry is red.|Quả anh đào màu đỏ.
+chili pepper|ˈtʃɪli ˌpepər|n|ớt đỏ|This chili pepper is hot.|Quả ớt này rất cay.
+coconut|ˈkoʊkənʌt|n|quả dừa|I drink coconut water.|Tôi uống nước dừa.
+corn|kɔːrn|n|ngô, bắp|We eat corn for lunch.|Chúng tôi ăn ngô vào bữa trưa.
+courgette|kʊrˈʒet|n|bí ngòi (còn gọi là zucchini)|I cook a courgette.|Tôi nấu một quả bí ngòi.
+cucumber|ˈkjuːkʌmbɚ|n|dưa chuột|I like cucumber salad.|Tôi thích salad dưa chuột.
+eggplant|ˈeɡplænt|n|cà tím, cà bung|She cooks eggplant.|Cô ấy nấu cà tím.
+garlic|ˈɡɑːrlɪk|n|tỏi|I add garlic to the soup.|Tôi thêm tỏi vào súp.
+ginger|ˈdʒɪndʒɚ|n|gừng|I like ginger tea.|Tôi thích trà gừng.
+grape|ɡreɪp|n|nho|The grape is sweet.|Quả nho rất ngọt.
+grapefruit|ˈɡreɪpfruːt|n|bưởi chùm (lai giữa cam và bưởi)|I eat grapefruit for breakfast.|Tôi ăn bưởi chùm vào bữa sáng.
+jackfruit|ˈdʒækfruːt|n|quả mít|Jackfruit smells sweet.|Quả mít có mùi thơm ngọt.
+kiwi|ˈkiːwiː|n|quả kiwi (dương đào)|The kiwi is green inside.|Quả kiwi có màu xanh bên trong.
+leek|liːk|n|tỏi tây|I put leek in the soup.|Tôi cho tỏi tây vào súp.
+lemon|ˈlemən|n|chanh vàng|I like lemon tea.|Tôi thích trà chanh vàng.
+lettuce|ˈlet̬ɪs|n|ra diếp|I buy fresh lettuce.|Tôi mua rau diếp tươi.
+lime|laɪm|n|chanh xanh|Add some lime to the water.|Hãy thêm ít chanh xanh vào nước.
+mandarin|ˈmændɚɪn|n|quả quýt|I eat a mandarin.|Tôi ăn một quả quýt.
+mango|ˈmæŋɡoʊ|n|quả xoài|The mango is sweet.|Quả xoài rất ngọt.
+melon|ˈmelən|n|quả dưa|I like melon in summer.|Tôi thích dưa vào mùa hè.
+mushroom|ˈmʌʃruːm|n|nấm|I cook mushroom soup.|Tôi nấu súp nấm.
+nectarine|ˌnektəˈriːn|n|quả xuân đào|The nectarine is juicy.|Quả xuân đào rất mọng nước.
+onion|ˈʌnjən|n|củ hành|I cut an onion.|Tôi thái một củ hành.
+orange|ˈɔːrɪndʒ|n, adj|quả cam; màu cam|I drink orange juice.|Tôi uống nước cam.
+papaya|pəˈpaɪə|n|quả đu đủ|The papaya is orange inside.|Quả đu đủ có màu cam bên trong.
+pea|piː|n|đậu Hà Lan|I eat green peas.|Tôi ăn đậu Hà Lan xanh.
+peach|piːtʃ|n|quả đào|The peach is soft.|Quả đào mềm.
+pear|per|n|quả lê|I eat a pear.|Tôi ăn một quả lê.
+pineapple|ˈpaɪnˌæpəl|n|quả dứa|I like pineapple juice.|Tôi thích nước ép dứa.
+plum|plʌm|n|quả mận|The plum is purple.|Quả mận màu tím.
+pomegranate|ˈpɑːməˌɡrænɪt|n|quả lưu|The pomegranate is red inside.|Quả lựu có màu đỏ bên trong.
+potato|pəˈteɪt̬oʊ|n|củ khoai tây|I eat a potato for dinner.|Tôi ăn một củ khoai tây vào bữa tối.
+pumpkin|ˈpʌmpkɪn|n|bí ngô, bí đỏ|I made a pumpkin soup.|Tôi đã nấu súp bí ngô.
+radish|ˈrædɪʃ|n|củ cải đỏ|The radish is red and small.|Củ cải đỏ nhỏ và có màu đỏ.
+raspberry|ˈræzberi|n|quả mâm xôi|She likes raspberry jam.|Cô ấy thích mứt mâm xôi.
+spinach|ˈspɪnɪtʃ|n|rau bina|Spinach is good for you.|Rau bina tốt cho bạn.
+spring Onion|ˌsprɪŋ ˈʌnjən|n|hành lá xanh|Add some spring onion to the soup.|Hãy thêm chút hành lá vào súp.
+squash|skwɑːʃ|n|cây bí, quả bí|We cooked squash for dinner.|Chúng tôi nấu bí cho bữa tối.
+starfruit|ˈstɑːrfruːt|n|quả khế|This starfruit tastes sweet.|Quả khế này có vị ngọt.
+strawberry|ˈstrɑːˌberi|n|quả dâu tây|I eat a strawberry every day.|Tôi ăn một quả dâu tây mỗi ngày.
+sweet potato|ˌswiːt pəˈteɪt̬oʊ|n|khoai lang|He bakes a sweet potato.|Anh ấy nướng một củ khoai lang.
+tomato|təˈmeɪt̬oʊ|n|quả cà chua|The tomato is red.|Quả cà chua màu đỏ.
+turnip|ˈtɝːnɪp|n|củ cải trắng|My mother cooks turnip soup.|Mẹ tôi nấu súp củ cải trắng.
+watermelon|ˈwɑːt̬ɚˌmelən|n|dưa hấu|We eat watermelon in summer.|Chúng tôi ăn dưa hấu vào mùa hè.`},
 {id:'cook', name:'Nấu nướng', raw:`
-bake|beɪk|v|nướng||
-barbecue|ˈbɑːrbəkjuː|v|nướng, quay thịt trên lò||
-baste|beɪst|v|phết||
-blanch|blæntʃ|v|chần thức ăn||
-blend|blend|v|trộn||
-boil|bɔɪl|v|đun sôi||
-braise|breɪz|v|om (thịt...)||
-brew|bruː|v|ủ (trà, rượu...)||
-caramelize|ˈkɑːrməlaɪz|v|thắng đường||
-char-broil|ˈtʃɑːrbrɔɪl|v|nấu thức ăn trên vỉ nướng||
-chill|tʃɪl|v|làm tan giá, rã đông||
-chop|tʃɑːp|v|chặt, bổ||
-chunk|tʃʌŋk|v, n|cắt khúc, khúc||
-churn|tʃɝːn|v, n|đánh, khuấy sữa||
-coddle|ˈkɑːdəl|v|tần, hầm||
-congeal|kənˈdʒiːl|v|làm đông, làm cô đặc lại||
-cool|kuːl|v|để nguội||
-deglaze|ˌdiːˈɡleɪz|v|làm nước xốt||
-descale|ˌdiːˈskeɪl|v|cạo cặn||
-dice|daɪs|v|thái hạt lựu||
-dip|dɪp|v|nhúng, ngâm||
-ferment|fɚˈment|v|lên men||
-fillet|ˈfɪlɪt|v|róc xương, lạng thịt||
-flambé|flɑːmˈbeɪ|v|đốt rượu||
-flavor|ˈfleɪvɚ|v|tẩm gia vị||
-fold|foʊld|v|quấy, trộn||
-garnish|ˈɡɑːrnɪʃ|v|trang trí, bày biện||
-knead|niːd|v|nhào bột||
-layer|ˈleɪɚ|v|xếp từng lớp||
-leaven|ˈlevən|v|làm men nở||
-marinate|ˈmerəneɪt|v|ướp thịt||
-mash|mæʃ|v|nghiền, làm nát||
-measure|ˈmeʒɚ|v|cân đếm||
-melt|melt|v|làm tan chảy||
-mince|mɪns|v|băm, xay||
-pinch|pɪntʃ|v|véo||
-precook|ˌpriːˈkʊk|v|nấu sơ qua||
-prepare|prɪˈper|v|sơ chế, chuẩn bị||
-press|pres|v|ấn, ép||
-pulp|pʌlp|v|nghiền nhão, nghiền nát||
-raw|rɑː|adj|sống||
-refrigerate|rɪˈfrɪdʒəreɪt|v|ướp lạnh||
-roast|roʊst|v|quay, nướng||
-roll|roʊl|v|cuộn||
-salt|sɑːlt|v|ướp gia vị, rắc muối||
-saute|sɔːˈteɪ|v|rán, áp chảo||
-scald|skɑːld|v|đun gần sôi||
-scramble|ˈskræmbəl|v|trưng (bác) trứng||
-shell|ʃel|v|bóc vỏ||
-shred|ʃred|v|xé nhỏ||
-shuck|ʃʌk|v|bóc vỏ, lột vỏ||
-sieve|sɪv|v|sàng, rây||
-sift|sɪft|v|sàng, rắc||
-simmer|ˈsɪmɚ|v|ninh nhỏ lửa||
-skewer|ˈskjuːɚ|v|xiên thịt||
-skim|skɪm|v|vớt bọt, vớt váng||
-slice|slaɪs|v|thái||
-souse|saʊs|v|ngâm, giầm||
-sprinkle|ˈsprɪŋkəl|v|rắc||
-steam|stiːm|v|hấp||
-steep|stiːp|v|ngâm vào nước||
-stew|stuː|v|hầm, ninh nhừ||
-stir|stɝː|v|xào, quấy||
-sweeten|ˈswiːtən|v|làm ngọt||
-wash|wɑːʃ|v|rửa||`},
+bake|beɪk|v|nướng|I bake bread on Sunday.|Tôi nướng bánh mì vào Chủ nhật.
+barbecue|ˈbɑːrbəkjuː|v|nướng, quay thịt trên lò|We barbecue chicken in the garden.|Chúng tôi nướng gà ngoài vườn.
+baste|beɪst|v|phết|Baste the meat with butter.|Hãy phết bơ lên miếng thịt.
+blanch|blæntʃ|v|chần thức ăn|Blanch the beans for one minute.|Chần đậu trong một phút.
+blend|blend|v|trộn|Blend the milk and fruit.|Trộn sữa với trái cây.
+boil|bɔɪl|v|đun sôi|Boil the water first.|Đun sôi nước trước.
+braise|breɪz|v|om (thịt...)|She will braise the beef.|Cô ấy sẽ om thịt bò.
+brew|bruː|v|ủ (trà, rượu...)|He likes to brew tea.|Anh ấy thích ủ trà.
+caramelize|ˈkɑːrməlaɪz|v|thắng đường|Caramelize the sugar slowly.|Thắng đường từ từ.
+char-broil|ˈtʃɑːrbrɔɪl|v|nấu thức ăn trên vỉ nướng|They char-broil steak on Friday.|Họ nướng bít tết trên vỉ vào thứ Sáu.
+chill|tʃɪl|v|làm tan giá, rã đông|Chill the juice before drinking.|Làm lạnh nước ép trước khi uống.
+chop|tʃɑːp|v|chặt, bổ|Chop the onions, please.|Làm ơn chặt hành tây.
+chunk|tʃʌŋk|v, n|cắt khúc, khúc|Chunk the cheese into pieces.|Cắt phô mai thành từng khúc.
+churn|tʃɝːn|v, n|đánh, khuấy sữa|They churn milk into butter.|Họ khuấy sữa thành bơ.
+coddle|ˈkɑːdəl|v|tần, hầm|Coddle the eggs gently.|Hầm trứng nhẹ nhàng.
+congeal|kənˈdʒiːl|v|làm đông, làm cô đặc lại|The soup will congeal when cold.|Súp sẽ đông lại khi nguội.
+cool|kuːl|v|để nguội|Let the cake cool.|Để bánh nguội đi.
+deglaze|ˌdiːˈɡleɪz|v|làm nước xốt|Deglaze the pan with wine.|Làm nước xốt trong chảo bằng rượu vang.
+descale|ˌdiːˈskeɪl|v|cạo cặn|I descale the kettle monthly.|Tôi cạo cặn ấm đun mỗi tháng.
+dice|daɪs|v|thái hạt lựu|Dice the carrots.|Thái hạt lựu cà rốt.
+dip|dɪp|v|nhúng, ngâm|Dip the bread in soup.|Nhúng bánh mì vào súp.
+ferment|fɚˈment|v|lên men|Milk can ferment into yogurt.|Sữa có thể lên men thành sữa chua.
+fillet|ˈfɪlɪt|v|róc xương, lạng thịt|He will fillet the fish.|Anh ấy sẽ lạng cá.
+flambé|flɑːmˈbeɪ|v|đốt rượu|The chef will flambé the dessert.|Đầu bếp sẽ đốt rượu món tráng miệng.
+flavor|ˈfleɪvɚ|v|tẩm gia vị|Flavor the soup with herbs.|Tẩm gia vị cho súp bằng rau thơm.
+fold|foʊld|v|quấy, trộn|Fold the eggs into the flour.|Trộn trứng vào bột.
+garnish|ˈɡɑːrnɪʃ|v|trang trí, bày biện|Garnish the plate with parsley.|Trang trí đĩa bằng ngò tây.
+knead|niːd|v|nhào bột|Knead the dough well.|Nhào bột thật kỹ.
+layer|ˈleɪɚ|v|xếp từng lớp|Layer the pasta and cheese.|Xếp mì ống và phô mai thành từng lớp.
+leaven|ˈlevən|v|làm men nở|Yeast will leaven the bread.|Men sẽ làm bánh mì nở.
+marinate|ˈmerəneɪt|v|ướp thịt|Marinate the chicken for one hour.|Ướp gà trong một giờ.
+mash|mæʃ|v|nghiền, làm nát|Mash the potatoes.|Nghiền khoai tây.
+measure|ˈmeʒɚ|v|cân đếm|Measure the flour first.|Hãy cân bột trước.
+melt|melt|v|làm tan chảy|Melt the butter in a pan.|Làm tan chảy bơ trong chảo.
+mince|mɪns|v|băm, xay|Mince the garlic.|Băm tỏi.
+pinch|pɪntʃ|v|véo|Pinch the dough together.|Véo bột lại với nhau.
+precook|ˌpriːˈkʊk|v|nấu sơ qua|Precook the rice a little.|Nấu sơ gạo một chút.
+prepare|prɪˈper|v|sơ chế, chuẩn bị|I prepare dinner at six.|Tôi chuẩn bị bữa tối lúc sáu giờ.
+press|pres|v|ấn, ép|Press the garlic with a knife.|Ấn tỏi bằng dao.
+pulp|pʌlp|v|nghiền nhão, nghiền nát|Pulp the fruit for juice.|Nghiền nhão trái cây để làm nước ép.
+raw|rɑː|adj|sống|Do not eat raw meat.|Đừng ăn thịt sống.
+refrigerate|rɪˈfrɪdʒəreɪt|v|ướp lạnh|Refrigerate the milk after use.|Hãy ướp lạnh sữa sau khi dùng.
+roast|roʊst|v|quay, nướng|We roast a chicken on Sunday.|Chúng tôi quay gà vào Chủ nhật.
+roll|roʊl|v|cuộn|Roll the dough flat.|Cán bột cho phẳng.
+salt|sɑːlt|v|ướp gia vị, rắc muối|Salt the soup a little.|Rắc chút muối vào súp.
+saute|sɔːˈteɪ|v|rán, áp chảo|Saute the onions in oil.|Áp chảo hành tây với dầu.
+scald|skɑːld|v|đun gần sôi|Scald the milk first.|Đun gần sôi sữa trước.
+scramble|ˈskræmbəl|v|trưng (bác) trứng|I scramble two eggs.|Tôi trưng hai quả trứng.
+shell|ʃel|v|bóc vỏ|Shell the eggs, please.|Làm ơn bóc vỏ trứng.
+shred|ʃred|v|xé nhỏ|Shred the cheese.|Xé nhỏ phô mai.
+shuck|ʃʌk|v|bóc vỏ, lột vỏ|He will shuck the corn.|Anh ấy sẽ bóc vỏ bắp.
+sieve|sɪv|v|sàng, rây|Sieve the flour twice.|Rây bột hai lần.
+sift|sɪft|v|sàng, rắc|Sift sugar on the cake.|Rắc đường lên bánh.
+simmer|ˈsɪmɚ|v|ninh nhỏ lửa|Simmer the soup for ten minutes.|Ninh nhỏ lửa súp trong mười phút.
+skewer|ˈskjuːɚ|v|xiên thịt|Skewer the meat and grill it.|Xiên thịt rồi nướng.
+skim|skɪm|v|vớt bọt, vớt váng|Skim the foam off the soup.|Vớt bọt khỏi súp.
+slice|slaɪs|v|thái|Slice the bread thinly.|Thái bánh mì mỏng.
+souse|saʊs|v|ngâm, giầm|Souse the fish in vinegar.|Ngâm cá trong giấm.
+sprinkle|ˈsprɪŋkəl|v|rắc|Sprinkle sugar on top.|Rắc đường lên trên.
+steam|stiːm|v|hấp|Steam the fish for ten minutes.|Hấp cá trong mười phút.
+steep|stiːp|v|ngâm vào nước|Steep the tea for three minutes.|Ngâm trà ba phút.
+stew|stuː|v|hầm, ninh nhừ|Stew the beef slowly.|Hầm thịt bò thật nhừ.
+stir|stɝː|v|xào, quấy|Stir the soup often.|Hãy khuấy súp thường xuyên.
+sweeten|ˈswiːtən|v|làm ngọt|Sweeten the tea with honey.|Làm ngọt trà bằng mật ong.
+wash|wɑːʃ|v|rửa|Wash the vegetables first.|Rửa rau trước.`},
 {id:'vehicle', name:'Phương tiện giao thông', raw:`
-aerial|ˈeriəl|adj|trên không||
-aerial tramway|ˈeriəl ˈtræmweɪ|n|cáp treo||
-airplane|ˈerpleɪn|n|máy bay||
-ambulance|ˈæmbjələns|n|xe cứu thương||
-automobile|ˈɑːt̬əmoʊbiːl|n|xe ô tô||
-baby carriage|ˈbeɪbi ˌkerɪdʒ|n|xe đẩy trẻ con||
-bicycle|ˈbaɪsəkəl|n|xe đạp||
-boat|boʊt|n|tàu thuyền||
-carriage|ˈkerɪdʒ|n|xe ngựa||
-cement mixer|sɪˈment ˌmɪksɚ|n|máy trộn xi măng||
-crane|kreɪn|n|cần cẩu, cần trục||
-dump truck|ˈdʌmp ˌtrʌk|n|xe tải tự đổ||
-emergency|ɪˈmɝːdʒənsi|n|thắng tay khẩn cấp||
-fire engine|ˈfaɪr ˌendʒɪn|n|xe cứu hỏa||
-forklift|ˈfɔrkˌlift|n|xe nâng||
-helicopter|ˈheləˌkɑːptɚ|n|trực thăng||
-motorcycle|ˈmoʊt̬ɚˌsaɪkəl|n|xe mô tô||
-mountain bike|ˈmaʊntən ˌbaɪk|n|xe đạp leo núi||
-police car|pəˈliːs ˌkɑːr|n|xe cảnh sát||
-propeller|prəˈpelɚ|n|chân vịt, máy đẩy||
-rearview mirror|ˌrɪrvju ˈmɪrɚ|n|gương chiếu hậu||
-rowboat|ˈroʊˌboʊt|n|thuyền có mái chèo||
-scooter|ˈskuːt̬ɚ|n|xe máy tay ga||
-seat belt|ˈsiːt ˌbelt|n|dây đai an toàn||
-skateboard|ˈskeɪtbɔːrd|n|ván trượt||
-streetcar|ˈstriːtkɑːr|n|xe điện||
-subway|ˈsʌbweɪ|n|đường ngầm||
-tractor|ˈtræktɚ|n|máy kéo||
-tramway|ˈtræmweɪ|n|đường tàu điện||
-van|væn|n|xe tải||
-vehicle|ˈviːəkəl|n|phương tiện giao thông||
-windscreen wiper|ˈwɪndskriːn ˌwaɪpɚ|n|cần gạt nước||`},
+aerial|ˈeriəl|adj|trên không|We saw an aerial photo of the city.|Chúng tôi xem ảnh chụp trên không của thành phố.
+aerial tramway|ˈeriəl ˈtræmweɪ|n|cáp treo|The aerial tramway goes up the hill.|Cáp treo đi lên đồi.
+airplane|ˈerpleɪn|n|máy bay|The airplane is very big.|Chiếc máy bay rất lớn.
+ambulance|ˈæmbjələns|n|xe cứu thương|The ambulance is fast.|Xe cứu thương chạy nhanh.
+automobile|ˈɑːt̬əmoʊbiːl|n|xe ô tô|My father has an automobile.|Bố tôi có một chiếc ô tô.
+baby carriage|ˈbeɪbi ˌkerɪdʒ|n|xe đẩy trẻ con|She pushes the baby carriage.|Cô ấy đẩy xe đẩy em bé.
+bicycle|ˈbaɪsəkəl|n|xe đạp|I ride a bicycle to school.|Tôi đi xe đạp đến trường.
+boat|boʊt|n|tàu thuyền|The boat is on the lake.|Con thuyền ở trên hồ.
+carriage|ˈkerɪdʒ|n|xe ngựa|The carriage has two horses.|Xe ngựa có hai con ngựa.
+cement mixer|sɪˈment ˌmɪksɚ|n|máy trộn xi măng|The cement mixer is loud.|Máy trộn xi măng rất ồn.
+crane|kreɪn|n|cần cẩu, cần trục|The crane lifts heavy boxes.|Cần cẩu nâng các thùng nặng.
+dump truck|ˈdʌmp ˌtrʌk|n|xe tải tự đổ|A dump truck carries sand.|Xe tải tự đổ chở cát.
+emergency|ɪˈmɝːdʒənsi|n|thắng tay khẩn cấp|Pull the emergency brake now!|Kéo thắng tay khẩn cấp ngay!
+fire engine|ˈfaɪr ˌendʒɪn|n|xe cứu hỏa|The fire engine is red.|Xe cứu hỏa màu đỏ.
+forklift|ˈfɔrkˌlift|n|xe nâng|He drives a forklift.|Anh ấy lái xe nâng.
+helicopter|ˈheləˌkɑːptɚ|n|trực thăng|The helicopter flies low.|Trực thăng bay thấp.
+motorcycle|ˈmoʊt̬ɚˌsaɪkəl|n|xe mô tô|He rides a motorcycle.|Anh ấy đi xe mô tô.
+mountain bike|ˈmaʊntən ˌbaɪk|n|xe đạp leo núi|I have a new mountain bike.|Tôi có một chiếc xe đạp leo núi mới.
+police car|pəˈliːs ˌkɑːr|n|xe cảnh sát|The police car stopped here.|Xe cảnh sát dừng ở đây.
+propeller|prəˈpelɚ|n|chân vịt, máy đẩy|The propeller turns fast.|Chân vịt quay nhanh.
+rearview mirror|ˌrɪrvju ˈmɪrɚ|n|gương chiếu hậu|Check the rearview mirror.|Hãy kiểm tra gương chiếu hậu.
+rowboat|ˈroʊˌboʊt|n|thuyền có mái chèo|We sit in the rowboat.|Chúng tôi ngồi trên thuyền chèo.
+scooter|ˈskuːt̬ɚ|n|xe máy tay ga|She rides a scooter.|Cô ấy đi xe tay ga.
+seat belt|ˈsiːt ˌbelt|n|dây đai an toàn|Wear your seat belt.|Hãy thắt dây an toàn.
+skateboard|ˈskeɪtbɔːrd|n|ván trượt|He has a red skateboard.|Anh ấy có một ván trượt màu đỏ.
+streetcar|ˈstriːtkɑːr|n|xe điện|The streetcar stops here.|Xe điện dừng ở đây.
+subway|ˈsʌbweɪ|n|đường ngầm|I take the subway to work.|Tôi đi tàu điện ngầm đi làm.
+tractor|ˈtræktɚ|n|máy kéo|The farmer drives a tractor.|Người nông dân lái máy kéo.
+tramway|ˈtræmweɪ|n|đường tàu điện|The tramway is old.|Đường tàu điện này đã cũ.
+van|væn|n|xe tải|The van is white.|Chiếc xe tải màu trắng.
+vehicle|ˈviːəkəl|n|phương tiện giao thông|This vehicle is very fast.|Phương tiện này rất nhanh.
+windscreen wiper|ˈwɪndskriːn ˌwaɪpɚ|n|cần gạt nước|The windscreen wiper is broken.|Cần gạt nước bị hỏng.`},
 {id:'animal', name:'Động vật', raw:`
-bald eagle|ˌbɑːld ˈiːɡəl|n|đại bàng trắng||
-bee|biː|n|con ong||
-blackbird|ˈblækbɝːd|n|chim két||
-cat|kæt|n|con mèo||
-chicken|ˈtʃɪkɪn|n|con gà||
-chimpanzee|ˌtʃɪmpænˈziː|n|con tinh tinh||
-cow|kaʊ|n|con bò||
-coyote|kaɪˈoʊt̬i|n|chó sói đồng cỏ||
-crab|kræb|n|con cua||
-crow|kroʊ|n|(một loại) quạ||
-deer|dɪr|n|con hươu, nai||
-dog|dɑːɡ|n|con chó||
-dove|dʌv|n|chim bồ câu||
-duck|dʌk|n|con vịt||
-elephant|ˈeləfənt|n|con voi||
-flamingo|fləˈmɪŋɡoʊ|n|chim hồng hạc||
-fox|fɑːks|n|con cáo||
-giraffe|dʒɪˈræf|n|hươu cao cổ||
-goat|ɡoʊt|n|con dê||
-goldfish|ˈɡoʊldfɪʃ|n|cá vàng||
-goose|ɡuːs|n|con ngỗng||
-hamster|ˈhæmstɚ|n|chuột đồng||
-hawk|hɑːk|n|chim diều hâu||
-hedgehog|ˈhedʒhɑːɡ|n|con nhím||
-hippopotamus|ˌhɪpəˈpɑːt̬əməs|n|hà mã||
-horse|hɔːrs|n|con ngựa||
-kangaroo|ˌkæŋɡəˈruː|n|chuột túi||
-kitten|ˈkɪt̬ən|n|mèo con||
-koala|koʊˈɑːlə|n|gấu túi||
-leopard|ˈlepɚd|n|con báo||
-lion|ˈlaɪən|n|sư tử||
-mole|moʊl|n|chuột chũi||
-monkey|ˈmʌŋki|n|con khỉ||
-mouse|maʊs|n|con chuột||
-ostrich|ˈɑːstrɪtʃ|n|đà điểu||
-otter|ˈɑːt̬ɚ|n|rái cá||
-owl|aʊl|n|con cú||
-ox|ɑːks|n|con bò đực||
-panda|ˈpændə|n|gấu trúc||
-parrot|ˈperət|n|con vẹt||
-peacock|ˈpiːkɑːk|n|con công||
-penguin|ˈpeŋɡwɪn|n|chim cánh cụt||
-pig|pɪɡ|n|con lợn, heo||
-pigeon|ˈpɪdʒən|n|chim bồ câu (lớn hơn)||
-puppy|ˈpʌpi|n|chó con||
-rabbit|ˈræbɪt|n|con thỏ||
-raven|ˈreɪvən|n|(một loại) quạ||
-robin|ˈrɑːbɪn|n|chim cổ đỏ||
-seagull|ˈsiːɡʌl|n|mòng biển, hải âu||
-sheep|ʃiːp|n|con cừu||
-shrimp|ʃrɪmp|n|con tôm||
-sparrow|ˈsperoʊ|n|chim sẻ||
-squirrel|ˈskwɝːəl|n|con sóc||
-stork|stɔːrk|n|con cò||
-swallow|ˈswɑːloʊ|n|chim nhạn, én||
-swan|swɑːn|n|thiên nga||
-turkey|ˈtɝːki|n|con gà tây||
-turtle|ˈtɝːt̬əl|n|con rùa||
-walrus|ˈwɑːlrəs|n|hải mã||
-woodpecker|ˈwʊdˌpekɚ|n|chim gõ kiến||`},
+bald eagle|ˌbɑːld ˈiːɡəl|n|đại bàng trắng|A bald eagle flew above us.|Một con đại bàng trắng bay trên đầu chúng tôi.
+bee|biː|n|con ong|A bee is on the flower.|Một con ong đậu trên bông hoa.
+blackbird|ˈblækbɝːd|n|chim két|The blackbird sings loudly.|Con chim két hót rất to.
+cat|kæt|n|con mèo|The cat is sleeping.|Con mèo đang ngủ.
+chicken|ˈtʃɪkɪn|n|con gà|The chicken eats corn.|Con gà ăn ngô.
+chimpanzee|ˌtʃɪmpænˈziː|n|con tinh tinh|The chimpanzee is smart.|Con tinh tinh rất thông minh.
+cow|kaʊ|n|con bò|The cow gives milk.|Con bò cho sữa.
+coyote|kaɪˈoʊt̬i|n|chó sói đồng cỏ|The coyote runs at night.|Chó sói đồng cỏ chạy vào ban đêm.
+crab|kræb|n|con cua|The crab lives on the beach.|Con cua sống trên bãi biển.
+crow|kroʊ|n|(một loại) quạ|A crow sat on the fence.|Một con quạ đậu trên hàng rào.
+deer|dɪr|n|con hươu, nai|The deer is in the forest.|Con hươu ở trong rừng.
+dog|dɑːɡ|n|con chó|My dog is friendly.|Con chó của tôi thân thiện.
+dove|dʌv|n|chim bồ câu|The dove is white.|Con bồ câu màu trắng.
+duck|dʌk|n|con vịt|The duck swims in the pond.|Con vịt bơi trong ao.
+elephant|ˈeləfənt|n|con voi|The elephant is huge.|Con voi rất to lớn.
+flamingo|fləˈmɪŋɡoʊ|n|chim hồng hạc|The flamingo is pink.|Chim hồng hạc màu hồng.
+fox|fɑːks|n|con cáo|The fox is orange.|Con cáo có màu cam.
+giraffe|dʒɪˈræf|n|hươu cao cổ|The giraffe has a long neck.|Hươu cao cổ có cái cổ dài.
+goat|ɡoʊt|n|con dê|The goat eats grass.|Con dê ăn cỏ.
+goldfish|ˈɡoʊldfɪʃ|n|cá vàng|I have a goldfish.|Tôi có một con cá vàng.
+goose|ɡuːs|n|con ngỗng|The goose is on the farm.|Con ngỗng ở trong trang trại.
+hamster|ˈhæmstɚ|n|chuột đồng|My hamster is small.|Con chuột đồng của tôi nhỏ xíu.
+hawk|hɑːk|n|chim diều hâu|A hawk flies high.|Một con diều hâu bay cao.
+hedgehog|ˈhedʒhɑːɡ|n|con nhím|The hedgehog is small.|Con nhím nhỏ bé.
+hippopotamus|ˌhɪpəˈpɑːt̬əməs|n|hà mã|The hippopotamus is in the water.|Hà mã ở dưới nước.
+horse|hɔːrs|n|con ngựa|The horse runs fast.|Con ngựa chạy nhanh.
+kangaroo|ˌkæŋɡəˈruː|n|chuột túi|The kangaroo can jump high.|Chuột túi có thể nhảy cao.
+kitten|ˈkɪt̬ən|n|mèo con|The kitten drinks milk.|Mèo con uống sữa.
+koala|koʊˈɑːlə|n|gấu túi|The koala sleeps all day.|Gấu túi ngủ cả ngày.
+leopard|ˈlepɚd|n|con báo|The leopard is fast.|Con báo rất nhanh.
+lion|ˈlaɪən|n|sư tử|The lion is strong.|Sư tử rất khỏe.
+mole|moʊl|n|chuột chũi|A mole lives under the ground.|Chuột chũi sống dưới lòng đất.
+monkey|ˈmʌŋki|n|con khỉ|The monkey eats a banana.|Con khỉ ăn một quả chuối.
+mouse|maʊs|n|con chuột|A mouse is in the kitchen.|Một con chuột ở trong bếp.
+ostrich|ˈɑːstrɪtʃ|n|đà điểu|The ostrich cannot fly.|Đà điểu không thể bay.
+otter|ˈɑːt̬ɚ|n|rái cá|The otter swims well.|Rái cá bơi giỏi.
+owl|aʊl|n|con cú|The owl sleeps in the day.|Con cú ngủ vào ban ngày.
+ox|ɑːks|n|con bò đực|The ox pulls the cart.|Con bò đực kéo xe.
+panda|ˈpændə|n|gấu trúc|The panda eats bamboo.|Gấu trúc ăn tre.
+parrot|ˈperət|n|con vẹt|The parrot can talk.|Con vẹt biết nói.
+peacock|ˈpiːkɑːk|n|con công|The peacock has beautiful feathers.|Con công có bộ lông đẹp.
+penguin|ˈpeŋɡwɪn|n|chim cánh cụt|The penguin lives in the cold.|Chim cánh cụt sống ở nơi lạnh.
+pig|pɪɡ|n|con lợn, heo|The pig is in the mud.|Con lợn ở trong bùn.
+pigeon|ˈpɪdʒən|n|chim bồ câu (lớn hơn)|A pigeon is in the park.|Một con chim bồ câu ở trong công viên.
+puppy|ˈpʌpi|n|chó con|The puppy is very cute.|Chú chó con rất dễ thương.
+rabbit|ˈræbɪt|n|con thỏ|The rabbit likes carrots.|Con thỏ thích cà rốt.
+raven|ˈreɪvən|n|(một loại) quạ|A raven is on the tree.|Một con quạ đậu trên cây.
+robin|ˈrɑːbɪn|n|chim cổ đỏ|A robin sings in spring.|Chim cổ đỏ hót vào mùa xuân.
+seagull|ˈsiːɡʌl|n|mòng biển, hải âu|The seagull is near the sea.|Con mòng biển ở gần biển.
+sheep|ʃiːp|n|con cừu|The sheep eat grass.|Những con cừu ăn cỏ.
+shrimp|ʃrɪmp|n|con tôm|I like fried shrimp.|Tôi thích tôm chiên.
+sparrow|ˈsperoʊ|n|chim sẻ|A sparrow is on the roof.|Một con chim sẻ đậu trên mái nhà.
+squirrel|ˈskwɝːəl|n|con sóc|The squirrel climbs the tree.|Con sóc trèo lên cây.
+stork|stɔːrk|n|con cò|The stork stands on one leg.|Con cò đứng bằng một chân.
+swallow|ˈswɑːloʊ|n|chim nhạn, én|A swallow builds a nest.|Chim én làm tổ.
+swan|swɑːn|n|thiên nga|The swan is on the lake.|Thiên nga ở trên hồ.
+turkey|ˈtɝːki|n|con gà tây|We eat turkey at Christmas.|Chúng tôi ăn gà tây vào Giáng sinh.
+turtle|ˈtɝːt̬əl|n|con rùa|The turtle is slow.|Con rùa rất chậm.
+walrus|ˈwɑːlrəs|n|hải mã|The walrus lives in cold water.|Hải mã sống ở vùng nước lạnh.
+woodpecker|ˈwʊdˌpekɚ|n|chim gõ kiến|The woodpecker hits the tree.|Chim gõ kiến mổ vào cây.`},
 {id:'nature', name:'Thiên nhiên', raw:`
-animal|ˈænɪməl|n|động vật, thú vật||
-Arctic|ˈɑːrktɪk|n, adj|vùng Bắc Cực; (thuộc) Bắc Cực||
-atmosphere|ˈætməsfɪr|n|khí quyển||
-beach|biːtʃ|n|bãi biển||
-breezy|ˈbriːzi|adj|gió thổi hiu mát||
-bush|bʊʃ|n|bụi cây, bụi rậm||
-cave|keɪv|n|hang động||
-cliff|klɪf|n|vách đá||
-coal|koʊl|n|than đá||
-creek|kriːk|n|lạch, nhánh sông, sông con||
-daisy|ˈdeɪzi|n|hoa cúc||
-deforestation|diːˌfɔːrəˈsteɪʃən|n|sự tàn phá rừng||
-desert|ˈdezɚt|n|sa mạc, hoang mạc||
-ecological|ˌiːkəˈlɑːdʒɪkəl|adj|(thuộc) sinh thái||
-environment|ɪnˈvaɪrənmənt|n|môi trường||
-eruption|ɪˈrʌpʃən|n|sự phun trào (núi lửa)||
-flood|flʌd|n|lũ lụt||
-flower|ˈflaʊɚ|n|hoa||
-fossil|ˈfɑːsəl|n, adj|chất liệu hóa thạch; hóa thạch, hóa đá||
-gloomy|ˈɡluːmi|adj|u ám, ảm đạm||
-graze|ɡreɪz|v|thả (súc vật) ăn cỏ||
-herd|hɝːd|n|bầy, đàn (vật nuôi)||
-highland|ˈhaɪlənd|n|cao nguyên||
-hurricane|ˈhɝːɪkeɪn|n|bão||
-insect|ˈɪnsekt|n|côn trùng, sâu bọ||
-livestock|ˈlaɪvstɑːk|n|vật nuôi, thú nuôi||
-meadow|ˈmedoʊ|n|đồng cỏ, bãi cỏ||
-misty|misty|adj|có sương mù||
-mountain|ˈmaʊntən|n|núi, dãy núi||
-mud|mʌd|n|bùn||
-overcast|ˈoʊvɚkæst|v, adj|mây phủ; tối sầm do mây phủ||
-peninsula|pəˈnɪnsələ|n|bán đảo||
-petal|ˈpet̬əl|n|cánh hoa||
-planet|ˈplænɪt|n|hành tinh||
-pollution|pəˈluːʃən|n|ô nhiễm||
-pond|pɑːnd|n|ao nước||
-river|ˈrɪvɚ|n|dòng sông||
-riverbank|ˈrɪvəˌbæŋk|n|bờ sông, bãi sông, vùng đất ven sông||
-root|ruːt|n|gốc, rễ cây||
-rubbish|ˈrʌbɪʃ|n|rác rưởi||
-savanna|səˈvænə|n|hoang mạc, thảo nguyên||
-scenery|ˈsiːnɚi|n|phong cảnh, cảnh vật||
-sea|siː|n|biển||
-season|ˈsiːzən|n|mùa trong năm||
-seed|siːd|n|hạt giống||
-slaughter|ˈslɑːt̬ɚ|n, v|sự giết mổ; giết mổ thịt||
-sleet|sliːt|n, v|mưa tuyết, mưa đá; trời mưa tuyết||
-slope|sloʊp|n|dốc||
-snowslide|ˈsnoʊslaɪd|n|tuyết lở||
-soil|sɔɪl|n|đất trồng, đất dai||
-solar|ˈsoʊlɚ|adj|(thuộc) mặt trời||
-sunshine|ˈsʌnʃaɪn|n|ánh sáng mặt trời, ánh nắng||
-sustainable|səˈsteɪnəbəl|adj|bền vững||
-temperature|ˈtempɚətʃɚ|n|nhiệt độ||
-tornado|tɔːrˈneɪdoʊ|n|lốc xoáy||
-tsunami|tsuːˈnɑːmi|n|sóng thần||
-valley|ˈvæli|n|thung lũng, châu thổ, lưu vực||
-vapor|ˈveɪpər|v|bốc hơi||
-vivid|ˈvɪvɪd|adj|sống động, mãnh liệt||
-volcano|vɑːlˈkeɪnoʊ|n|núi lửa||
-waterfall|ˈwɑːt̬ɚfɑːl|n|thác nước||
-wild|waɪld|n, adj|thiên nhiên hoang dại; hoang dại||
-wildlife|ˈwaɪldlaɪf|n|sinh vật hoang dã, thiên nhiên hoang dã||
-winter|ˈwɪnt̬ɚ|n|mùa đông||`},
+animal|ˈænɪməl|n|động vật, thú vật|A dog is an animal.|Chó là một loài động vật.
+Arctic|ˈɑːrktɪk|n, adj|vùng Bắc Cực; (thuộc) Bắc Cực|It is very cold in the Arctic.|Ở Bắc Cực rất lạnh.
+atmosphere|ˈætməsfɪr|n|khí quyển|The atmosphere protects the Earth.|Khí quyển bảo vệ Trái Đất.
+beach|biːtʃ|n|bãi biển|We play on the beach.|Chúng tôi chơi trên bãi biển.
+breezy|ˈbriːzi|adj|gió thổi hiu mát|It is a breezy day.|Hôm nay là một ngày gió hiu hiu.
+bush|bʊʃ|n|bụi cây, bụi rậm|A bird is in the bush.|Một con chim ở trong bụi cây.
+cave|keɪv|n|hang động|The bear sleeps in a cave.|Con gấu ngủ trong hang.
+cliff|klɪf|n|vách đá|Do not stand near the cliff.|Đừng đứng gần vách đá.
+coal|koʊl|n|than đá|They burn coal for heat.|Họ đốt than đá để sưởi.
+creek|kriːk|n|lạch, nhánh sông, sông con|We walk by the creek.|Chúng tôi đi dạo bên lạch nước.
+daisy|ˈdeɪzi|n|hoa cúc|The daisy is white.|Hoa cúc màu trắng.
+deforestation|diːˌfɔːrəˈsteɪʃən|n|sự tàn phá rừng|Deforestation is a big problem.|Phá rừng là một vấn đề lớn.
+desert|ˈdezɚt|n|sa mạc, hoang mạc|The desert is very hot.|Sa mạc rất nóng.
+ecological|ˌiːkəˈlɑːdʒɪkəl|adj|(thuộc) sinh thái|This is an ecological problem.|Đây là một vấn đề sinh thái.
+environment|ɪnˈvaɪrənmənt|n|môi trường|We must protect the environment.|Chúng ta phải bảo vệ môi trường.
+eruption|ɪˈrʌpʃən|n|sự phun trào (núi lửa)|The eruption was very loud.|Vụ phun trào rất ồn ào.
+flood|flʌd|n|lũ lụt|The flood hit our town.|Lũ lụt đã ập đến thị trấn chúng tôi.
+flower|ˈflaʊɚ|n|hoa|She gave me a flower.|Cô ấy tặng tôi một bông hoa.
+fossil|ˈfɑːsəl|n, adj|chất liệu hóa thạch; hóa thạch, hóa đá|We found a fossil here.|Chúng tôi tìm thấy một hóa thạch ở đây.
+gloomy|ˈɡluːmi|adj|u ám, ảm đạm|It is a gloomy day.|Hôm nay là một ngày ảm đạm.
+graze|ɡreɪz|v|thả (súc vật) ăn cỏ|Cows graze in the field.|Bò gặm cỏ trên cánh đồng.
+herd|hɝːd|n|bầy, đàn (vật nuôi)|A herd of cows crossed the road.|Một đàn bò băng qua đường.
+highland|ˈhaɪlənd|n|cao nguyên|He lives in the highland.|Anh ấy sống ở cao nguyên.
+hurricane|ˈhɝːɪkeɪn|n|bão|The hurricane is coming.|Cơn bão đang đến.
+insect|ˈɪnsekt|n|côn trùng, sâu bọ|An ant is an insect.|Kiến là một loài côn trùng.
+livestock|ˈlaɪvstɑːk|n|vật nuôi, thú nuôi|The farmer has livestock.|Người nông dân có vật nuôi.
+meadow|ˈmedoʊ|n|đồng cỏ, bãi cỏ|Cows eat in the meadow.|Bò ăn cỏ ở đồng cỏ.
+misty|misty|adj|có sương mù|The morning is misty.|Buổi sáng có sương mù.
+mountain|ˈmaʊntən|n|núi, dãy núi|We climb the mountain.|Chúng tôi leo núi.
+mud|mʌd|n|bùn|The shoes are full of mud.|Đôi giày dính đầy bùn.
+overcast|ˈoʊvɚkæst|v, adj|mây phủ; tối sầm do mây phủ|The sky is overcast today.|Hôm nay bầu trời âm u mây phủ.
+peninsula|pəˈnɪnsələ|n|bán đảo|Korea is on a peninsula.|Hàn Quốc nằm trên một bán đảo.
+petal|ˈpet̬əl|n|cánh hoa|The flower has red petals.|Bông hoa có những cánh màu đỏ.
+planet|ˈplænɪt|n|hành tinh|Earth is a planet.|Trái Đất là một hành tinh.
+pollution|pəˈluːʃən|n|ô nhiễm|Pollution is bad for us.|Ô nhiễm có hại cho chúng ta.
+pond|pɑːnd|n|ao nước|Ducks swim in the pond.|Vịt bơi trong ao.
+river|ˈrɪvɚ|n|dòng sông|The river is long.|Dòng sông dài.
+riverbank|ˈrɪvəˌbæŋk|n|bờ sông, bãi sông, vùng đất ven sông|We sit on the riverbank.|Chúng tôi ngồi trên bờ sông.
+root|ruːt|n|gốc, rễ cây|The tree has deep roots.|Cái cây có rễ sâu.
+rubbish|ˈrʌbɪʃ|n|rác rưởi|Put the rubbish in the bin.|Hãy bỏ rác vào thùng.
+savanna|səˈvænə|n|hoang mạc, thảo nguyên|Lions live in the savanna.|Sư tử sống ở thảo nguyên.
+scenery|ˈsiːnɚi|n|phong cảnh, cảnh vật|The scenery is beautiful.|Phong cảnh thật đẹp.
+sea|siː|n|biển|I swim in the sea.|Tôi bơi ở biển.
+season|ˈsiːzən|n|mùa trong năm|Summer is my favorite season.|Mùa hè là mùa tôi thích nhất.
+seed|siːd|n|hạt giống|Plant the seed in soil.|Hãy gieo hạt vào đất.
+slaughter|ˈslɑːt̬ɚ|n, v|sự giết mổ; giết mổ thịt|They slaughter pigs on the farm.|Họ giết mổ lợn ở trang trại.
+sleet|sliːt|n, v|mưa tuyết, mưa đá; trời mưa tuyết|There is sleet today.|Hôm nay có mưa tuyết.
+slope|sloʊp|n|dốc|The slope is steep.|Con dốc rất dốc.
+snowslide|ˈsnoʊslaɪd|n|tuyết lở|A snowslide hit the village.|Một trận tuyết lở ập vào ngôi làng.
+soil|sɔɪl|n|đất trồng, đất dai|Plants grow in soil.|Cây mọc trong đất.
+solar|ˈsoʊlɚ|adj|(thuộc) mặt trời|We use solar power.|Chúng tôi dùng năng lượng mặt trời.
+sunshine|ˈsʌnʃaɪn|n|ánh sáng mặt trời, ánh nắng|I love the sunshine.|Tôi yêu ánh nắng mặt trời.
+sustainable|səˈsteɪnəbəl|adj|bền vững|We need sustainable energy.|Chúng ta cần năng lượng bền vững.
+temperature|ˈtempɚətʃɚ|n|nhiệt độ|The temperature is low today.|Hôm nay nhiệt độ thấp.
+tornado|tɔːrˈneɪdoʊ|n|lốc xoáy|A tornado hit the town.|Một cơn lốc xoáy ập vào thị trấn.
+tsunami|tsuːˈnɑːmi|n|sóng thần|The tsunami was huge.|Cơn sóng thần rất lớn.
+valley|ˈvæli|n|thung lũng, châu thổ, lưu vực|The village is in a valley.|Ngôi làng nằm trong thung lũng.
+vapor|ˈveɪpər|v|bốc hơi|Water will vapor in the sun.|Nước sẽ bốc hơi dưới nắng.
+vivid|ˈvɪvɪd|adj|sống động, mãnh liệt|She has vivid dreams.|Cô ấy có những giấc mơ sống động.
+volcano|vɑːlˈkeɪnoʊ|n|núi lửa|The volcano is active.|Ngọn núi lửa đang hoạt động.
+waterfall|ˈwɑːt̬ɚfɑːl|n|thác nước|The waterfall is tall.|Thác nước rất cao.
+wild|waɪld|n, adj|thiên nhiên hoang dại; hoang dại|Tigers are wild animals.|Hổ là động vật hoang dã.
+wildlife|ˈwaɪldlaɪf|n|sinh vật hoang dã, thiên nhiên hoang dã|I love watching wildlife.|Tôi thích ngắm động vật hoang dã.
+winter|ˈwɪnt̬ɚ|n|mùa đông|Winter is cold here.|Ở đây mùa đông lạnh.`},
 {id:'leisure', name:'Giải trí', raw:`
-activity|ækˈtɪvət̬i|n|hoạt động||
-art gallery|ˈɑːrt ˌɡælɚi|n|phòng trưng bày tranh, bảo tàng nghệ thuật||
-ballet|bælˈeɪ|n|ba lê, kịch múa||
-bar|bɑːr|n|quán rượu, quầy bán rượu||
-bowling|ˈboʊlɪŋ|n|trò chơi lăn bóng, bowling||
-cafè|kæfˈeɪ|n|quán cà phê||
-cheat|tʃiːt|n, v|trò lừa đảo; gian lận, lừa đảo||
-cinema|ˈsɪnəmə|n|rạp chiếu phim||
-circus|ˈsɝːkəs|n|rạp xiếc||
-concert|ˈkɑːnsɚt|n|buổi hòa nhạc||
-concert hall|ˈkɑːnsɚt ˌhɑːl|n|phòng hòa nhạc||
-cosplay|ˈkɑːzpleɪ|n|trò chơi hóa trang||
-dartboard|ˈdɑːrtbɔːrd|n|tấm bia trong trò chơi phi tiêu||
-exhibition|ˌeksəˈbɪʃən|n|buổi triển lãm, trưng bày||
-exhibition center|ˌeksəˈbɪʃən ˌsent̬ɚ|n|hội chợ thương mại, trung tâm triển lãm||
-film|fɪlm|n|phim, phim ảnh||
-handcraft|ˈhændkræft|n|nghề thủ công, hoạt động thủ công||
-leisure centre|ˈliːʒɚ ˌsent̬ɚ|n|khu vui chơi, trung tâm giải trí||
-monopoly|məˈnɑːpəli|n|trò chơi cờ tỷ phú||
-museum|mjuːˈziːəm|n|bảo tàng||
-nightclub|ˈnaɪtklʌb|n|hộp đêm||
-opera|ˈɑːpɚə|n|nhạc kịch||
-opera house|ˈɑːpɚə ˌhaʊs|n|nhà hát||
-play|pleɪ|n, v|sự vui đùa; vui chơi||
-pub|pʌb|n|nơi phục vụ đồ uống có cồn||
-puzzle|ˈpʌzəl|n|trò chơi xếp hình||
-quiz|kwɪz|n|trò chơi đố vui||
-soft play|ˌsɑːft ˈpleɪ|n|trò chơi nhẹ nhàng dành cho trẻ em||
-stadium|ˈsteɪdiəm|n|sân vận động||
-theater|ˈθiːət̬ɚ|n|nhà hát, rạp hát||
-zoo|zuː|n|sở thú||`},
+activity|ækˈtɪvət̬i|n|hoạt động|Swimming is a fun activity.|Bơi lội là một hoạt động vui.
+art gallery|ˈɑːrt ˌɡælɚi|n|phòng trưng bày tranh, bảo tàng nghệ thuật|We visit the art gallery.|Chúng tôi đi thăm phòng trưng bày tranh.
+ballet|bælˈeɪ|n|ba lê, kịch múa|She loves ballet.|Cô ấy yêu ba lê.
+bar|bɑːr|n|quán rượu, quầy bán rượu|He works in a bar.|Anh ấy làm việc ở quán bar.
+bowling|ˈboʊlɪŋ|n|trò chơi lăn bóng, bowling|We go bowling on Friday.|Chúng tôi đi chơi bowling vào thứ Sáu.
+cafè|kæfˈeɪ|n|quán cà phê|We meet at the cafè.|Chúng tôi gặp nhau ở quán cà phê.
+cheat|tʃiːt|n, v|trò lừa đảo; gian lận, lừa đảo|Do not cheat on the test.|Đừng gian lận trong bài kiểm tra.
+cinema|ˈsɪnəmə|n|rạp chiếu phim|We go to the cinema.|Chúng tôi đi xem phim ở rạp.
+circus|ˈsɝːkəs|n|rạp xiếc|The kids love the circus.|Bọn trẻ yêu rạp xiếc.
+concert|ˈkɑːnsɚt|n|buổi hòa nhạc|We went to a concert last night.|Tối qua chúng tôi đã đi xem hòa nhạc.
+concert hall|ˈkɑːnsɚt ˌhɑːl|n|phòng hòa nhạc|The concert hall is very big.|Phòng hòa nhạc rất lớn.
+cosplay|ˈkɑːzpleɪ|n|trò chơi hóa trang|She loves cosplay at the festival.|Cô ấy thích hóa trang cosplay ở lễ hội.
+dartboard|ˈdɑːrtbɔːrd|n|tấm bia trong trò chơi phi tiêu|He hit the dartboard in the center.|Anh ấy phóng trúng giữa tấm bia phi tiêu.
+exhibition|ˌeksəˈbɪʃən|n|buổi triển lãm, trưng bày|The art exhibition opens today.|Triển lãm nghệ thuật khai mạc hôm nay.
+exhibition center|ˌeksəˈbɪʃən ˌsent̬ɚ|n|hội chợ thương mại, trung tâm triển lãm|The exhibition center is near my house.|Trung tâm triển lãm ở gần nhà tôi.
+film|fɪlm|n|phim, phim ảnh|This film is very funny.|Bộ phim này rất hài hước.
+handcraft|ˈhændkræft|n|nghề thủ công, hoạt động thủ công|My mother likes handcraft.|Mẹ tôi thích làm đồ thủ công.
+leisure centre|ˈliːʒɚ ˌsent̬ɚ|n|khu vui chơi, trung tâm giải trí|Kids play at the leisure centre.|Bọn trẻ chơi ở trung tâm giải trí.
+monopoly|məˈnɑːpəli|n|trò chơi cờ tỷ phú|We play monopoly on Sundays.|Chúng tôi chơi cờ tỷ phú vào Chủ nhật.
+museum|mjuːˈziːəm|n|bảo tàng|The museum is open today.|Bảo tàng hôm nay mở cửa.
+nightclub|ˈnaɪtklʌb|n|hộp đêm|He works at a nightclub.|Anh ấy làm việc ở một hộp đêm.
+opera|ˈɑːpɚə|n|nhạc kịch|My aunt loves opera.|Dì tôi thích nhạc kịch.
+opera house|ˈɑːpɚə ˌhaʊs|n|nhà hát|We visited the opera house.|Chúng tôi đã tham quan nhà hát opera.
+play|pleɪ|n, v|sự vui đùa; vui chơi|The children play in the park.|Bọn trẻ vui chơi trong công viên.
+pub|pʌb|n|nơi phục vụ đồ uống có cồn|He meets his friends at the pub.|Anh ấy gặp bạn bè ở quán rượu.
+puzzle|ˈpʌzəl|n|trò chơi xếp hình|I like this puzzle.|Tôi thích trò xếp hình này.
+quiz|kwɪz|n|trò chơi đố vui|We have a quiz today.|Hôm nay chúng tôi có một câu đố vui.
+soft play|ˌsɑːft ˈpleɪ|n|trò chơi nhẹ nhàng dành cho trẻ em|The baby enjoys soft play.|Em bé thích khu vui chơi mềm.
+stadium|ˈsteɪdiəm|n|sân vận động|The stadium is full of fans.|Sân vận động đầy người hâm mộ.
+theater|ˈθiːət̬ɚ|n|nhà hát, rạp hát|We watched a play at the theater.|Chúng tôi xem kịch ở nhà hát.
+zoo|zuː|n|sở thú|I saw a lion at the zoo.|Tôi đã thấy một con sư tử ở sở thú.`},
 {id:'char', name:'Tính cách', raw:`
-active|ˈæktɪv|adj|năng nổ, lanh lợi||
-alert|əˈlɝːt|adj|tỉnh táo, cảnh giác||
-ambitious|æmˈbɪʃəs|adj|tham vọng||
-attentive|əˈtent̬ɪv|adj|chăm chú, chú tâm||
-bold|boʊld|adj|táo bạo, mạo hiểm||
-brave|breɪv|adj|dũng cảm, gan dạ||
-careful|ˈkerfəl|adj|cẩn thận, thận trọng||
-careless|ˈkerləs|adj|bất cẩn, cẩu thả||
-cautious|ˈkɑːʃəs|adj|thận trọng, cẩn thận||
-conscientious|ˌkɑːnʃiˈenʃəs|adj|chu đáo, tỉ mỉ||
-courageous|kəˈreɪdʒəs|adj|can đảm||
-crafty|ˈkræfti|adj|láu cá, xảo quyệt||
-cunning|ˈkʌnɪŋ|adj|xảo trá, khôn lỏi||
-deceitful|dɪˈsiːtfəl|adj|dối trá||
-decent|ˈdiːsənt|adj|lịch sự, tao nhã||
-dependable|dɪˈpendəbəl|adj|đáng tin cậy||
-determined|dɪˈtɝːmɪnd|adj|quyết tâm||
-devoted|dɪˈvoʊt̬ɪd|adj|hết lòng, tận tâm, tận tụy||
-diligent|ˈdɪlədʒənt|adj|siêng năng, cần cù||
-disciplined|ˈdɪsəplɪnd|adj|có tính kỷ luật||
-dishonest|dɪˈsɑːnɪst|adj|bất lương, dối trá||
-disloyal|ˌdɪsˈlɔɪəl|adj|phản trắc, phản bội||
-energetic|ˌenɚˈdʒet̬ɪk|adj|giàu năng lượng||
-fair|fer|adj|ngay thẳng||
-faithful|ˈfeɪθfəl|adj|trung thành, chung thủy||
-fearless|ˈfɪrləs|adj|bạo dạn||
-forgetful|fɚˈɡetfəl|adj|hay quên||
-hard-headed|ˌhɑːrdˈhedɪd|adj|cứng đầu, ương ngạnh||
-hardworking|ˈhɑrdˈwɜrkɪŋ|adj|chăm chỉ, chịu khó||
-hardy|ˈhɑːrdi|adj|táo bạo, gan dạ||
-honest|ˈɑːnɪst|adj|chân thật, trung thành||
-idle|ˈaɪdəl|adj|nhàn rỗi, lười nhác||
-immature|ˌɪməˈtʊr|adj|non nớt, thiếu chín chắn||
-impartial|ɪmˈpɑːrʃəl|adj|trung lập, ngay thẳng||
-inattentive|ˌɪnəˈtent̬ɪv|adj|lơ đễnh, thiếu tập trung||
-independent|ˌɪndɪˈpendənt|adj|tự lập||
-inert|ˌɪnˈɝːt|adj|trì trệ, chậm chạp||
-insightful|ˈɪnsaɪtfəl|adj|sâu sắc, sáng suốt||
-insincere|ˌɪnsɪnˈsɪr|adj|không thành thực, giả dối||
-irrational|ɪˈræʃənəl|adj|không hợp lý||
-irresponsible|ˌɪrəˈspɑːnsəbəl|adj|thiếu trách nhiệm||
-lazy|ˈleɪzi|adj|lười biếng||
-level-headed|ˌlevəlˈhedɪd|adj|bình tĩnh, điềm đạm||
-loyal|ˈlɔɪəl|adj|trung thành, trung kiên||
-mature|məˈtʊr|adj|trưởng thành, chững chạc||
-methodical|məˈθɑːdɪkəl|adj|ngăn nắp, cẩn thận||
-naive|naɪˈiːv|adj|ngây thơ||
-objective|əbˈdʒektɪv|adj|khách quan||
-observant|əbˈzɝːvənt|adj|tinh ý, hay quan sát||
-opinionated|əˈpɪnjəneɪt̬ɪd|adj|cứng đầu, ngoan cố||
-organized|ˈɔːrɡənaɪzd|adj|có trật tự, ngăn nắp||
-passive|ˈpæsɪv|adj|nhiệt huyết||
-perceptive|pɚˈseptɪv|adj|mẫn cảm, sâu sắc||
-persevering|ˌpɝːsəˈvɪrɪŋ|adj|kiên nhẫn, bền bỉ||
-practical|ˈpræktɪkəl|adj|thực tế, thực tiễn||
-prudent|ˈpruːdənt|adj|thận trọng, khôn ngoan||
-quick|kwɪk|adj|nhanh nhẹn||
-rational|ˈræʃənəl|adj|có lý trí||
-reasonable|ˈriːzənəbəl|adj|biết điều||
-reckless|ˈrekləs|adj|liều lĩnh, táo bạo||
-reliable|rɪˈlaɪəbəl|adj|đáng tin tưởng||
-resolute|ˈrezəluːt|adj|cương quyết||
-responsible|rɪˈspɑːnsəbəl|adj|có trách nhiệm||
-scrupulous|ˈskruːpjələs|adj|kĩ lưỡng, tỉ mỉ, thận trọng||
-sensible|ˈsensəbəl|adj|khôn ngoan, có óc phán xét||
-shallow|ˈʃæloʊ|adj|nông cạn||
-shrewd|ʃruːd|adj|khôn ngoan||
-sincere|sɪnˈsɪr|adj|chân thành||
-sluggish|ˈslʌɡɪʃ|adj|uể oải, lờ đờ||
-sly|slaɪ|adj|ranh mãnh, quỷ quyệt||
-strong|strɑːŋ|adj|mạnh mẽ, đanh thép||
-strong-minded|ˌstrɑːŋˈmaɪndɪd|adj|cứng cỏi, kiên quyết||
-strong-willed|ˌstrɑːŋˈwɪld|adj|cứng cỏi||
-stubborn|ˈstʌbɚn|adj|bướng bỉnh, ngang ngạnh||
-superficial|ˌsuːpɚˈfɪʃəl|adj|hời hợt, nông cạn||
-superstitious|ˌsuːpɚˈstɪʃəs|adj|mê tín||
-thorough|ˈθɝːə|adj|kỹ lưỡng, thấu đáo||
-timid|ˈtɪmɪd|adj|rụt rè, bẽn lẽn||
-tough|tʌf|adj|cứng rắn||
-treacherous|ˈtretʃɚəs|adj|bội bạc||
-trustworthy|ˈtrʌstˌwɝːði|adj|đáng tin||
-truthful|ˈtruːθfəl|adj|thật thà, chân thật||
-unbiased|ʌnˈbaɪəst|adj|không thiên vị||
-unpredictable|ˌʌnprɪˈdɪktəbəl|adj|khó đoán, khôn lường||
-unreasonable|ʌnˈriːzənəbəl|adj|vô lý, quá đáng||
-unreliable|ˌʌnrɪˈlaɪəbəl|adj|không đáng tin||
-unscrupulous|ʌnˈskruːpjələs|adj|cẩu thả||
-vigorous|ˈvɪɡɚəs|adj|mạnh mẽ, sôi nổi||
-weak|wiːk|adj|yếu đuối||`},
+active|ˈæktɪv|adj|năng nổ, lanh lợi|My grandfather is still active.|Ông tôi vẫn còn năng nổ.
+alert|əˈlɝːt|adj|tỉnh táo, cảnh giác|The guard is alert at night.|Người bảo vệ tỉnh táo vào ban đêm.
+ambitious|æmˈbɪʃəs|adj|tham vọng|She is an ambitious student.|Cô ấy là một học sinh đầy tham vọng.
+attentive|əˈtent̬ɪv|adj|chăm chú, chú tâm|He is attentive in class.|Cậu ấy chăm chú trong lớp.
+bold|boʊld|adj|táo bạo, mạo hiểm|It was a bold plan.|Đó là một kế hoạch táo bạo.
+brave|breɪv|adj|dũng cảm, gan dạ|The brave boy saved the dog.|Cậu bé dũng cảm đã cứu con chó.
+careful|ˈkerfəl|adj|cẩn thận, thận trọng|Be careful on the road.|Hãy cẩn thận trên đường.
+careless|ˈkerləs|adj|bất cẩn, cẩu thả|He made a careless mistake.|Anh ấy mắc một lỗi bất cẩn.
+cautious|ˈkɑːʃəs|adj|thận trọng, cẩn thận|She is cautious with money.|Cô ấy thận trọng với tiền bạc.
+conscientious|ˌkɑːnʃiˈenʃəs|adj|chu đáo, tỉ mỉ|He is a conscientious worker.|Anh ấy là một nhân viên chu đáo.
+courageous|kəˈreɪdʒəs|adj|can đảm|The courageous woman helped us.|Người phụ nữ can đảm đã giúp chúng tôi.
+crafty|ˈkræfti|adj|láu cá, xảo quyệt|The fox is crafty.|Con cáo rất láu cá.
+cunning|ˈkʌnɪŋ|adj|xảo trá, khôn lỏi|The cunning cat stole the fish.|Con mèo xảo quyệt đã trộm con cá.
+deceitful|dɪˈsiːtfəl|adj|dối trá|Do not be deceitful.|Đừng dối trá.
+decent|ˈdiːsənt|adj|lịch sự, tao nhã|He is a decent man.|Ông ấy là một người đàng hoàng.
+dependable|dɪˈpendəbəl|adj|đáng tin cậy|My brother is dependable.|Anh trai tôi rất đáng tin cậy.
+determined|dɪˈtɝːmɪnd|adj|quyết tâm|She is determined to win.|Cô ấy quyết tâm chiến thắng.
+devoted|dɪˈvoʊt̬ɪd|adj|hết lòng, tận tâm, tận tụy|He is devoted to his family.|Anh ấy hết lòng vì gia đình.
+diligent|ˈdɪlədʒənt|adj|siêng năng, cần cù|She is a diligent student.|Cô ấy là học sinh siêng năng.
+disciplined|ˈdɪsəplɪnd|adj|có tính kỷ luật|The soldiers are disciplined.|Những người lính rất có kỷ luật.
+dishonest|dɪˈsɑːnɪst|adj|bất lương, dối trá|The shop owner was dishonest.|Chủ cửa hàng đã không trung thực.
+disloyal|ˌdɪsˈlɔɪəl|adj|phản trắc, phản bội|A disloyal friend is bad.|Một người bạn phản bội thì thật tệ.
+energetic|ˌenɚˈdʒet̬ɪk|adj|giàu năng lượng|The kids are very energetic.|Bọn trẻ rất giàu năng lượng.
+fair|fer|adj|ngay thẳng|The teacher is fair to everyone.|Giáo viên công bằng với mọi người.
+faithful|ˈfeɪθfəl|adj|trung thành, chung thủy|My dog is faithful.|Con chó của tôi rất trung thành.
+fearless|ˈfɪrləs|adj|bạo dạn|The fearless boy climbed the tree.|Cậu bé bạo dạn đã trèo lên cây.
+forgetful|fɚˈɡetfəl|adj|hay quên|My grandma is forgetful.|Bà tôi hay quên.
+hard-headed|ˌhɑːrdˈhedɪd|adj|cứng đầu, ương ngạnh|He is a hard-headed man.|Ông ấy là người cứng đầu.
+hardworking|ˈhɑrdˈwɜrkɪŋ|adj|chăm chỉ, chịu khó|My father is hardworking.|Bố tôi rất chăm chỉ.
+hardy|ˈhɑːrdi|adj|táo bạo, gan dạ|The hardy man walked all day.|Người đàn ông gan dạ đi bộ cả ngày.
+honest|ˈɑːnɪst|adj|chân thật, trung thành|Please be honest with me.|Hãy thành thật với tôi.
+idle|ˈaɪdəl|adj|nhàn rỗi, lười nhác|He sat idle all day.|Anh ấy ngồi không cả ngày.
+immature|ˌɪməˈtʊr|adj|non nớt, thiếu chín chắn|He is still immature.|Cậu ấy vẫn còn non nớt.
+impartial|ɪmˈpɑːrʃəl|adj|trung lập, ngay thẳng|The judge must be impartial.|Thẩm phán phải công tâm.
+inattentive|ˌɪnəˈtent̬ɪv|adj|lơ đễnh, thiếu tập trung|The student was inattentive today.|Hôm nay học sinh thiếu tập trung.
+independent|ˌɪndɪˈpendənt|adj|tự lập|She is an independent girl.|Cô ấy là một cô gái tự lập.
+inert|ˌɪnˈɝːt|adj|trì trệ, chậm chạp|The cat lay inert on the sofa.|Con mèo nằm bất động trên ghế sofa.
+insightful|ˈɪnsaɪtfəl|adj|sâu sắc, sáng suốt|That was an insightful answer.|Đó là một câu trả lời sâu sắc.
+insincere|ˌɪnsɪnˈsɪr|adj|không thành thực, giả dối|His smile looks insincere.|Nụ cười của anh ấy trông giả dối.
+irrational|ɪˈræʃənəl|adj|không hợp lý|His fear is irrational.|Nỗi sợ của anh ấy là không hợp lý.
+irresponsible|ˌɪrəˈspɑːnsəbəl|adj|thiếu trách nhiệm|It is irresponsible to lie.|Nói dối là thiếu trách nhiệm.
+lazy|ˈleɪzi|adj|lười biếng|I feel lazy today.|Hôm nay tôi thấy lười.
+level-headed|ˌlevəlˈhedɪd|adj|bình tĩnh, điềm đạm|She stays level-headed in trouble.|Cô ấy luôn bình tĩnh khi gặp rắc rối.
+loyal|ˈlɔɪəl|adj|trung thành, trung kiên|He is a loyal friend.|Anh ấy là một người bạn trung thành.
+mature|məˈtʊr|adj|trưởng thành, chững chạc|She is very mature for her age.|Cô ấy rất chững chạc so với tuổi.
+methodical|məˈθɑːdɪkəl|adj|ngăn nắp, cẩn thận|He is a methodical worker.|Anh ấy làm việc rất có phương pháp.
+naive|naɪˈiːv|adj|ngây thơ|The boy is naive.|Cậu bé rất ngây thơ.
+objective|əbˈdʒektɪv|adj|khách quan|A judge should be objective.|Thẩm phán nên khách quan.
+observant|əbˈzɝːvənt|adj|tinh ý, hay quan sát|She is observant and notices details.|Cô ấy tinh ý và để ý chi tiết.
+opinionated|əˈpɪnjəneɪt̬ɪd|adj|cứng đầu, ngoan cố|My uncle is opinionated.|Chú tôi rất cố chấp với ý kiến.
+organized|ˈɔːrɡənaɪzd|adj|có trật tự, ngăn nắp|Her room is organized.|Phòng của cô ấy rất ngăn nắp.
+passive|ˈpæsɪv|adj|nhiệt huyết|He is a passive student.|Cậu ấy là học sinh thụ động.
+perceptive|pɚˈseptɪv|adj|mẫn cảm, sâu sắc|She is a perceptive girl.|Cô ấy là một cô gái nhạy bén.
+persevering|ˌpɝːsəˈvɪrɪŋ|adj|kiên nhẫn, bền bỉ|He is persevering in his studies.|Anh ấy kiên trì trong học tập.
+practical|ˈpræktɪkəl|adj|thực tế, thực tiễn|This bag is very practical.|Chiếc túi này rất thực tế.
+prudent|ˈpruːdənt|adj|thận trọng, khôn ngoan|She is prudent with money.|Cô ấy khôn ngoan trong chuyện tiền bạc.
+quick|kwɪk|adj|nhanh nhẹn|He is a quick runner.|Anh ấy là người chạy nhanh.
+rational|ˈræʃənəl|adj|có lý trí|Let us be rational.|Chúng ta hãy có lý trí.
+reasonable|ˈriːzənəbəl|adj|biết điều|The price is reasonable.|Giá cả hợp lý.
+reckless|ˈrekləs|adj|liều lĩnh, táo bạo|He is a reckless driver.|Anh ấy là tài xế liều lĩnh.
+reliable|rɪˈlaɪəbəl|adj|đáng tin tưởng|My car is reliable.|Xe của tôi rất đáng tin cậy.
+resolute|ˈrezəluːt|adj|cương quyết|She was resolute and said no.|Cô ấy cương quyết và nói không.
+responsible|rɪˈspɑːnsəbəl|adj|có trách nhiệm|He is responsible for the dog.|Anh ấy chịu trách nhiệm về con chó.
+scrupulous|ˈskruːpjələs|adj|kĩ lưỡng, tỉ mỉ, thận trọng|He is scrupulous about details.|Anh ấy tỉ mỉ về từng chi tiết.
+sensible|ˈsensəbəl|adj|khôn ngoan, có óc phán xét|That is a sensible idea.|Đó là một ý kiến khôn ngoan.
+shallow|ˈʃæloʊ|adj|nông cạn|He is a shallow person.|Anh ấy là người nông cạn.
+shrewd|ʃruːd|adj|khôn ngoan|She is a shrewd woman.|Bà ấy là người phụ nữ khôn khéo.
+sincere|sɪnˈsɪr|adj|chân thành|Please accept my sincere thanks.|Xin hãy nhận lời cảm ơn chân thành của tôi.
+sluggish|ˈslʌɡɪʃ|adj|uể oải, lờ đờ|I feel sluggish this morning.|Sáng nay tôi thấy uể oải.
+sly|slaɪ|adj|ranh mãnh, quỷ quyệt|The fox has a sly smile.|Con cáo có nụ cười ranh mãnh.
+strong|strɑːŋ|adj|mạnh mẽ, đanh thép|He is a strong man.|Anh ấy là một người mạnh mẽ.
+strong-minded|ˌstrɑːŋˈmaɪndɪd|adj|cứng cỏi, kiên quyết|She is a strong-minded girl.|Cô ấy là cô gái cứng cỏi.
+strong-willed|ˌstrɑːŋˈwɪld|adj|cứng cỏi|My son is strong-willed.|Con trai tôi có ý chí mạnh mẽ.
+stubborn|ˈstʌbɚn|adj|bướng bỉnh, ngang ngạnh|My brother is very stubborn.|Anh trai tôi rất bướng bỉnh.
+superficial|ˌsuːpɚˈfɪʃəl|adj|hời hợt, nông cạn|His idea is superficial.|Ý tưởng của anh ấy rất hời hợt.
+superstitious|ˌsuːpɚˈstɪʃəs|adj|mê tín|My grandma is superstitious.|Bà tôi hay mê tín.
+thorough|ˈθɝːə|adj|kỹ lưỡng, thấu đáo|She did a thorough job.|Cô ấy làm việc rất kỹ lưỡng.
+timid|ˈtɪmɪd|adj|rụt rè, bẽn lẽn|The timid girl hid behind me.|Cô bé rụt rè trốn sau lưng tôi.
+tough|tʌf|adj|cứng rắn|He is a tough man.|Ông ấy là người cứng rắn.
+treacherous|ˈtretʃɚəs|adj|bội bạc|The treacherous man lied to us.|Gã bội bạc đã nói dối chúng tôi.
+trustworthy|ˈtrʌstˌwɝːði|adj|đáng tin|She is a trustworthy friend.|Cô ấy là người bạn đáng tin.
+truthful|ˈtruːθfəl|adj|thật thà, chân thật|Be truthful with your parents.|Hãy thật thà với bố mẹ.
+unbiased|ʌnˈbaɪəst|adj|không thiên vị|The teacher is unbiased.|Giáo viên không thiên vị.
+unpredictable|ˌʌnprɪˈdɪktəbəl|adj|khó đoán, khôn lường|The weather is unpredictable.|Thời tiết khó đoán.
+unreasonable|ʌnˈriːzənəbəl|adj|vô lý, quá đáng|His demand is unreasonable.|Yêu cầu của anh ấy thật vô lý.
+unreliable|ˌʌnrɪˈlaɪəbəl|adj|không đáng tin|The bus is unreliable.|Xe buýt không đáng tin.
+unscrupulous|ʌnˈskruːpjələs|adj|cẩu thả|He is an unscrupulous man.|Hắn là kẻ không có lương tâm.
+vigorous|ˈvɪɡɚəs|adj|mạnh mẽ, sôi nổi|He does vigorous exercise daily.|Anh ấy tập thể dục mạnh mẽ mỗi ngày.
+weak|wiːk|adj|yếu đuối|I feel weak today.|Hôm nay tôi thấy yếu.`},
 {id:'emo', name:'Cảm xúc', raw:`
-accepting|əkˈseptɪŋ|adj|chấp nhận||
-admiration|ˌædməˈreɪʃən|n|sự ngưỡng mộ||
-adoring|əˈdɔːrɪŋ|adj|tha thiết, trìu mến||
-annoyed|əˈnɔɪd|adj|khó chịu, bực bội, bị làm phiền||
-antsy|ˈæntsi|adj|căng thẳng, sốt ruột||
-anxious|ˈæŋkʃəs|adj|lo âu, bồn chồn||
-apologetic|əˌpɑːləˈdʒet̬ɪk|adj|hối lỗi, biện hộ||
-appalled|əˈpɑːld|adj|kinh hãi, sợ sệt||
-astonished|əˈstɑːnɪʃt|adj|kinh ngạc||
-awed|ɑːd|adj|thán phục, nể sợ||
-bashful|ˈbæʃfəl|adj|rụt rè, bẽn lẽn||
-bemused|bɪˈmjuːzd|adj|sửng sốt, kinh ngạc||
-bored|bɔːrd|adj|buồn chán, tẻ nhạt||
-bothered|ˈbɑːðɚd|adj|bực mình, khó chịu||
-brooding|ˈbruːdɪŋ|adj|ủ ê, não nề||
-calm|kɑːm|adj|bình tĩnh||
-captivated|ˈkæptɪveɪtɪd|adj|bị hớp hồn, choáng ngợp||
-carefree|ˈkerfriː|adj|vô tư lự||
-certain|ˈsɝːtən|adj|quả quyết, chắc chắn||
-clueless|ˈkluːləs|adj|ngây người||
-cranky|ˈkræŋki|adj|kỳ quặc||
-delighted|dɪˈlaɪt̬ɪd|adj|vui mừng, mừng rỡ||
-delirious|dɪˈlɪriəs|adj|cuồng nhiệt, điên cuồng||
-derisive|dɪˈraɪsɪv|adj|nhạo báng, giễu cợt||
-desperate|ˈdespɚət|adj|tuyệt vọng, chán trường||
-disturbed|dɪˈstɝːbd|adj|bối rối, lúng túng||
-dopey|ˈdoʊpi|adj|mơ màng, uể oải||
-doubtful|ˈdaʊtfəl|adj|nghi hoặc, hoài nghi||
-down|daʊn|adj|nản lòng, chán nản||
-drained|dreɪnd|adj|kiệt sức||
-edgy|ˈedʒi|adj|cáu kỉnh||
-elated|iˈleɪt̬ɪd|adj|phẩn khởi, hân hoan||
-embarrassed|ɪmˈberəst|adj|xấu hổ, ngại ngùng||
-empathetic|ˌempəˈθet̬ɪk|adj|đồng cảm, xót xa||
-engrossed|ɪnˈɡroʊst|adj|bị mê hoặc||
-enlightened|ɪnˈlaɪt̬ənd|adj|được làm sáng tỏ, được thông suốt||
-envious|ˈenviəs|adj|ghen tị, độ kỵ||
-excited|ɪkˈsaɪt̬ɪd|adj|hưng phấn, sôi nổi||
-excluded|ɪkˈskluːd|adj|bị bỏ rơi, cảm giác lạc lõng||
-exhausted|ɪɡˈzɑːstɪd|adj|mệt lử||
-flabbergasted|ˈflæbɚɡæstɪd|adj|sửng sốt, thất kinh||
-foolish|ˈfuːlɪʃ|adj|dại dột||
-frazzled|ˈfræzəld|adj|mệt rã rời, kiệt quệ||
-fretful|ˈfretfəl|adj|bực tức, khó chịu||
-frustrated|ˈfrʌstreɪt̬ɪd|adj|nản lòng, nản chí||
-furious|ˈfʊriəs|adj|giận dữ, điên tiết||
-giddy|ˈɡɪdi|adj|chóng mặt, choáng váng||
-glad|ɡlæd|adj|vui sướng||
-gleeful|ˈɡliːfəl|adj|hân hoan, mừng rỡ||
-guarded|ˈɡɑːrdɪd|adj|thận trọng, ý tứ||
-guilty|ˈɡɪlti|adj|mặc cảm, cảm thấy tội lỗi||
-hankering|ˈhæŋkɚɪŋ|n|khao khát, thèm muốn||
-hesitant|ˈhezətənt|adj|do dự, ngập ngừng||
-hollow|ˈhɑːloʊ|adj|trống rỗng||
-horrified|ˈhɔːrəfaɪd|adj|khiếp sợ||
-hostile|ˈhɑːstəl|adj|chống đối, thù địch||
-humiliated|hjuːˈmɪlieɪt̬ɪd|adj|cảm giác bẽ mặt, xấu hổ||
-hysterical|hɪˈsterɪkəl|adj|kích động, cuồng loạn||
-indifferent|ɪnˈdɪfɚənt|adj|dửng dưng, lãnh đạm, thờ ơ||
-indignant|ɪnˈdɪɡnənt|adj|căm phẫn, phẫn nộ||
-intense|ɪnˈtens|adj|mãnh liệt, nồng nhiệt||
-interested|ˈɪntrɪstɪd|adj|hứng thú, thích thú||
-intoxicated|ɪnˈtɑːksɪkeɪt̬ɪd|adj|say sưa||
-irritated|ˈɪrəteɪt̬ɪd|adj|tức tối, khó chịu||
-jittery|ˈdʒɪt̬ɚi|adj|bồn chồn, dễ bị kích động||
-jocular|ˈdʒɑːkjəlɚ|adj|hài hước, vui vẻ||
-jolly|ˈdʒɑːli|adj|vui tươi, nhộn nhịp||
-joyful|ˈdʒɔɪfəl|adj|hân hoan, vui mừng||
-jumpy|ˈdʒɔɪfəl|adj|giật mình, hốt hoảng||
-keen|kiːn|adj|say mê, ham thích||
-lethargic|ləˈθɑːrdʒɪk|adj|mệt mỏi, uể oải||
-lonely|ˈloʊnli|adj|cô đơn||
-longing|ˈlɑːŋɪŋ|adj|thèm khát, thèm muốn||
-lost|lɑːst|adj|lạc lõng, mất phương hướng||
-lucky|ˈlʌki|adj|may mắn||
-melancholic|ˌmeləŋˈkɑːlɪk|adj|u sầu, buồn bã||
-miserable|ˈmɪzɚəbəl|adj|khốn khổ, đáng thương||
-mortified|ˈmɔːrt̬əfaɪd|adj|xấu hổ, ái ngại||
-mournful|ˈmɔːrnfəl|adj|buồn rầu, ảm đạm||
-nasty|ˈnæsti|adj|tục tĩu||
-needy|ˈniːdi|adj|thiếu thốn (về mặt tình cảm)||
-nervous|ˈnɝːvəs|adj|lo lắng, bồn chồn||
-numb|nʌm|adj|lặng người||
-obsessed|əbˈsest|adj|ám ảnh||
-offended|əˈfendɪd|adj|phật ý, cảm thấy bị xúc phạm||
-optimistic|ˌɑːptəˈmɪstɪk|adj|lạc quan, yêu đời||
-overwhelmed|ˌoʊvɚˈwelmd|adj|choáng ngợp, quá tải||
-paranoid|ˈperənɔɪd|adj|hoang tưởng||
-passionate|ˈpæʃənət|adj|nồng nhiệt, thiết tha||
-peaceful|ˈpiːsfəl|adj|thanh thản, bình yên||
-perky|ˈpɝːki|adj|tươi tỉnh, vênh váo||
-perplexed|pɚˈplekst|adj|lúng túng, bối rối||
-pessimistic|ˌpesəˈmɪstɪk|adj|bi quan||
-petrified|ˈpetrəfaɪd|adj|làm sững sờ, chết điếng||
-positive|ˈpɑːzət̬ɪv|adj|tích cực, lạc quan||
-powerful|ˈpaʊɚfəl|adj|quyền thế, quyền lực||
-proud|praʊd|adj|hãnh diện, tự hào||
-rattled|ˈræt̬əld|adj|bồn chồn, lo lắng||
-reflective|rɪˈflektɪv|adj|trầm ngâm||
-regretful|rɪˈɡretfəl|adj|hối tiếc||
-relaxed|rɪˈlækst|adj|thư giãn, thoải mái||
-relieved|rɪˈliːvd|adj|nhẹ nhõm||
-remorseful|rɪˈmɔːrsfəl|adj|ăn năn, hối hận||
-rueful|ˈruːfəl|adj|buồn bã, rầu rĩ||
-satisfied|ˈsæt̬ɪsfaɪd|adj|thỏa mãn, hài lòng||
-self-conscious|ˌselfˈkɑːnʃəs|adj|e dè, ngượng nghịu||
-selfish|ˈselfɪʃ|adj|ích kỷ||
-sensitive|ˈsensət̬ɪv|adj|nhạy cảm, dễ tổn thương||
-shameful|ˈʃeɪmfəl|adj|đáng hổ thẹn, ngượng||
-shock|ʃɑːkt|adj|bất ngờ, sốc||
-smug|smʌɡ|adj|tự mãn||
-snappy|ˈsnæpi|adj|dễ gắt gỏng, cáu kỉnh||
-somber|ˈsɒmbər|adj|u sầu, ủ rũ||
-speechless|ˈspiːtʃləs|adj|câm nín||
-stressed|strest|adj|căng thẳng||
-stunned|stʌnd|adj|sững sờ, bất ngờ||
-submissive|səbˈmɪsɪv|adj|ngoan ngoãn, dễ bảo||
-suffering|səbˈmɪsɪv|adj|đau đớn, đau khổ||
-surprised|sɚˈpraɪzd|adj|bất ngờ, ngạc nhiên||
-thankful|ˈθæŋkfəl|adj|biết ơn||
-thoughtful|ˈθɑːtfəl|adj|trầm ngâm, suy tư||
-troubled|ˈtrʌbəld|adj|băn khoăn, lo lắng||
-upbeat|ˈʌpbiːt|adj|vui vẻ, phấn chấn||
-uptight|ˌʌpˈtaɪt|adj|căng thẳng, lo lắng||
-wary|ˈweri|adj|thận trọng, đề phòng||
-woeful|ˈwoʊfəl|adj|thiểu não, buồn rầu||
-wretched|ˈretʃɪd|adj|bất hạnh, đáng thương||
-zealous|ˈzeləs|adj|hăng hái, sốt sắng||`}
+accepting|əkˈseptɪŋ|adj|chấp nhận|She is accepting of new ideas.|Cô ấy chấp nhận những ý tưởng mới.
+admiration|ˌædməˈreɪʃən|n|sự ngưỡng mộ|I have admiration for my teacher.|Tôi ngưỡng mộ giáo viên của mình.
+adoring|əˈdɔːrɪŋ|adj|tha thiết, trìu mến|The adoring fans cheered.|Những người hâm mộ tha thiết đã reo hò.
+annoyed|əˈnɔɪd|adj|khó chịu, bực bội, bị làm phiền|I am annoyed with the noise.|Tôi bực bội vì tiếng ồn.
+antsy|ˈæntsi|adj|căng thẳng, sốt ruột|He feels antsy before the test.|Anh ấy thấy sốt ruột trước bài kiểm tra.
+anxious|ˈæŋkʃəs|adj|lo âu, bồn chồn|I am anxious about the exam.|Tôi lo lắng về kỳ thi.
+apologetic|əˌpɑːləˈdʒet̬ɪk|adj|hối lỗi, biện hộ|He looked apologetic.|Anh ấy trông có vẻ hối lỗi.
+appalled|əˈpɑːld|adj|kinh hãi, sợ sệt|She was appalled by the news.|Cô ấy kinh hãi trước tin tức.
+astonished|əˈstɑːnɪʃt|adj|kinh ngạc|I was astonished by the gift.|Tôi kinh ngạc trước món quà.
+awed|ɑːd|adj|thán phục, nể sợ|The kids were awed by the show.|Bọn trẻ thán phục buổi biểu diễn.
+bashful|ˈbæʃfəl|adj|rụt rè, bẽn lẽn|The bashful boy said hello.|Cậu bé rụt rè chào hỏi.
+bemused|bɪˈmjuːzd|adj|sửng sốt, kinh ngạc|She looked bemused.|Cô ấy trông có vẻ sửng sốt.
+bored|bɔːrd|adj|buồn chán, tẻ nhạt|I am bored at home.|Tôi chán ở nhà.
+bothered|ˈbɑːðɚd|adj|bực mình, khó chịu|He is bothered by the noise.|Anh ấy bị tiếng ồn làm phiền.
+brooding|ˈbruːdɪŋ|adj|ủ ê, não nề|He sat brooding alone.|Anh ấy ngồi ủ ê một mình.
+calm|kɑːm|adj|bình tĩnh|Please stay calm.|Xin hãy giữ bình tĩnh.
+captivated|ˈkæptɪveɪtɪd|adj|bị hớp hồn, choáng ngợp|The kids were captivated by the story.|Bọn trẻ bị câu chuyện cuốn hút.
+carefree|ˈkerfriː|adj|vô tư lự|The children are carefree.|Bọn trẻ vô tư lự.
+certain|ˈsɝːtən|adj|quả quyết, chắc chắn|I am certain about it.|Tôi chắc chắn về điều đó.
+clueless|ˈkluːləs|adj|ngây người|I am clueless about cars.|Tôi chẳng biết gì về xe hơi.
+cranky|ˈkræŋki|adj|kỳ quặc|The baby is cranky today.|Hôm nay em bé quấy khóc.
+delighted|dɪˈlaɪt̬ɪd|adj|vui mừng, mừng rỡ|I am delighted to meet you.|Tôi rất vui được gặp bạn.
+delirious|dɪˈlɪriəs|adj|cuồng nhiệt, điên cuồng|He was delirious with fever.|Anh ấy mê sảng vì sốt.
+derisive|dɪˈraɪsɪv|adj|nhạo báng, giễu cợt|He gave a derisive laugh.|Anh ấy cười giễu cợt.
+desperate|ˈdespɚət|adj|tuyệt vọng, chán trường|She is desperate for help.|Cô ấy tuyệt vọng cần giúp đỡ.
+disturbed|dɪˈstɝːbd|adj|bối rối, lúng túng|She felt disturbed by the news.|Cô ấy thấy bối rối vì tin đó.
+dopey|ˈdoʊpi|adj|mơ màng, uể oải|He felt dopey after waking up.|Anh ấy thấy mơ màng sau khi thức dậy.
+doubtful|ˈdaʊtfəl|adj|nghi hoặc, hoài nghi|I am doubtful about his story.|Tôi hoài nghi câu chuyện của anh ấy.
+down|daʊn|adj|nản lòng, chán nản|I feel down today.|Hôm nay tôi thấy chán nản.
+drained|dreɪnd|adj|kiệt sức|I feel drained after work.|Tôi thấy kiệt sức sau giờ làm.
+edgy|ˈedʒi|adj|cáu kỉnh|He feels edgy today.|Hôm nay anh ấy thấy cáu kỉnh.
+elated|iˈleɪt̬ɪd|adj|phẩn khởi, hân hoan|She was elated by the news.|Cô ấy hân hoan trước tin vui.
+embarrassed|ɪmˈberəst|adj|xấu hổ, ngại ngùng|I felt embarrassed.|Tôi cảm thấy xấu hổ.
+empathetic|ˌempəˈθet̬ɪk|adj|đồng cảm, xót xa|She is empathetic to others.|Cô ấy đồng cảm với người khác.
+engrossed|ɪnˈɡroʊst|adj|bị mê hoặc|He is engrossed in his book.|Anh ấy mải mê với cuốn sách.
+enlightened|ɪnˈlaɪt̬ənd|adj|được làm sáng tỏ, được thông suốt|I felt enlightened after the talk.|Tôi thấy sáng tỏ sau buổi nói chuyện.
+envious|ˈenviəs|adj|ghen tị, độ kỵ|She is envious of her friend.|Cô ấy ghen tị với bạn mình.
+excited|ɪkˈsaɪt̬ɪd|adj|hưng phấn, sôi nổi|I am excited about the trip.|Tôi háo hức về chuyến đi.
+excluded|ɪkˈskluːd|adj|bị bỏ rơi, cảm giác lạc lõng|He felt excluded from the game.|Cậu ấy thấy bị loại khỏi trò chơi.
+exhausted|ɪɡˈzɑːstɪd|adj|mệt lử|I am exhausted after running.|Tôi mệt lử sau khi chạy.
+flabbergasted|ˈflæbɚɡæstɪd|adj|sửng sốt, thất kinh|I was flabbergasted by the price.|Tôi sửng sốt trước giá tiền.
+foolish|ˈfuːlɪʃ|adj|dại dột|That was a foolish mistake.|Đó là một sai lầm dại dột.
+frazzled|ˈfræzəld|adj|mệt rã rời, kiệt quệ|She felt frazzled after work.|Cô ấy thấy rã rời sau giờ làm.
+fretful|ˈfretfəl|adj|bực tức, khó chịu|The baby is fretful tonight.|Tối nay em bé khó chịu.
+frustrated|ˈfrʌstreɪt̬ɪd|adj|nản lòng, nản chí|I am frustrated with my phone.|Tôi bực bội với điện thoại của mình.
+furious|ˈfʊriəs|adj|giận dữ, điên tiết|He was furious with me.|Anh ấy giận dữ với tôi.
+giddy|ˈɡɪdi|adj|chóng mặt, choáng váng|I feel giddy on the boat.|Tôi thấy chóng mặt trên thuyền.
+glad|ɡlæd|adj|vui sướng|I am glad to see you.|Tôi rất vui khi gặp bạn.
+gleeful|ˈɡliːfəl|adj|hân hoan, mừng rỡ|The kids were gleeful.|Bọn trẻ rất hân hoan.
+guarded|ˈɡɑːrdɪd|adj|thận trọng, ý tứ|She was guarded with strangers.|Cô ấy dè dặt với người lạ.
+guilty|ˈɡɪlti|adj|mặc cảm, cảm thấy tội lỗi|I feel guilty about lying.|Tôi thấy có lỗi vì đã nói dối.
+hankering|ˈhæŋkɚɪŋ|n|khao khát, thèm muốn|I have a hankering for pizza.|Tôi thèm ăn pizza.
+hesitant|ˈhezətənt|adj|do dự, ngập ngừng|He was hesitant to answer.|Anh ấy do dự khi trả lời.
+hollow|ˈhɑːloʊ|adj|trống rỗng|I feel hollow inside.|Tôi thấy trống rỗng trong lòng.
+horrified|ˈhɔːrəfaɪd|adj|khiếp sợ|She was horrified by the film.|Cô ấy khiếp sợ bộ phim.
+hostile|ˈhɑːstəl|adj|chống đối, thù địch|The man was hostile to us.|Người đàn ông thù địch với chúng tôi.
+humiliated|hjuːˈmɪlieɪt̬ɪd|adj|cảm giác bẽ mặt, xấu hổ|He felt humiliated at school.|Cậu ấy thấy bẽ mặt ở trường.
+hysterical|hɪˈsterɪkəl|adj|kích động, cuồng loạn|The girl was hysterical.|Cô bé đã rất cuồng loạn.
+indifferent|ɪnˈdɪfɚənt|adj|dửng dưng, lãnh đạm, thờ ơ|He is indifferent to music.|Anh ấy thờ ơ với âm nhạc.
+indignant|ɪnˈdɪɡnənt|adj|căm phẫn, phẫn nộ|She was indignant at the lie.|Cô ấy phẫn nộ trước lời nói dối.
+intense|ɪnˈtens|adj|mãnh liệt, nồng nhiệt|The heat is intense today.|Hôm nay nóng gay gắt.
+interested|ˈɪntrɪstɪd|adj|hứng thú, thích thú|I am interested in art.|Tôi quan tâm đến nghệ thuật.
+intoxicated|ɪnˈtɑːksɪkeɪt̬ɪd|adj|say sưa|The man was intoxicated.|Người đàn ông đã say.
+irritated|ˈɪrəteɪt̬ɪd|adj|tức tối, khó chịu|I am irritated by the noise.|Tôi khó chịu vì tiếng ồn.
+jittery|ˈdʒɪt̬ɚi|adj|bồn chồn, dễ bị kích động|I feel jittery before exams.|Tôi thấy bồn chồn trước kỳ thi.
+jocular|ˈdʒɑːkjəlɚ|adj|hài hước, vui vẻ|He is a jocular man.|Ông ấy là người hay đùa.
+jolly|ˈdʒɑːli|adj|vui tươi, nhộn nhịp|Santa is a jolly man.|Ông già Noel là người vui tính.
+joyful|ˈdʒɔɪfəl|adj|hân hoan, vui mừng|It was a joyful day.|Đó là một ngày vui vẻ.
+jumpy|ˈdʒɔɪfəl|adj|giật mình, hốt hoảng|I am jumpy at night.|Ban đêm tôi hay giật mình.
+keen|kiːn|adj|say mê, ham thích|She is keen on music.|Cô ấy ham thích âm nhạc.
+lethargic|ləˈθɑːrdʒɪk|adj|mệt mỏi, uể oải|I feel lethargic today.|Hôm nay tôi thấy uể oải.
+lonely|ˈloʊnli|adj|cô đơn|She feels lonely at home.|Cô ấy thấy cô đơn ở nhà.
+longing|ˈlɑːŋɪŋ|adj|thèm khát, thèm muốn|He has a longing look.|Anh ấy có ánh mắt khao khát.
+lost|lɑːst|adj|lạc lõng, mất phương hướng|I am lost in the city.|Tôi bị lạc trong thành phố.
+lucky|ˈlʌki|adj|may mắn|You are very lucky.|Bạn rất may mắn.
+melancholic|ˌmeləŋˈkɑːlɪk|adj|u sầu, buồn bã|The song is melancholic.|Bài hát này buồn man mác.
+miserable|ˈmɪzɚəbəl|adj|khốn khổ, đáng thương|I feel miserable today.|Hôm nay tôi thấy khốn khổ.
+mortified|ˈmɔːrt̬əfaɪd|adj|xấu hổ, ái ngại|I was mortified by my mistake.|Tôi xấu hổ vì lỗi của mình.
+mournful|ˈmɔːrnfəl|adj|buồn rầu, ảm đạm|The music was mournful.|Âm nhạc thật buồn thảm.
+nasty|ˈnæsti|adj|tục tĩu|That was a nasty joke.|Đó là một trò đùa tục tĩu.
+needy|ˈniːdi|adj|thiếu thốn (về mặt tình cảm)|The child feels needy.|Đứa trẻ cảm thấy thiếu thốn tình cảm.
+nervous|ˈnɝːvəs|adj|lo lắng, bồn chồn|I am nervous about the test.|Tôi lo lắng về bài kiểm tra.
+numb|nʌm|adj|lặng người|My hands are numb.|Tay tôi tê cóng.
+obsessed|əbˈsest|adj|ám ảnh|He is obsessed with games.|Anh ấy bị ám ảnh bởi trò chơi.
+offended|əˈfendɪd|adj|phật ý, cảm thấy bị xúc phạm|She felt offended by his words.|Cô ấy thấy bị xúc phạm bởi lời anh ấy.
+optimistic|ˌɑːptəˈmɪstɪk|adj|lạc quan, yêu đời|She is always optimistic.|Cô ấy luôn lạc quan.
+overwhelmed|ˌoʊvɚˈwelmd|adj|choáng ngợp, quá tải|I feel overwhelmed with work.|Tôi thấy quá tải với công việc.
+paranoid|ˈperənɔɪd|adj|hoang tưởng|He is paranoid about spies.|Anh ấy hoang tưởng về gián điệp.
+passionate|ˈpæʃənət|adj|nồng nhiệt, thiết tha|She is passionate about music.|Cô ấy đam mê âm nhạc.
+peaceful|ˈpiːsfəl|adj|thanh thản, bình yên|The lake is peaceful.|Hồ nước thật yên bình.
+perky|ˈpɝːki|adj|tươi tỉnh, vênh váo|She is perky in the morning.|Cô ấy tươi tỉnh vào buổi sáng.
+perplexed|pɚˈplekst|adj|lúng túng, bối rối|I was perplexed by the question.|Tôi bối rối trước câu hỏi.
+pessimistic|ˌpesəˈmɪstɪk|adj|bi quan|He is pessimistic about the future.|Anh ấy bi quan về tương lai.
+petrified|ˈpetrəfaɪd|adj|làm sững sờ, chết điếng|I was petrified of the dog.|Tôi chết điếng vì con chó.
+positive|ˈpɑːzət̬ɪv|adj|tích cực, lạc quan|Try to stay positive.|Hãy cố gắng giữ tinh thần tích cực.
+powerful|ˈpaʊɚfəl|adj|quyền thế, quyền lực|The king was powerful.|Nhà vua rất quyền lực.
+proud|praʊd|adj|hãnh diện, tự hào|I am proud of you.|Tôi tự hào về bạn.
+rattled|ˈræt̬əld|adj|bồn chồn, lo lắng|She was rattled by the noise.|Cô ấy bồn chồn vì tiếng ồn.
+reflective|rɪˈflektɪv|adj|trầm ngâm|He is in a reflective mood.|Anh ấy đang trầm ngâm.
+regretful|rɪˈɡretfəl|adj|hối tiếc|He felt regretful after the fight.|Anh ấy hối tiếc sau cuộc cãi nhau.
+relaxed|rɪˈlækst|adj|thư giãn, thoải mái|I feel relaxed at the beach.|Tôi thấy thư giãn ở bãi biển.
+relieved|rɪˈliːvd|adj|nhẹ nhõm|I am relieved it is over.|Tôi nhẹ nhõm vì mọi chuyện đã xong.
+remorseful|rɪˈmɔːrsfəl|adj|ăn năn, hối hận|He looked remorseful.|Anh ấy trông có vẻ ăn năn.
+rueful|ˈruːfəl|adj|buồn bã, rầu rĩ|She gave a rueful smile.|Cô ấy mỉm cười buồn bã.
+satisfied|ˈsæt̬ɪsfaɪd|adj|thỏa mãn, hài lòng|I am satisfied with my work.|Tôi hài lòng với công việc của mình.
+self-conscious|ˌselfˈkɑːnʃəs|adj|e dè, ngượng nghịu|I feel self-conscious on stage.|Tôi thấy ngượng ngùng trên sân khấu.
+selfish|ˈselfɪʃ|adj|ích kỷ|Don't be selfish.|Đừng ích kỷ.
+sensitive|ˈsensət̬ɪv|adj|nhạy cảm, dễ tổn thương|She is a sensitive girl.|Cô ấy là cô gái nhạy cảm.
+shameful|ˈʃeɪmfəl|adj|đáng hổ thẹn, ngượng|That was a shameful act.|Đó là một hành động đáng xấu hổ.
+shock|ʃɑːkt|adj|bất ngờ, sốc|I was in shock.|Tôi đã bị sốc.
+smug|smʌɡ|adj|tự mãn|He had a smug smile.|Anh ấy có nụ cười tự mãn.
+snappy|ˈsnæpi|adj|dễ gắt gỏng, cáu kỉnh|He is snappy when tired.|Anh ấy hay gắt gỏng khi mệt.
+somber|ˈsɒmbər|adj|u sầu, ủ rũ|The room was somber.|Căn phòng thật u sầu.
+speechless|ˈspiːtʃləs|adj|câm nín|I was speechless.|Tôi đã câm nín.
+stressed|strest|adj|căng thẳng|I am stressed about work.|Tôi căng thẳng vì công việc.
+stunned|stʌnd|adj|sững sờ, bất ngờ|She was stunned by the news.|Cô ấy sững sờ trước tin tức.
+submissive|səbˈmɪsɪv|adj|ngoan ngoãn, dễ bảo|The dog is submissive.|Con chó rất ngoan ngoãn.
+suffering|səbˈmɪsɪv|adj|đau đớn, đau khổ|The suffering child needs help.|Đứa trẻ đau khổ cần được giúp đỡ.
+surprised|sɚˈpraɪzd|adj|bất ngờ, ngạc nhiên|I was surprised by the gift.|Tôi ngạc nhiên vì món quà.
+thankful|ˈθæŋkfəl|adj|biết ơn|I am thankful for your help.|Tôi biết ơn sự giúp đỡ của bạn.
+thoughtful|ˈθɑːtfəl|adj|trầm ngâm, suy tư|He looked thoughtful.|Anh ấy trông có vẻ trầm ngâm.
+troubled|ˈtrʌbəld|adj|băn khoăn, lo lắng|She looks troubled today.|Hôm nay cô ấy trông lo lắng.
+upbeat|ˈʌpbiːt|adj|vui vẻ, phấn chấn|He is upbeat today.|Hôm nay anh ấy rất phấn chấn.
+uptight|ˌʌpˈtaɪt|adj|căng thẳng, lo lắng|Don't be so uptight.|Đừng căng thẳng như vậy.
+wary|ˈweri|adj|thận trọng, đề phòng|Be wary of strangers.|Hãy đề phòng người lạ.
+woeful|ˈwoʊfəl|adj|thiểu não, buồn rầu|The story was woeful.|Câu chuyện thật thảm thương.
+wretched|ˈretʃɪd|adj|bất hạnh, đáng thương|The wretched dog was cold.|Con chó đáng thương bị lạnh.
+zealous|ˈzeləs|adj|hăng hái, sốt sắng|He is a zealous teacher.|Ông ấy là giáo viên hăng hái.`}
 ];
 
 var ALL = [];
@@ -1728,8 +1770,12 @@ var known = load(KEYS.known, {});
 var srs = load(KEYS.srs, {});
 var stats = load(KEYS.stats, {});
 var pref = load(KEYS.pref, {});
-pref.accent = pref.accent || 'en-US'; pref.rate = pref.rate || 0.9; pref.goal = pref.goal || 10;
-
+pref.accent = pref.accent || 'en-US'; pref.rate = pref.rate || 0.9; pref.goal = pref.goal || 10; pref.theme = pref.theme || 'auto';
+function applyTheme() {
+  var r = document.documentElement;
+  if (pref.theme === 'light' || pref.theme === 'dark') r.setAttribute('data-theme', pref.theme); else r.removeAttribute('data-theme');
+}
+applyTheme();
 /* ===== Ngày tháng, ôn tập ngắt quãng (Leitner) ===== */
 function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
 function dayOffset(n) { var d = new Date(); d.setDate(d.getDate() + n); return d; }
@@ -1844,6 +1890,7 @@ function renderHome() {
     '<section class="panel"><h2>Tiến độ theo chủ đề</h2><div class="topics">' + topics + '</div></section>' +
     '<section class="panel settings"><h2>Cài đặt</h2>' +
     '<div class="setrow"><span>Tốc độ đọc</span><div class="seg" role="group" aria-label="Tốc độ đọc">' + opt('rate', '0.7', String(pref.rate), 'Chậm') + opt('rate', '0.9', String(pref.rate), 'Vừa') + opt('rate', '1.05', String(pref.rate), 'Nhanh') + '</div></div>' +
+    '<div class="setrow"><span>Giao diện</span><div class="seg" role="group" aria-label="Giao diện">' + opt('theme', 'auto', pref.theme, 'Tự động') + opt('theme', 'light', pref.theme, 'Sáng') + opt('theme', 'dark', pref.theme, 'Tối') + '</div></div>' +
     '<div class="setrow"><span>Mục tiêu mỗi ngày</span><div class="seg" role="group" aria-label="Mục tiêu mỗi ngày">' + opt('goal', '5', String(pref.goal), '5 thẻ') + opt('goal', '10', String(pref.goal), '10') + opt('goal', '20', String(pref.goal), '20') + opt('goal', '30', String(pref.goal), '30') + '</div></div>' +
     '<div class="field"><label for="bk">Sao lưu tiến độ</label><p class="hint">Tạo mã rồi lưu lại. Ở máy khác, dán mã vào đây và bấm Khôi phục.</p><textarea id="bk" spellcheck="false" placeholder="Mã sao lưu sẽ hiện ở đây"></textarea>' +
     '<div class="fbtns" style="justify-content:flex-start"><button type="button" class="btn" data-act="backup">Tạo mã sao lưu</button><button type="button" class="btn" data-act="copybk">Sao chép</button><button type="button" class="btn" data-act="restore">Khôi phục từ mã</button></div></div>' +
@@ -2039,6 +2086,7 @@ document.addEventListener('click', function (e) {
   switch (a) {
     case 'accent': pref.accent = el.dataset.v; save(KEYS.pref, pref); if (!voices.length) loadVoices(); document.querySelectorAll('[data-act="accent"]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.v === pref.accent); }); toast(pref.accent === 'en-US' ? 'Đã chọn giọng Mỹ' : 'Đã chọn giọng Anh'); break;
     case 'rate': pref.rate = parseFloat(el.dataset.v); save(KEYS.pref, pref); renderHome(); speak('Hello, welcome to English', 1); break;
+    case 'theme': pref.theme = el.dataset.v; save(KEYS.pref, pref); applyTheme(); renderHome(); break;
     case 'goal': pref.goal = parseInt(el.dataset.v, 10); save(KEYS.pref, pref); renderHome(); break;
     case 'tab': setTab(el.dataset.v); break;
     case 'chips': S.chipsOpen = !S.chipsOpen; renderChips(); break;
@@ -2098,7 +2146,9 @@ document.addEventListener('change', function (e) {
 document.addEventListener('keydown', function (e) {
   var t = e.target.tagName;
   if (e.key === 'Enter' && e.target.id === 'ans') { e.preventDefault(); checkTyped(); return; }
+  if (e.key === 'Enter' && e.target.id === 'fc') { e.preventDefault(); S.flip = !S.flip; e.target.classList.toggle('flip', S.flip); return; }
   if (S.tab !== 'flash' || t === 'INPUT' || t === 'SELECT' || t === 'TEXTAREA' || !S.deck.length || S.di >= S.deck.length) return;
+  if (e.key === ' ' && t === 'BUTTON') return; // để nút đang focus tự xử lý phím Space
   var w = S.deck[S.di];
   if (e.key === 'ArrowRight') goCard(S.di + 1);
   else if (e.key === 'ArrowLeft') goCard(S.di - 1);

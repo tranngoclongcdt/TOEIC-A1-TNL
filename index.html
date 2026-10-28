@@ -449,12 +449,24 @@ $('#aGo').onclick = function () {
 
 $('#aGoogle').onclick = function () {
   $('#aErr').textContent = '';
-  AUTH.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function (e) {
-    if (e && e.code === 'auth/popup-blocked') {
-      AUTH.signInWithRedirect(new firebase.auth.GoogleAuthProvider()).catch(function (e2) { $('#aErr').textContent = authErr(e2); });
-    } else $('#aErr').textContent = authErr(e);
-  });
+  var onGithub = location.hostname.indexOf('github.io') > -1;
+  if (onGithub) {
+    // GitHub Pages đặt COOP làm popup không hoạt động — dùng redirect (quay lại trang sau khi chọn tài khoản)
+    AUTH.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+      .catch(function (e) { $('#aErr').textContent = authErr(e); });
+  } else {
+    AUTH.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function (e) {
+      if (e && e.code === 'auth/popup-blocked') {
+        AUTH.signInWithRedirect(new firebase.auth.GoogleAuthProvider()).catch(function (e2) { $('#aErr').textContent = authErr(e2); });
+      } else $('#aErr').textContent = authErr(e);
+    });
+  }
 };
+
+/* Bắt kết quả redirect từ Google: trả về trang xong nếu Google trả lỗi thì hiện ra */
+AUTH.getRedirectResult().catch(function (e) {
+  $('#aErr').textContent = authErr(e);
+});
 
 $('#uSignout').onclick = function () {
   AUTH.signOut().then(function () {
